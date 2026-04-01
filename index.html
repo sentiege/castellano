@@ -1,0 +1,1794 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Castellano Studio · Cartillas completas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg: #050816;
+      --bg-soft: #0b1020;
+      --card: #111827;
+      --accent: #22c55e;
+      --accent-soft: rgba(34, 197, 94, 0.15);
+      --accent-strong: #4ade80;
+      --danger: #f97373;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --border-soft: rgba(148, 163, 184, 0.35);
+      --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.85);
+      --radius-lg: 18px;
+      --radius-full: 999px;
+      --transition-fast: 0.18s ease-out;
+      --transition-med: 0.28s ease-out;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #1f2937 0, #020617 42%, #000 100%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .app-shell {
+      width: 100%;
+      max-width: 1180px;
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(2, 6, 23, 0.98));
+      border-radius: 28px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      box-shadow: 0 32px 80px rgba(15, 23, 42, 0.9);
+      padding: 18px 20px 22px;
+      display: grid;
+      grid-template-rows: auto auto minmax(0, 1fr);
+      gap: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .app-shell::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.045), transparent 55%),
+        radial-gradient(circle at 100% 0, rgba(52, 211, 153, 0.06), transparent 50%);
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    .app-shell > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .branding {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-badge {
+      width: 38px;
+      height: 38px;
+      border-radius: 18px;
+      background: radial-gradient(circle at 30% 20%, #4ade80, #22c55e 40%, #16a34a 75%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.6),
+        0 18px 35px rgba(22, 163, 74, 0.75);
+      color: #f9fafb;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    .title-block h1 {
+      font-size: 1.15rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #e5e7eb;
+    }
+
+    .title-block p {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .header-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(15, 118, 110, 0.6));
+      border: 1px solid rgba(45, 212, 191, 0.5);
+      font-size: 0.76rem;
+      color: #ccfbf1;
+      white-space: nowrap;
+    }
+
+    .header-pill-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.3);
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding: 2px 0 6px;
+      scrollbar-width: thin;
+    }
+
+    .tab-btn {
+      flex-shrink: 0;
+      border-radius: 999px;
+      border: 1px solid rgba(55, 65, 81, 0.85);
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--muted);
+      font-size: 0.76rem;
+      padding: 6px 10px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background var(--transition-fast), border-color var(--transition-fast),
+        color var(--transition-fast), transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+    }
+
+    .tab-btn span.index {
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.9);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+
+    .tab-btn.active {
+      border-color: rgba(34, 197, 94, 0.95);
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(22, 163, 74, 0.15));
+      color: #e5e7eb;
+      box-shadow: 0 10px 24px rgba(22, 163, 74, 0.55);
+      transform: translateY(-1px);
+    }
+
+    .tab-btn.active span.index {
+      border-color: rgba(34, 197, 94, 0.95);
+      color: #bbf7d0;
+    }
+
+    /* Layout interior */
+    .content-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.4fr);
+      gap: 18px;
+      min-height: 0;
+    }
+
+    .card,
+    .practice-card {
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-height: 0;
+    }
+
+    .card {
+      background: radial-gradient(circle at top left, rgba(34, 197, 94, 0.16), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(59, 130, 246, 0.13), transparent 52%),
+        linear-gradient(145deg, rgba(15, 23, 42, 0.97), rgba(2, 6, 23, 0.98));
+    }
+
+    .practice-card {
+      background: radial-gradient(circle at top right, rgba(56, 189, 248, 0.16), transparent 55%),
+        radial-gradient(circle at bottom left, rgba(34, 197, 94, 0.13), transparent 50%),
+        linear-gradient(155deg, rgba(15, 23, 42, 0.96), rgba(2, 6, 23, 0.99));
+    }
+
+    .card-header,
+    .practice-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.35);
+    }
+
+    .card-header h2,
+    .practice-header h2 {
+      font-size: 0.98rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #e5e7eb;
+    }
+
+    .pill {
+      padding: 4px 9px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      color: var(--muted);
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    .pill.accent {
+      border-color: rgba(34, 197, 94, 0.7);
+      color: #bbf7d0;
+      background: var(--accent-soft);
+    }
+
+    .card-section {
+      background: rgba(15, 23, 42, 0.88);
+      border-radius: 14px;
+      padding: 9px 11px;
+      border: 1px solid rgba(31, 41, 55, 0.85);
+    }
+
+    .section-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #a5b4fc;
+      margin-bottom: 4px;
+    }
+
+    .card-section h3 {
+      font-size: 0.94rem;
+      margin-bottom: 4px;
+      color: #e5e7eb;
+    }
+
+    .card-section p {
+      font-size: 0.82rem;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    .chips-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .chip {
+      font-size: 0.75rem;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      color: #e5e7eb;
+    }
+
+    .chip strong {
+      color: var(--accent-strong);
+    }
+
+    .examples-list {
+      margin-top: 6px;
+      list-style: none;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .examples-list li {
+      position: relative;
+      padding-left: 16px;
+      margin-bottom: 4px;
+    }
+
+    .examples-list li::before {
+      content: "";
+      position: absolute;
+      left: 4px;
+      top: 0.6em;
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+
+    .highlight-box {
+      margin-top: 4px;
+      padding: 7px 9px;
+      border-radius: 10px;
+      border: 1px dashed rgba(148, 163, 184, 0.7);
+      background: radial-gradient(circle at 0 0, rgba(34, 197, 94, 0.15), transparent 60%);
+      font-size: 0.78rem;
+      color: #e5e7eb;
+    }
+
+    /* Practice */
+    .step-indicator {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(55, 65, 81, 0.8);
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), #22d3ee);
+      border-radius: 999px;
+      transition: width var(--transition-med);
+    }
+
+    .question-area {
+      margin-top: 4px;
+      padding: 10px 10px 8px;
+      border-radius: 12px;
+      border: 1px solid rgba(31, 41, 55, 0.95);
+      background: rgba(15, 23, 42, 0.94);
+    }
+
+    .question-label {
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #a5b4fc;
+      margin-bottom: 4px;
+    }
+
+    .question-text {
+      font-size: 0.9rem;
+      color: #e5e7eb;
+      line-height: 1.5;
+    }
+
+    .options-grid {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .option-btn {
+      border-radius: 12px;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.97), rgba(15, 23, 42, 0.9));
+      color: var(--text);
+      font-size: 0.8rem;
+      padding: 7px 9px;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      transition: border-color var(--transition-fast),
+        background var(--transition-fast),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+    }
+
+    .option-btn span.badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      font-size: 0.7rem;
+      color: var(--muted);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .option-btn .label {
+      flex: 1;
+    }
+
+    .option-btn:hover {
+      border-color: rgba(59, 130, 246, 0.85);
+      background: radial-gradient(circle at top left, rgba(37, 99, 235, 0.35), rgba(15, 23, 42, 0.98));
+      transform: translateY(-1px);
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.9);
+    }
+
+    .option-btn.selected {
+      border-color: var(--accent-strong);
+      background: radial-gradient(circle at 0 0, rgba(34, 197, 94, 0.35), rgba(15, 23, 42, 0.96));
+      box-shadow: 0 12px 28px rgba(22, 163, 74, 0.65);
+    }
+
+    .option-btn.correct {
+      border-color: var(--accent-strong);
+      background: radial-gradient(circle at 0 0, rgba(34, 197, 94, 0.35), rgba(15, 23, 42, 0.96));
+    }
+
+    .option-btn.incorrect {
+      border-color: rgba(248, 113, 113, 0.9);
+      background: radial-gradient(circle at 0 0, rgba(248, 113, 113, 0.3), rgba(15, 23, 42, 0.96));
+    }
+
+    .reasoning-block {
+      margin-top: 10px;
+      padding: 8px 9px;
+      border-radius: 10px;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      background: radial-gradient(circle at 0 0, rgba(15, 118, 110, 0.28), rgba(15, 23, 42, 0.95));
+    }
+
+    .reasoning-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #67e8f9;
+      margin-bottom: 4px;
+    }
+
+    .reasoning-input {
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      background: rgba(15, 23, 42, 0.96);
+      color: var(--text);
+      font-size: 0.78rem;
+      padding: 7px 8px;
+      resize: none;
+      min-height: 60px;
+      outline: none;
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast),
+        background var(--transition-fast);
+    }
+
+    .reasoning-input:focus {
+      border-color: rgba(45, 212, 191, 0.9);
+      box-shadow: 0 0 0 1px rgba(45, 212, 191, 0.6);
+      background: rgba(15, 23, 42, 0.99);
+    }
+
+    .feedback {
+      margin-top: 6px;
+      font-size: 0.8rem;
+      min-height: 1.2em;
+    }
+
+    .feedback.correct {
+      color: #bbf7d0;
+    }
+
+    .feedback.incorrect {
+      color: var(--danger);
+    }
+
+    .footer-actions {
+      margin-top: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn {
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      padding: 7px 14px;
+      font-size: 0.8rem;
+      background: rgba(15, 23, 42, 0.96);
+      color: var(--text);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background var(--transition-fast), border-color var(--transition-fast),
+        transform var(--transition-fast), box-shadow var(--transition-fast);
+    }
+
+    .btn-primary {
+      border-color: rgba(34, 197, 94, 0.92);
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.95), rgba(22, 163, 74, 0.98));
+      color: #ecfdf5;
+      box-shadow: 0 14px 30px rgba(22, 163, 74, 0.7);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 18px 40px rgba(22, 163, 74, 0.9);
+    }
+
+    .btn-ghost {
+      background: transparent;
+    }
+
+    .btn-ghost:hover {
+      background: rgba(15, 23, 42, 0.9);
+      transform: translateY(-1px);
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.9);
+    }
+
+    .score-pill {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .score-pill strong {
+      color: var(--accent-strong);
+    }
+
+    /* Sections/cartillas */
+    .cartilla-section {
+      display: none;
+    }
+    .cartilla-section.active {
+      display: block;
+    }
+
+    @media (max-width: 880px) {
+      .content-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 12px;
+      }
+
+      .app-shell {
+        border-radius: 22px;
+      }
+
+      .title-block h1 {
+        font-size: 1.02rem;
+      }
+
+      .header-pill {
+        display: none;
+      }
+
+      .options-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="header">
+      <div class="branding">
+        <div class="logo-badge">Cs</div>
+        <div class="title-block">
+          <h1>Castellano Studio</h1>
+          <p>Cartillas interactivas de gramática y texto</p>
+        </div>
+      </div>
+      <div class="header-pill">
+        <span class="header-pill-dot"></span>
+        10 cartillas · Reglas lingüísticas clave
+      </div>
+    </header>
+
+    <!-- Tabs de cartillas -->
+    <div class="tabs" id="tabs">
+      <button class="tab-btn active" data-cartilla="1">
+        <span class="index">1</span> Comunicación y funciones
+      </button>
+      <button class="tab-btn" data-cartilla="2">
+        <span class="index">2</span> Acentuación básica
+      </button>
+      <button class="tab-btn" data-cartilla="3">
+        <span class="index">3</span> Palabras compuestas
+      </button>
+      <button class="tab-btn" data-cartilla="4">
+        <span class="index">4</span> Doble acentuación
+      </button>
+      <button class="tab-btn" data-cartilla="5">
+        <span class="index">5</span> Tipologías de texto
+      </button>
+      <button class="tab-btn" data-cartilla="6">
+        <span class="index">6</span> Progresión temática
+      </button>
+      <button class="tab-btn" data-cartilla="7">
+        <span class="index">7</span> Sustantivo y GN
+      </button>
+      <button class="tab-btn" data-cartilla="8">
+        <span class="index">8</span> Complementos del sustantivo
+      </button>
+      <button class="tab-btn" data-cartilla="9">
+        <span class="index">9</span> Género y número
+      </button>
+      <button class="tab-btn" data-cartilla="10">
+        <span class="index">10</span> Concordancia nominal
+      </button>
+    </div>
+
+    <!-- Secciones de cartillas -->
+    <div class="content-grid">
+
+      <!-- CARTILLA 1 -->
+      <section class="cartilla-section active" data-cartilla="1">
+        <div class="card">
+          <div class="card-header">
+            <h2>Cartilla 1 · Comunicación y funciones</h2>
+            <span class="pill accent">Teoría base</span>
+          </div>
+
+          <div class="card-section">
+            <div class="section-label">Bloque A · Esquema</div>
+            <h3>¿Qué es la comunicación?</h3>
+            <p>
+              La <strong>comunicación</strong> es el proceso en el que un emisor envía un
+              mensaje a un receptor usando un código (por ejemplo, la lengua) a través
+              de un canal, dentro de un contexto determinado.[web:23][web:36]
+            </p>
+            <div class="chips-row">
+              <span class="chip"><strong>Emisor</strong> · quien produce el mensaje</span>
+              <span class="chip"><strong>Receptor</strong> · quien lo recibe</span>
+              <span class="chip"><strong>Mensaje</strong> · lo que se comunica</span>
+              <span class="chip"><strong>Código</strong> · lengua/signos usados</span>
+              <span class="chip"><strong>Canal</strong> · medio (voz, chat…)</span>
+              <span class="chip"><strong>Contexto</strong> · situación</span>
+            </div>
+          </div>
+
+          <div class="card-section">
+            <div class="section-label">Bloque B · Funciones</div>
+            <h3>Funciones del lenguaje (Jakobson)</h3>
+            <ul class="examples-list">
+              <li>
+                <strong>Referencial</strong>: informa sobre la realidad de forma objetiva.
+                Ej.: «Hoy hace 30 grados».[web:24][web:30][web:36]
+              </li>
+              <li>
+                <strong>Emotiva</strong>: expresa sentimientos del emisor.
+                Ej.: «Estoy nervioso por el examen».[web:27][web:30][web:36]
+              </li>
+              <li>
+                <strong>Apelativa</strong>: intenta influir en el receptor.
+                Ej.: «Estudia este tema ahora mismo».[web:27][web:30][web:36]
+              </li>
+              <li>
+                <strong>Fática</strong>: mantiene o comprueba el canal.
+                Ej.: «¿Me escuchás?».[web:27][web:30][web:36]
+              </li>
+              <li>
+                <strong>Poética</strong>: se centra en la forma del mensaje.
+                Ej.: juegos de palabras, poemas.[web:27][web:30][web:36]
+              </li>
+              <li>
+                <strong>Metalingüística</strong>: habla del propio lenguaje.
+                Ej.: «‘Sustantivo’ es una palabra que nombra seres o cosas».[web:27][web:30][web:36]
+              </li>
+            </ul>
+            <div class="highlight-box">
+              En un mismo enunciado puede aparecer más de una función, pero suele haber
+              una que predomina según la intención del emisor.[web:30][web:36]
+            </div>
+          </div>
+
+          <div class="card-section">
+            <div class="section-label">Bloque C · Regla en 1 línea</div>
+            <p>
+              Para identificar la función del lenguaje, fijate en
+              cuál es la <strong>intención</strong> principal del emisor:
+              informar, expresar, convencer, mantener el contacto,
+              jugar con las palabras o explicar el propio lenguaje.[web:30][web:36]
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- CARTILLA 2 -->
+      <section class="cartilla-section" data-cartilla="2">
+        <div class="card">
+          <div class="card-header">
+            <h2>Cartilla 2 · Acentuación básica</h2>
+            <span class="pill accent">Monosílabas · Polisílabas · Tilde diacrítica</span>
+          </div>
+
+          <div class="card-section">
+            <div class="section-label">Bloque A · Esquema</div>
+            <h3>Monosílabas y polisílabas</h3>
+            <p>
+              Una palabra <strong>monosílaba</strong> tiene una sola sílaba (fue, dio, sol)
+              y, por regla general, no lleva tilde.[web:31][web:34][web:40]
+              Las <strong>polisílabas</strong> tienen dos o más sílabas
+              y se acentúan según si son agudas, graves o esdrújulas.[web:34][web:40][web:48]
+            </p>
+          </div>
+
+          <div class="card-section">
+            <div class="section-label">Bloque B · Tilde diacrítica</div>
+            <h3>¿Cuándo se usa la tilde diacrítica?</h3>
+            <p>
+              La tilde diacrítica distingue palabras que se escriben igual pero tienen
+              significado o función diferente.[web:28][web:31][web:37]
+            </p>
+            <ul class="examples-list">
+              <li><strong>el</strong> (artículo) / <strong>él</strong> (pronombre personal).</li>
+              <li><strong>tu</strong> (adjetivo posesivo) / <strong>tú</strong> (pronombre).</li>
+              <li><strong>mi</strong> (posesivo) / <strong>mí</strong> (pronombre tónico).</li>
+              <li><strong>mas</strong> (pero) / <strong>más</strong> (cantidad).</li>
+              <li><strong>de</strong> (preposición) / <strong>dé</strong> (verbo dar).[web:28][web:31]</li>
+            </ul>
+            <div class="highlight-box">
+              En general, la forma con tilde suele ser pronombre, verbo o adverbio tónico,
+              mientras que la forma sin tilde es determinante, preposición o conjunción.[web:28][web:31]
+            </div>
+          </div>
+
+          <div class="card-section">
+            <div class="section-label">Bloque C · Regla en 1 línea</div>
+            <p>
+              Primero fijate si la palabra es monosílaba o polisílaba; luego aplicá las
+              reglas de agudas, graves y esdrújulas, y usá la tilde diacrítica sólo
+              cuando cambie el significado o la función.[web:34][web:37][web:40][web:48]
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- CARTILLA 3 -->
+      <section class="cartilla-section" data-cartilla="3">
+        <div class="card">
+          <div class="card-header">
+            <h2>Cartilla 3 · Acentuación de compuestas</h2>
+            <span class="pill accent">Palabras compuestas</span>
+          </div>
+          <div class="card-section">
+            <div class="section-label">Bloque A · Esquema</div>
+            <h3>Palabras compuestas sin guion</h3>
+            <p>
+              En las compuestas sin guion, la tilde la decide el <strong>último</strong>
+              elemento, y las tildes de los anteriores se pierden.[web:38][web:39][web:41][web:48]
+            </p>
+            <ul class="examples-list">
+              <li><em>balón</em> + <em>cesto</em> → <strong>baloncesto</strong> (grave sin tilde).[web:41]</li>
+              <li><em>décimo</em> + <em>tercero</em> → <strong>decimotercero</strong>.[web:41]</li>
+              <li>
+                Los adverbios terminados en <strong>-mente</strong> conservan la tilde del adjetivo:
+                <em>fácil</em> → <strong>fácilmente</strong>.[web:41][web:48][web:51]
+              </li>
+            </ul>
+          </div>
+          <div class="card-section">
+            <div class="section-label">Bloque B · Con guion</div>
+            <h3>Compuestas con guion</h3>
+            <p>
+              En las compuestas con guion, cada parte mantiene su tilde como si fueran
+              palabras independientes.[web:38][web:41][web:48]
+            </p>
+            <ul class="examples-list">
+              <li><strong>teórico-práctico</strong>.</li>
+              <li><strong>histórico-cultural</strong>.</li>
+            </ul>
+            <div class="highlight-box">
+              Preguntate siempre si la compuesta se escribe en una sola palabra, con
+              guion o separada; eso cambia totalmente la acentuación.[web:38][web:41][web:48][web:51]
+            </div>
+          </div>
+          <div class="card-section">
+            <div class="section-label">Bloque C · Regla en 1 línea</div>
+            <p>
+              Si la palabra compuesta va unida, mirá sólo el último elemento para
+              decidir la tilde; si va con guion, cada palabra sigue sus propias reglas
+              de acentuación.[web:38][web:41][web:48][web:51]
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- CARTILLA 4 -->
+      <section class="cartilla-section" data-cartilla="4">
+        <div class="card">
+          <div class="card-header">
+            <h2>Cartilla 4 · Palabras con doble acentuación</h2>
+            <span class="pill accent">Variantes válidas</span>
+          </div>
+          <div class="card-section">
+            <div class="section-label">Bloque A · Esquema</div>
+            <h3>Doble acentuación gráfica</h3>
+            <p>
+              Algunas palabras admiten dos acentuaciones consideradas correctas
+              (por ejemplo, con y sin tilde), normalmente por variación de uso en
+              distintos países o registros.[web:40][web:48]
+            </p>
+            <ul class="examples-list">
+              <li><strong>video</strong> / <strong>vídeo</strong>.</li>
+              <li><strong>periodo</strong> / <strong>período</strong>.</li>
+              <li><strong>cardiaco</strong> / <strong>cardíaco</strong>.</li>
+            </ul>
+          </div>
+          <div class="card-section">
+            <div class="section-label">Bloque B · Idea clave</div>
+            <p>
+              La norma admite ambas formas, aunque una suele ser más frecuente
+              en ciertos países o ámbitos; es importante ser consistente en
+              un mismo texto.[web:40][web:48]
+            </p>
+            <div class="highlight-box">
+              Consultar el diccionario o la Ortografía de la RAE ayuda a confirmar si
+              una variante está aceptada.[web:40][web:48]
+            </div>
+          </div>
+          <div class="card-section">
+            <div class="section-label">Bloque C · Regla en 1 línea</div>
+            <p>
+              Cuando haya doble acentuación válida, elegí una forma y mantenela en
+              todo el texto, salvo que tu profesor o institución indiquen una
+              preferencia concreta.[web:40][web:48]
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- CARTILLA 5 -->
+      <section class="cartilla-section" data-cartilla="5">
+        <div class="card">
+          <div class="card-header">
+            <h2>Cartilla 5 · Tipologías de texto</h2>
+            <span class="pill accent">Contexto · Intención · Mensaje</span>
+          </div>
+          <div class="card-section">
+            <div class="section-label">Bloque A · Tipos básicos</div>
+            <h3>Según la intención comunicativa</h3>
+            <ul class="examples-list">
+              <li><strong>Narrativo</strong>: cuenta hechos en un tiempo y espacio.</li>
+              <li><strong>Descriptivo</strong>: detalla características de algo.</li>
+              <li><strong>Expositivo</strong>: explica conceptos de forma objetiva.</li>
+              <li><strong>Argumentativo</strong>: defiende opiniones con razones.</li>
+              <li><strong>Instructivo</strong>: da órdenes o instrucciones.[web:43][web:46][web:49][web:52]</li>
+            </ul>
+          </div>
+          <div class="card-section">
+            <div class="section-label">Bloque B · Contexto e intención</div>
+            <p>
+              El <strong>contexto</strong> (dónde, cuándo, para quién) y la
+              <strong>intención</strong> del emisor influyen en el tipo de texto y
+              en cómo organiza el mensaje.[web:43][web:49][web:52]
+            </p>
+            <div class="highlight-box">
+              Preguntate siempre: «¿qué quiere lograr el autor con este texto?»:
+              informar, convencer, emocionar, enseñar, ordenar, etc.[web:43][web:49][web:52]
+            </div>
+          </div>
+          <div class="card-section">
+            <div class="section-label">Bloque C · Regla en 1 línea</div>
+            <p>
+              Para reconocer la tipología textual, fijate en la intención, en la
+              estructura (introducción, desarrollo, conclusión) y en el vocabulario
+              típico de cada tipo.[web:46][web:49][web:52]
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- CARTILLA 6 -->
+      <section class="cartilla-section" data-cartilla="6">
+        <div class="card">
+          <div class="card-header">
+            <h2>Cartilla 6 · Progresión temática</h2>
+            <span class="pill accent">Tema · Rema · Ideas centrales</span>
+          </div>
+          <div class="card-section">
+            <div class="section-label">Bloque A · Concepto</div>
+            <h3>¿Qué es la progresión temática?</h3>
+            <p>
+              Es la forma en que la información se va organizando y avanzando en un
+              texto: de un <strong>tema</strong> (lo ya conocido) se pasa a un
+              <strong>rema</strong> (información nueva) que lo desarrolla.[web:29][web:32][web:35]
+            </p>
+          </div>
+          <div class="card-section">
+            <div class="section-label">Bloque B · Ideas principales</div>
+            <ul class="examples-list">
+              <li><strong>Idea principal</strong>: núcleo del texto, lo más importante.</li>
+              <li><strong>Ideas secundarias</strong>: amplían, explican o justifican.</li>
+            </ul>
+            <div class="highlight-box">
+              Un buen texto evita repetir siempre lo mismo: cada oración aporta algo
+              nuevo, pero todo sigue conectado con la idea central.[web:32][web:35]
+            </div>
+          </div>
+          <div class="card-section">
+            <div class="section-label">Bloque C · Regla en 1 línea</div>
+            <p>
+              Para detectar la progresión temática, buscá cómo se repiten o cambian
+              los temas de una oración a otra y qué información nueva se va
+              agregando.[web:29][web:32][web:35]
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- CARTILLA 7 -->
+      <section class="cartilla-section" data-cartilla="7">
+        <div class="card">
+          <div class="card-header">
+            <h2>Cartilla 7 · Sustantivo y grupo nominal</h2>
+            <span class="pill accent">Núcleo del sintagma</span>
+          </div>
+          <div class="card-section">
+            <div class="section-label">Bloque A · Sustantivo</div>
+            <h3>¿Qué es un sustantivo?</h3>
+            <p>
+              El <strong>sustantivo</strong> nombra personas, animales, cosas, lugares,
+              ideas o sentimientos (libro, Ana, libertad).[web:47][web:50]
+              Es el núcleo del grupo nominal.
+            </p>
+          </div>
+          <div class="card-section">
+            <div class="section-label">Bloque B · Grupo nominal</div>
+            <h3>Componentes del grupo nominal</h3>
+            <p>
+              El <strong>grupo nominal</strong> (sintagma nominal) se organiza alrededor
+              de un sustantivo núcleo, al que se le pueden añadir determinantes,
+              adjetivos y complementos.[web:47][web:50]
+            </p>
+            <ul class="examples-list">
+              <li>
+                «Los tres libros nuevos de historia»:
+                núcleo «libros»; determinante «los»; cuantificador «tres»;
+                adjetivo «nuevos»; complemento «de historia».[web:47][web:50]
+              </li>
+            </ul>
+          </div>
+          <div class="card-section">
+            <div class="section-label">Bloque C · Regla en 1 línea</div>
+            <p>
+              Para localizar el grupo nominal, buscá primero el sustantivo núcleo
+              y luego todo lo que lo acompaña directamente.[web:47][web:50]
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- CARTILLA 8 -->
+      <section class="cartilla-section" data-cartilla="8">
+        <div class="card">
+          <div class="card-header">
+            <h2>Cartilla 8 · Complementos del sustantivo</h2>
+            <span class="pill accent">Modificadores del núcleo</span>
+          </div>
+          <div class="card-section">
+            <div class="section-label">Bloque A · Tipos principales</div>
+            <h3>Modificadores del sustantivo</h3>
+            <ul class="examples-list">
+              <li>
+                <strong>Prepositivo</strong> (complemento preposicional):
+                «casa <em>de madera</em>», «libro <em>de Castellano</em>».[web:47][web:50]
+              </li>
+              <li>
+                <strong>Apositivo</strong> (aposición explicativa):
+                «López, <em>mi profesor</em>, explicó el tema».[web:47][web:50]
+              </li>
+              <li>
+                <strong>Adjunto</strong>: complemento no obligatorio que añade
+                información (adjetivos, grupos preposicionales, etc.).[web:44][web:47][web:50]
+              </li>
+            </ul>
+          </div>
+          <div class="card-section">
+            <div class="section-label">Bloque B · Idea clave</div>
+            <p>
+              Algunos complementos son exigidos por el sustantivo (obligatorios),
+              mientras que los adjuntos aportan datos extra pero se pueden omitir sin
+              que la estructura quede incompleta.[web:44][web:47][web:50]
+            </p>
+          </div>
+          <div class="card-section">
+            <div class="section-label">Bloque C · Regla en 1 línea</div>
+            <p>
+              Preguntate si el complemento es necesario para entender a qué se refiere
+              el sustantivo; si no lo es, probablemente sea un adjunto.[web:47][web:50]
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- CARTILLA 9 -->
+      <section class="cartilla-section" data-cartilla="9">
+        <div class="card">
+          <div class="card-header">
+            <h2>Cartilla 9 · Género y número</h2>
+            <span class="pill accent">Formas del sustantivo</span>
+          </div>
+          <div class="card-section">
+            <div class="section-label">Bloque A · Género</div>
+            <h3>Masculino y femenino</h3>
+            <p>
+              Muchos sustantivos marcan el género con terminaciones -o (masculino)
+              y -a (femenino), pero hay formas irregulares (hombre/mujer,
+              toro/vaca) y casos invariables donde el género lo marca el
+              determinante («el estudiante» / «la estudiante»).[web:47][web:50]
+            </p>
+          </div>
+          <div class="card-section">
+            <div class="section-label">Bloque B · Número</div>
+            <h3>Singular y plural</h3>
+            <p>
+              El plural suele formarse añadiendo -s o -es, siguiendo las reglas
+              ortográficas habituales: casa/casas, profesor/profesores.[web:47][web:50]
+              Hay formas invariables (el lunes / los lunes) y colectivos que son
+              singulares pero designan conjunto (gente, alumnado).[web:47][web:50]
+            </p>
+          </div>
+          <div class="card-section">
+            <div class="section-label">Bloque C · Regla en 1 línea</div>
+            <p>
+              Siempre revisá qué forma usan los determinantes y adjetivos cercanos
+              para confirmar el género y número del sustantivo.[web:47][web:50]
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- CARTILLA 10 -->
+      <section class="cartilla-section" data-cartilla="10">
+        <div class="card">
+          <div class="card-header">
+            <h2>Cartilla 10 · Concordancia nominal</h2>
+            <span class="pill accent">Género y número en acuerdo</span>
+          </div>
+          <div class="card-section">
+            <div class="section-label">Bloque A · Concepto</div>
+            <h3>¿Qué es la concordancia nominal?</h3>
+            <p>
+              Es el acuerdo en género y número entre el sustantivo y los
+              determinantes, adjetivos y algunos pronombres que lo acompañan.[web:47][web:50]
+            </p>
+            <ul class="examples-list">
+              <li>«<strong>Estos</strong> <strong>libros</strong> <strong>nuevos</strong>» (todo en masculino plural).</li>
+              <li>«<strong>Aquella</strong> <strong>casa</strong> <strong>vieja</strong>» (todo en femenino singular).</li>
+            </ul>
+          </div>
+          <div class="card-section">
+            <div class="section-label">Bloque B · Casos especiales</div>
+            <p>
+              Cuando hay varios sustantivos, la concordancia suele ir al plural,
+              y si tienen distinto género, normalmente se usa el masculino
+              plural: «El profesor y la alumna <strong>nuevos</strong>».[web:47][web:50]
+            </p>
+          </div>
+          <div class="card-section">
+            <div class="section-label">Bloque C · Regla en 1 línea</div>
+            <p>
+              Revisá siempre que todos los elementos que acompañan al sustantivo
+              coincidan con él en género y número para evitar errores de
+              concordancia.[web:47][web:50]
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Panel de práctica (común) -->
+      <section class="practice-card">
+        <div class="practice-header">
+          <h2 id="practiceTitle">Práctica · Cartilla 1</h2>
+          <div>
+            <div class="step-indicator">
+              Pregunta <span id="currentQuestion">1</span> de
+              <span id="totalQuestions">3</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="progress-bar">
+          <div id="progressFill" class="progress-fill"></div>
+        </div>
+
+        <div class="question-area">
+          <div class="question-label">Ejercicio de razonamiento</div>
+          <div id="questionText" class="question-text"></div>
+
+          <div id="optionsContainer" class="options-grid"></div>
+
+          <div class="reasoning-block">
+            <div class="reasoning-label">Explicá tu elección</div>
+            <textarea
+              id="reasoningInput"
+              class="reasoning-input"
+              placeholder="En una o dos frases, justifica tu respuesta."
+            ></textarea>
+          </div>
+
+          <div id="feedback" class="feedback"></div>
+        </div>
+
+        <div class="footer-actions">
+          <button id="resetBtn" class="btn btn-ghost" type="button">
+            Reiniciar cartilla
+          </button>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span id="scorePill" class="score-pill">
+              Puntaje: <strong>0</strong> / 0
+            </span>
+            <button id="nextBtn" class="btn btn-primary" type="button">
+              Comprobar y siguiente →
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <script>
+    // Banco de preguntas por cartilla
+    const quizzes = {
+      1: {
+        title: "Práctica · Cartilla 1",
+        questions: [
+          {
+            text: "«La reunión es mañana a las 8:00 en el aula magna.» ¿Qué función del lenguaje predomina?",
+            options: [
+              "Emotiva o expresiva",
+              "Apelativa o conativa",
+              "Referencial o informativa",
+              "Fática"
+            ],
+            correctIndex: 2,
+            explanationCorrect:
+              "Predomina la función referencial porque el enunciado transmite información objetiva sobre un hecho de la realidad.",
+            explanationIncorrect:
+              "Fijate si el enunciado expresa sentimientos, da una orden o simplemente ofrece información objetiva sobre la realidad."
+          },
+          {
+            text: "«Estoy muy preocupado por el examen de Castellano.» ¿Qué función del lenguaje es la principal?",
+            options: [
+              "Emotiva o expresiva",
+              "Poética",
+              "Metalingüística",
+              "Referencial o informativa"
+            ],
+            correctIndex: 0,
+            explanationCorrect:
+              "La función emotiva predomina porque el foco del mensaje está en el estado de ánimo del emisor.",
+            explanationIncorrect:
+              "Pensá si el foco está en dar datos objetivos, en pedir algo o en mostrar cómo se siente la persona que habla."
+          },
+          {
+            text: "«Por favor, revisá esta cartilla antes de la clase.» ¿Qué función del lenguaje domina?",
+            options: [
+              "Fática",
+              "Apelativa o conativa",
+              "Poética",
+              "Metalingüística"
+            ],
+            correctIndex: 1,
+            explanationCorrect:
+              "Predomina la función apelativa porque el enunciado intenta influir en el receptor: se le pide que haga algo.",
+            explanationIncorrect:
+              "Preguntate si el objetivo principal es informar, expresar un sentimiento, mantener el contacto o pedir/ordenar algo."
+          }
+        ]
+      },
+      2: {
+        title: "Práctica · Cartilla 2",
+        questions: [
+          {
+            text: "¿En cuál de estas oraciones la palabra subrayada lleva tilde diacrítica?",
+            options: [
+              "No sé si el examen será difícil.",
+              "Voy a tomar un te con hielo.",
+              "Me gusta mas estudiar en grupo.",
+              "El libro es de mi hermana."
+            ],
+            correctIndex: 0,
+            explanationCorrect:
+              "«sé» lleva tilde diacrítica porque es forma del verbo saber; «mas» (pero) y «de» (preposición) no llevan tilde, y «té» como bebida sí, pero en la opción está sin tilde.",
+            explanationIncorrect:
+              "Revisá qué palabras cambian de categoría o significado cuando llevan tilde (sé/dé/té/más, etc.)."
+          },
+          {
+            text: "«El también fue al cine.» ¿Por qué «también» lleva tilde?",
+            options: [
+              "Es palabra esdrújula.",
+              "Es palabra llana terminada en vocal.",
+              "Es palabra aguda terminada en n.",
+              "Es monosílaba con tilde diacrítica."
+            ],
+            correctIndex: 2,
+            explanationCorrect:
+              "«También» es una palabra aguda que termina en -n, por eso lleva tilde.",
+            explanationIncorrect:
+              "Primero separá en sílabas, identificá si es aguda, grave o esdrújula y mirá en qué termina."
+          },
+          {
+            text: "¿Cuál de estas opciones contiene SOLO palabras monosílabas que, por regla general, no se tildan?",
+            options: [
+              "fue, vio, dio",
+              "sé, té, mí",
+              "más, dé, tú",
+              "el, de, mas"
+            ],
+            correctIndex: 3,
+            explanationCorrect:
+              "«el», «de» y «mas» (con sentido de ‘pero’) son monosílabos que no llevan tilde en el uso estándar.",
+            explanationIncorrect:
+              "Diferenciá las palabras que llevan tilde diacrítica (sé, tú, más, té) de las que se escriben sin tilde."
+          }
+        ]
+      },
+      3: {
+        title: "Práctica · Cartilla 3",
+        questions: [
+          {
+            text: "¿Cuál es la forma correcta de la palabra compuesta por «fácil» + «mente»?",
+            options: [
+              "facilmente",
+              "fácilmente",
+              "facílmente",
+              "facil-mente"
+            ],
+            correctIndex: 1,
+            explanationCorrect:
+              "Los adverbios en -mente conservan la tilde del adjetivo: fácil → fácilmente.",
+            explanationIncorrect:
+              "Pensá qué tilde tenía el adjetivo original y recordá la regla de los adverbios terminados en -mente."
+          },
+          {
+            text: "¿Cómo se escribe correctamente la unión de «histórico» + «cultural» en una sola palabra?",
+            options: [
+              "históricocultural",
+              "historico-cultural",
+              "histórico-cultural",
+              "historicocultural"
+            ],
+            correctIndex: 3,
+            explanationCorrect:
+              "En compuestas sin guion la tilde se decide por el último elemento; aquí se pierde la tilde de «histórico» y queda «historicocultural».",
+            explanationIncorrect:
+              "Identificá si la palabra va con guion o en una sola palabra, y qué pasa con la tilde del primer término."
+          },
+          {
+            text: "«paraguayo» + «argentino» forman:",
+            options: [
+              "Paraguayo-argentino",
+              "paraguayo argentino",
+              "paraguayoargentino",
+              "paraguayo-Argentino"
+            ],
+            correctIndex: 0,
+            explanationCorrect:
+              "En este caso suele escribirse con guion: paraguayo-argentino, manteniendo la tilde si la hubiera en cada elemento.",
+            explanationIncorrect:
+              "Cuando cada parte conserva su independencia, a menudo se escribe con guion y cada una sigue sus propias reglas de acentuación."
+          }
+        ]
+      },
+      4: {
+        title: "Práctica · Cartilla 4",
+        questions: [
+          {
+            text: "¿Cuál de estas parejas corresponde a una doble acentuación válida?",
+            options: [
+              "bídeo / bideo",
+              "video / vídeo",
+              "periódo / periodo",
+              "cardíaco / cardiáco"
+            ],
+            correctIndex: 1,
+            explanationCorrect:
+              "«video» y «vídeo» son dos formas válidas según la norma; el resto presentan errores de acentuación.",
+            explanationIncorrect:
+              "Recordá que la doble acentuación se da entre dos formas aceptadas por la norma, no entre formas mal escritas."
+          },
+          {
+            text: "Si en tu país se prefiere «período», ¿qué es lo más recomendable hacer en un trabajo escrito?",
+            options: [
+              "Alternar «periode» y «periodo».",
+              "Usar siempre «período» para ser coherente.",
+              "Usar a veces «período» y a veces «períoodo».",
+              "Evitar completamente la palabra."
+            ],
+            correctIndex: 1,
+            explanationCorrect:
+              "Ante una doble acentuación válida, lo más recomendable es elegir una forma y mantenerla en todo el texto.",
+            explanationIncorrect:
+              "Pensá en la importancia de la coherencia ortográfica dentro de un mismo trabajo o examen."
+          },
+          {
+            text: "¿Qué idea resume mejor el uso de palabras con doble acentuación?",
+            options: [
+              "Ambas formas siempre son incorrectas.",
+              "Solo una forma es correcta y la otra es un error.",
+              "Dos variantes son válidas, según el país o el uso.",
+              "Siempre deben escribirse sin tilde."
+            ],
+            correctIndex: 2,
+            explanationCorrect:
+              "En la doble acentuación gráfica, dos variantes son válidas; cambian según la variedad o el registro.",
+            explanationIncorrect:
+              "No se trata de una forma correcta y una incorrecta, sino de dos opciones aceptadas por la norma."
+          }
+        ]
+      },
+      5: {
+        title: "Práctica · Cartilla 5",
+        questions: [
+          {
+            text: "Un texto que explica de forma objetiva qué es la fotosíntesis suele ser:",
+            options: [
+              "Narrativo",
+              "Expositivo",
+              "Argumentativo",
+              "Instructivo"
+            ],
+            correctIndex: 1,
+            explanationCorrect:
+              "Su intención principal es informar y explicar un contenido, por eso es un texto expositivo.",
+            explanationIncorrect:
+              "Pensá si el objetivo es contar una historia, dar instrucciones, opinar o explicar un tema."
+          },
+          {
+            text: "Una receta de cocina pertenece, sobre todo, al tipo de texto:",
+            options: [
+              "Instructivo o prescriptivo",
+              "Descriptivo",
+              "Poético",
+              "Argumentativo"
+            ],
+            correctIndex: 0,
+            explanationCorrect:
+              "La receta da instrucciones paso a paso, por eso es un texto instructivo o prescriptivo.",
+            explanationIncorrect:
+              "Fijate en si el texto intenta convencer, describir o enseñar qué acciones hay que realizar."
+          },
+          {
+            text: "En una columna de opinión de un diario la intención principal es:",
+            options: [
+              "Ordenar acciones precisas.",
+              "Describir un paisaje.",
+              "Convencer con argumentos.",
+              "Definir un concepto."
+            ],
+            correctIndex: 2,
+            explanationCorrect:
+              "La columna de opinión busca convencer al lector mediante argumentos y ejemplos.",
+            explanationIncorrect:
+              "Pensá qué diferencia a un texto informativo (objetivo) de uno que defiende una postura."
+          }
+        ]
+      },
+      6: {
+        title: "Práctica · Cartilla 6",
+        questions: [
+          {
+            text: "La idea principal de un texto es:",
+            options: [
+              "El detalle menos importante.",
+              "Un ejemplo concreto.",
+              "El núcleo de lo que se quiere comunicar.",
+              "Una opinión secundaria del autor."
+            ],
+            correctIndex: 2,
+            explanationCorrect:
+              "La idea principal es el núcleo del texto, aquello que sintetiza su contenido.",
+            explanationIncorrect:
+              "Diferenciá entre la información central y los ejemplos o detalles que solo la amplían."
+          },
+          {
+            text: "Si en varios párrafos se repite el mismo tema pero se agregan datos nuevos, podemos decir que:",
+            options: [
+              "No hay progresión temática.",
+              "La progresión temática está bien construida.",
+              "El texto es necesariamente incoherente.",
+              "No se puede identificar el tema."
+            ],
+            correctIndex: 1,
+            explanationCorrect:
+              "La progresión temática funciona bien cuando el mismo tema se va desarrollando con información nueva.",
+            explanationIncorrect:
+              "Pensá en cómo avanza la información: si se agrega contenido nuevo relacionado, suele haber buena progresión."
+          },
+          {
+            text: "¿Qué ayuda más a localizar la idea principal de un párrafo?",
+            options: [
+              "Buscar la oración con más comas.",
+              "Buscar la oración con más adjetivos.",
+              "Buscar la oración que mejor sintetiza el contenido.",
+              "Buscar la oración más corta."
+            ],
+            correctIndex: 2,
+            explanationCorrect:
+              "La idea principal suele concentrarse en la oración que resume el sentido del párrafo.",
+            explanationIncorrect:
+              "No se trata de la longitud o la presencia de comas, sino de qué oración resume mejor todo el contenido."
+          }
+        ]
+      },
+      7: {
+        title: "Práctica · Cartilla 7",
+        questions: [
+          {
+            text: "En el grupo nominal «aquellos tres árboles enormes del parque», ¿cuál es el núcleo?",
+            options: [
+              "aquellos",
+              "tres",
+              "árboles",
+              "del parque"
+            ],
+            correctIndex: 2,
+            explanationCorrect:
+              "El núcleo es «árboles», el sustantivo al que se refieren los demás elementos.",
+            explanationIncorrect:
+              "Recordá que el núcleo del grupo nominal suele ser el sustantivo principal."
+          },
+          {
+            text: "En «la casa vieja de mi abuela», ¿qué elemento es un complemento preposicional?",
+            options: [
+              "la",
+              "vieja",
+              "casa",
+              "de mi abuela"
+            ],
+            correctIndex: 3,
+            explanationCorrect:
+              "«de mi abuela» es un grupo preposicional que complementa al sustantivo «casa».",
+            explanationIncorrect:
+              "Identificá la preposición y el conjunto de palabras que forman el complemento."
+          },
+          {
+            text: "En «Mis dos mejores amigos paraguayos», ¿cuál de estas afirmaciones es correcta?",
+            options: [
+              "No hay núcleo.",
+              "El núcleo es «amigos».",
+              "El núcleo es «paraguayos».",
+              "El núcleo es «dos»."
+            ],
+            correctIndex: 1,
+            explanationCorrect:
+              "«amigos» es el sustantivo núcleo del grupo nominal; los demás elementos lo determinan o lo modifican.",
+            explanationIncorrect:
+              "Buscá la palabra que nombra directamente a los seres de los que se habla."
+          }
+        ]
+      },
+      8: {
+        title: "Práctica · Cartilla 8",
+        questions: [
+          {
+            text: "En «El libro de historia universal», ¿qué tipo de complemento es «de historia universal»?",
+            options: [
+              "Aposición",
+              "Complemento directo",
+              "Modificador prepositivo del sustantivo",
+              "Adjunto verbal"
+            ],
+            correctIndex: 2,
+            explanationCorrect:
+              "«de historia universal» es un complemento preposicional que modifica al sustantivo «libro».",
+            explanationIncorrect:
+              "Fijate en la preposición «de» y en que clarifica de qué tipo de libro se trata."
+          },
+          {
+            text: "En «López, mi profesor, explicó el tema», «mi profesor» funciona como:",
+            options: [
+              "Complemento directo",
+              "Aposición explicativa",
+              "Sujeto",
+              "Adverbio"
+            ],
+            correctIndex: 1,
+            explanationCorrect:
+              "«mi profesor» es una aposición que explica o precisa quién es «López».",
+            explanationIncorrect:
+              "Observá que va entre comas y se coloca junto al sustantivo para aclararlo."
+          },
+          {
+            text: "En «una casa grande con jardín», «con jardín» es:",
+            options: [
+              "Un complemento obligatorio del sustantivo.",
+              "Un adjunto que añade información extra.",
+              "El núcleo del grupo nominal.",
+              "Un adverbio de lugar."
+            ],
+            correctIndex: 1,
+            explanationCorrect:
+              "«con jardín» es un adjunto, un complemento no obligatorio que añade información a «casa».",
+            explanationIncorrect:
+              "Pensá si se puede decir simplemente «una casa grande» sin que la estructura se rompa."
+          }
+        ]
+      },
+      9: {
+        title: "Práctica · Cartilla 9",
+        questions: [
+          {
+            text: "¿Cuál es el plural correcto de «lápiz»?",
+            options: [
+              "lápices",
+              "lapices",
+              "lápizs",
+              "lápizces"
+            ],
+            correctIndex: 0,
+            explanationCorrect:
+              "Se elimina la -z y se añade -ces, manteniendo la tilde: lápiz → lápices.",
+            explanationIncorrect:
+              "Recordá la regla de las palabras terminadas en -z al formar el plural."
+          },
+          {
+            text: "«El estudiante / La estudiante» es un caso donde:",
+            options: [
+              "El género solo se marca con -o/-a.",
+              "El sustantivo cambia completamente.",
+              "El sustantivo es invariable y el género lo marca el determinante.",
+              "No existe forma femenina."
+            ],
+            correctIndex: 2,
+            explanationCorrect:
+              "«estudiante» es invariable; el género se marca con el artículo (el/la).",
+            explanationIncorrect:
+              "No todos los sustantivos marcan género con terminaciones distintas; a veces lo hace el determinante."
+          },
+          {
+            text: "¿Cuál de los siguientes es un sustantivo colectivo?",
+            options: [
+              "árboles",
+              "alumnado",
+              "gatos",
+              "casas"
+            ],
+            correctIndex: 1,
+            explanationCorrect:
+              "«alumnado» es colectivo: está en singular, pero se refiere a un grupo de alumnos.",
+            explanationIncorrect:
+              "Diferenciá entre plural (árboles, gatos, casas) y colectivos (gente, alumnado, etc.)."
+          }
+        ]
+      },
+      10: {
+        title: "Práctica · Cartilla 10",
+        questions: [
+          {
+            text: "¿En cuál de estas oraciones la concordancia nominal es correcta?",
+            options: [
+              "Estas casa grande está limpia.",
+              "Este casas grandes está limpia.",
+              "Estas casas grandes están limpias.",
+              "Esta casas grande están limpia."
+            ],
+            correctIndex: 2,
+            explanationCorrect:
+              "«Estas casas grandes están limpias» mantiene la concordancia en femenino plural.",
+            explanationIncorrect:
+              "Comprobá que artículo, sustantivo y adjetivo coincidan en género y número."
+          },
+          {
+            text: "«El profesor y la alumna aplicados» es correcto porque:",
+            options: [
+              "El adjetivo concuerda en singular.",
+              "El adjetivo va al masculino plural al haber dos géneros.",
+              "El adjetivo nunca cambia de género.",
+              "El adjetivo depende solo del último sustantivo."
+            ],
+            correctIndex: 1,
+            explanationCorrect:
+              "Al haber un sustantivo masculino y uno femenino, la concordancia suele hacerse en masculino plural: aplicados.",
+            explanationIncorrect:
+              "Pensá qué pasa con la concordancia cuando hay varios núcleos de distinto género."
+          },
+          {
+            text: "Marca la opción con error de concordancia:",
+            options: [
+              "Aquella niña pequeña.",
+              "Esos libros antiguos.",
+              "Esa problema grave.",
+              "Estas flores hermosas."
+            ],
+            correctIndex: 2,
+            explanationCorrect:
+              "«problema» es masculino; debería ser «ese problema grave».",
+            explanationIncorrect:
+              "Revisa especialmente los sustantivos que terminan en -a pero son masculinos (tema, problema, sistema…)."
+          }
+        ]
+      }
+    };
+
+    let currentCartilla = 1;
+    let currentIndex = 0;
+    let score = 0;
+    let answered = 0;
+    let selectedOption = null;
+
+    const practiceTitle = document.getElementById("practiceTitle");
+    const totalQuestionsEl = document.getElementById("totalQuestions");
+    const currentQuestionEl = document.getElementById("currentQuestion");
+    const questionTextEl = document.getElementById("questionText");
+    const optionsContainer = document.getElementById("optionsContainer");
+    const feedbackEl = document.getElementById("feedback");
+    const reasoningInput = document.getElementById("reasoningInput");
+    const progressFill = document.getElementById("progressFill");
+    const nextBtn = document.getElementById("nextBtn");
+    const resetBtn = document.getElementById("resetBtn");
+    const scorePill = document.getElementById("scorePill");
+
+    function loadCartilla(cartilla) {
+      currentCartilla = cartilla;
+      currentIndex = 0;
+      score = 0;
+      answered = 0;
+      practiceTitle.textContent = quizzes[cartilla].title;
+      totalQuestionsEl.textContent = quizzes[cartilla].questions.length;
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+      const qData = quizzes[currentCartilla];
+      const q = qData.questions[currentIndex];
+      currentQuestionEl.textContent = currentIndex + 1;
+      questionTextEl.textContent = q.text;
+      optionsContainer.innerHTML = "";
+      feedbackEl.textContent = "";
+      feedbackEl.className = "feedback";
+      reasoningInput.value = "";
+      selectedOption = null;
+
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "option-btn";
+        btn.dataset.index = idx;
+
+        const badge = document.createElement("span");
+        badge.className = "badge";
+        badge.textContent = String.fromCharCode(65 + idx);
+
+        const label = document.createElement("span");
+        label.className = "label";
+        label.textContent = opt;
+
+        btn.appendChild(badge);
+        btn.appendChild(label);
+
+        btn.addEventListener("click", () => handleOptionClick(idx, btn));
+        optionsContainer.appendChild(btn);
+      });
+
+      updateProgress();
+      updateScorePill();
+      nextBtn.textContent = "Comprobar y siguiente →";
+      nextBtn.disabled = false;
+      nextBtn.style.opacity = "1";
+    }
+
+    function handleOptionClick(idx, btn) {
+      if (feedbackEl.textContent) return;
+      selectedOption = idx;
+      const buttons = optionsContainer.querySelectorAll(".option-btn");
+      buttons.forEach((b) => b.classList.remove("selected"));
+      btn.classList.add("selected");
+    }
+
+    function checkAnswer() {
+      const qData = quizzes[currentCartilla];
+      const q = qData.questions[currentIndex];
+      const buttons = optionsContainer.querySelectorAll(".option-btn");
+
+      if (selectedOption === null) {
+        feedbackEl.textContent = "Elegí una opción antes de continuar.";
+        feedbackEl.className = "feedback incorrect";
+        return false;
+      }
+
+      answered++;
+      buttons.forEach((btn, idx) => {
+        if (idx === q.correctIndex) {
+          btn.classList.add("correct");
+        }
+        if (idx === selectedOption && idx !== q.correctIndex) {
+          btn.classList.add("incorrect");
+        }
+      });
+
+      if (selectedOption === q.correctIndex) {
+        score++;
+        feedbackEl.textContent = q.explanationCorrect;
+        feedbackEl.className = "feedback correct";
+      } else {
+        feedbackEl.textContent = q.explanationIncorrect;
+        feedbackEl.className = "feedback incorrect";
+      }
+
+      updateScorePill();
+      return true;
+    }
+
+    function updateProgress() {
+      const qData = quizzes[currentCartilla];
+      const progress = (currentIndex / qData.questions.length) * 100;
+      progressFill.style.width = `${progress}%`;
+    }
+
+    function updateScorePill() {
+      scorePill.innerHTML = `Puntaje: <strong>${score}</strong> / ${answered}`;
+    }
+
+    nextBtn.addEventListener("click", () => {
+      const wasChecked = checkAnswer();
+      if (!wasChecked) return;
+
+      const qData = quizzes[currentCartilla];
+      if (currentIndex < qData.questions.length - 1) {
+        currentIndex++;
+        setTimeout(renderQuestion, 500);
+      } else {
+        progressFill.style.width = "100%";
+        nextBtn.textContent = "Cartilla completada";
+        nextBtn.disabled = true;
+        nextBtn.style.opacity = "0.7";
+      }
+    });
+
+    resetBtn.addEventListener("click", () => {
+      currentIndex = 0;
+      score = 0;
+      answered = 0;
+      renderQuestion();
+    });
+
+    // Navegación por pestañas
+    const tabButtons = document.querySelectorAll(".tab-btn");
+    const cartillaSections = document.querySelectorAll(".cartilla-section");
+
+    tabButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const cartilla = parseInt(btn.dataset.cartilla, 10);
+        tabButtons.forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        cartillaSections.forEach((sec) => {
+          if (parseInt(sec.dataset.cartilla, 10) === cartilla) {
+            sec.classList.add("active");
+          } else {
+            sec.classList.remove("active");
+          }
+        });
+
+        loadCartilla(cartilla);
+      });
+    });
+
+    // Inicialización
+    loadCartilla(1);
+  </script>
+</body>
+</html>
