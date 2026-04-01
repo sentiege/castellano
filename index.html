@@ -6,18 +6,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     :root {
-      --bg: #050816;
-      --bg-soft: #0b1020;
-      --card: #111827;
-      --accent: #22c55e;
-      --accent-soft: rgba(34, 197, 94, 0.15);
-      --accent-strong: #4ade80;
-      --danger: #f97373;
-      --text: #e5e7eb;
-      --muted: #9ca3af;
-      --border-soft: rgba(148, 163, 184, 0.35);
-      --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.85);
-      --radius-lg: 18px;
+      --bg: #f3f4f6;
+      --bg-alt: #e5e7eb;
+      --card: #ffffff;
+      --accent: #5cb85c;
+      --accent-soft: rgba(92, 184, 92, 0.09);
+      --accent-strong: #3d9b3d;
+      --accent-blue: #337ab7;
+      --danger: #e11d48;
+      --text: #111827;
+      --muted: #6b7280;
+      --border-soft: #d1d5db;
+      --shadow-soft: 0 8px 24px rgba(15, 23, 42, 0.08);
+      --radius-lg: 16px;
       --radius-full: 999px;
       --transition-fast: 0.18s ease-out;
       --transition-med: 0.28s ease-out;
@@ -30,25 +31,26 @@
     }
 
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
-        "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #1f2937 0, #020617 42%, #000 100%);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background: linear-gradient(180deg, #f9fafb 0, #edf2ff 45%, #e5f7ff 100%);
       color: var(--text);
       min-height: 100vh;
       display: flex;
       align-items: stretch;
       justify-content: center;
-      padding: 24px;
+      padding: 18px;
     }
 
     .app-shell {
       width: 100%;
       max-width: 1180px;
-      background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(2, 6, 23, 0.98));
-      border-radius: 28px;
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      box-shadow: 0 32px 80px rgba(15, 23, 42, 0.9);
-      padding: 18px 20px 22px;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+      padding: 16px 18px 20px;
       display: grid;
       grid-template-rows: auto auto minmax(0, 1fr);
       gap: 12px;
@@ -61,8 +63,8 @@
       position: absolute;
       inset: -40%;
       background:
-        radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.045), transparent 55%),
-        radial-gradient(circle at 100% 0, rgba(52, 211, 153, 0.06), transparent 50%);
+        radial-gradient(circle at 0 0, rgba(51, 122, 183, 0.08), transparent 55%),
+        radial-gradient(circle at 100% 0, rgba(92, 184, 92, 0.10), transparent 50%);
       opacity: 0.9;
       pointer-events: none;
     }
@@ -89,27 +91,26 @@
     .logo-badge {
       width: 38px;
       height: 38px;
-      border-radius: 18px;
-      background: radial-gradient(circle at 30% 20%, #4ade80, #22c55e 40%, #16a34a 75%);
+      border-radius: 12px;
+      background: linear-gradient(135deg, #5cb85c, #3d9b3d);
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.6),
-        0 18px 35px rgba(22, 163, 74, 0.75);
+      box-shadow: 0 10px 22px rgba(16, 185, 129, 0.45);
       color: #f9fafb;
       font-weight: 700;
       font-size: 1.1rem;
     }
 
     .title-block h1 {
-      font-size: 1.15rem;
-      letter-spacing: 0.06em;
+      font-size: 1.2rem;
+      letter-spacing: 0.04em;
       text-transform: uppercase;
-      color: #e5e7eb;
+      color: #111827;
     }
 
     .title-block p {
-      font-size: 0.78rem;
+      font-size: 0.8rem;
       color: var(--muted);
       margin-top: 2px;
     }
@@ -120,10 +121,10 @@
       gap: 8px;
       padding: 6px 12px;
       border-radius: 999px;
-      background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(15, 118, 110, 0.6));
-      border: 1px solid rgba(45, 212, 191, 0.5);
-      font-size: 0.76rem;
-      color: #ccfbf1;
+      background: #ecfdf5;
+      border: 1px solid #bbf7d0;
+      font-size: 0.78rem;
+      color: #166534;
       white-space: nowrap;
     }
 
@@ -132,7 +133,7 @@
       height: 8px;
       border-radius: 999px;
       background: #22c55e;
-      box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.3);
+      box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.2);
     }
 
     /* Tabs */
@@ -147,17 +148,19 @@
     .tab-btn {
       flex-shrink: 0;
       border-radius: 999px;
-      border: 1px solid rgba(55, 65, 81, 0.85);
-      background: rgba(15, 23, 42, 0.9);
-      color: var(--muted);
+      border: 1px solid #d4d4d8;
+      background: #f9fafb;
+      color: #4b5563;
       font-size: 0.76rem;
       padding: 6px 10px;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      transition: background var(--transition-fast), border-color var(--transition-fast),
-        color var(--transition-fast), transform var(--transition-fast),
+      transition: background var(--transition-fast),
+        border-color var(--transition-fast),
+        color var(--transition-fast),
+        transform var(--transition-fast),
         box-shadow var(--transition-fast);
     }
 
@@ -165,31 +168,31 @@
       width: 18px;
       height: 18px;
       border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.9);
+      border: 1px solid #d4d4d8;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       font-size: 0.7rem;
-      color: var(--muted);
+      color: #6b7280;
     }
 
     .tab-btn.active {
-      border-color: rgba(34, 197, 94, 0.95);
-      background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(22, 163, 74, 0.15));
-      color: #e5e7eb;
-      box-shadow: 0 10px 24px rgba(22, 163, 74, 0.55);
+      border-color: #5cb85c;
+      background: #ecfdf5;
+      color: #14532d;
+      box-shadow: 0 6px 16px rgba(22, 163, 74, 0.25);
       transform: translateY(-1px);
     }
 
     .tab-btn.active span.index {
-      border-color: rgba(34, 197, 94, 0.95);
-      color: #bbf7d0;
+      border-color: #5cb85c;
+      color: #14532d;
     }
 
     /* Layout interior */
     .content-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.4fr);
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.3fr);
       gap: 18px;
       min-height: 0;
     }
@@ -198,24 +201,13 @@
     .practice-card {
       border-radius: var(--radius-lg);
       border: 1px solid var(--border-soft);
+      background: var(--card);
       box-shadow: var(--shadow-soft);
-      padding: 16px;
+      padding: 14px 14px 16px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
       min-height: 0;
-    }
-
-    .card {
-      background: radial-gradient(circle at top left, rgba(34, 197, 94, 0.16), transparent 55%),
-        radial-gradient(circle at bottom right, rgba(59, 130, 246, 0.13), transparent 52%),
-        linear-gradient(145deg, rgba(15, 23, 42, 0.97), rgba(2, 6, 23, 0.98));
-    }
-
-    .practice-card {
-      background: radial-gradient(circle at top right, rgba(56, 189, 248, 0.16), transparent 55%),
-        radial-gradient(circle at bottom left, rgba(34, 197, 94, 0.13), transparent 50%),
-        linear-gradient(155deg, rgba(15, 23, 42, 0.96), rgba(2, 6, 23, 0.99));
     }
 
     .card-header,
@@ -225,7 +217,7 @@
       justify-content: space-between;
       gap: 10px;
       padding-bottom: 4px;
-      border-bottom: 1px solid rgba(148, 163, 184, 0.35);
+      border-bottom: 1px solid #e5e7eb;
     }
 
     .card-header h2,
@@ -233,49 +225,49 @@
       font-size: 0.98rem;
       letter-spacing: 0.04em;
       text-transform: uppercase;
-      color: #e5e7eb;
+      color: #111827;
     }
 
     .pill {
-      padding: 4px 9px;
+      padding: 3px 9px;
       border-radius: 999px;
       font-size: 0.72rem;
       letter-spacing: 0.04em;
       text-transform: uppercase;
-      border: 1px solid rgba(148, 163, 184, 0.6);
-      color: var(--muted);
-      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid #e5e7eb;
+      color: #6b7280;
+      background: #f9fafb;
     }
 
     .pill.accent {
-      border-color: rgba(34, 197, 94, 0.7);
-      color: #bbf7d0;
-      background: var(--accent-soft);
+      border-color: rgba(92, 184, 92, 0.8);
+      color: #14532d;
+      background: #e0f7ea;
     }
 
     .card-section {
-      background: rgba(15, 23, 42, 0.88);
-      border-radius: 14px;
+      background: #f9fafb;
+      border-radius: 12px;
       padding: 9px 11px;
-      border: 1px solid rgba(31, 41, 55, 0.85);
+      border: 1px solid #e5e7eb;
     }
 
     .section-label {
       font-size: 0.72rem;
-      letter-spacing: 0.16em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: #a5b4fc;
+      color: #6b7280;
       margin-bottom: 4px;
     }
 
     .card-section h3 {
-      font-size: 0.94rem;
+      font-size: 0.95rem;
       margin-bottom: 4px;
-      color: #e5e7eb;
+      color: #111827;
     }
 
     .card-section p {
-      font-size: 0.82rem;
+      font-size: 0.84rem;
       line-height: 1.6;
       color: var(--muted);
     }
@@ -291,9 +283,9 @@
       font-size: 0.75rem;
       padding: 4px 9px;
       border-radius: 999px;
-      background: rgba(15, 23, 42, 0.95);
-      border: 1px solid rgba(55, 65, 81, 0.9);
-      color: #e5e7eb;
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      color: #374151;
     }
 
     .chip strong {
@@ -302,41 +294,54 @@
 
     .examples-list {
       margin-top: 6px;
-      list-style: none;
-      font-size: 0.8rem;
+      list-style: disc;
+      padding-left: 18px;
+      font-size: 0.82rem;
       color: var(--muted);
     }
 
     .examples-list li {
-      position: relative;
-      padding-left: 16px;
       margin-bottom: 4px;
     }
 
-    .examples-list li::before {
-      content: "";
-      position: absolute;
-      left: 4px;
-      top: 0.6em;
-      width: 6px;
-      height: 6px;
-      border-radius: 999px;
-      background: var(--accent);
-    }
-
     .highlight-box {
-      margin-top: 4px;
+      margin-top: 6px;
       padding: 7px 9px;
       border-radius: 10px;
-      border: 1px dashed rgba(148, 163, 184, 0.7);
-      background: radial-gradient(circle at 0 0, rgba(34, 197, 94, 0.15), transparent 60%);
+      border: 1px dashed #cbd5f5;
+      background: #eff6ff;
+      font-size: 0.8rem;
+      color: #1d4ed8;
+    }
+
+    /* Audio button */
+    .audio-btn {
+      border: none;
+      border-radius: 999px;
+      background: #eef2ff;
+      color: #4b5563;
       font-size: 0.78rem;
-      color: #e5e7eb;
+      padding: 2px 7px;
+      cursor: pointer;
+      margin-left: 6px;
+      border: 1px solid #c7d2fe;
+      transition: background 0.18s ease-out, transform 0.18s ease-out,
+                  box-shadow 0.18s ease-out, border-color 0.18s ease-out;
+    }
+    .audio-btn:hover {
+      background: #e0f2fe;
+      border-color: #60a5fa;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+    .audio-btn:active {
+      transform: translateY(0);
+      box-shadow: none;
     }
 
     /* Practice */
     .step-indicator {
-      font-size: 0.75rem;
+      font-size: 0.78rem;
       color: var(--muted);
     }
 
@@ -344,15 +349,14 @@
       width: 100%;
       height: 6px;
       border-radius: 999px;
-      background: rgba(15, 23, 42, 0.95);
-      border: 1px solid rgba(55, 65, 81, 0.8);
+      background: #e5e7eb;
       overflow: hidden;
     }
 
     .progress-fill {
       height: 100%;
       width: 0%;
-      background: linear-gradient(90deg, var(--accent), #22d3ee);
+      background: linear-gradient(90deg, #5cb85c, #337ab7);
       border-radius: 999px;
       transition: width var(--transition-med);
     }
@@ -361,21 +365,21 @@
       margin-top: 4px;
       padding: 10px 10px 8px;
       border-radius: 12px;
-      border: 1px solid rgba(31, 41, 55, 0.95);
-      background: rgba(15, 23, 42, 0.94);
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
     }
 
     .question-label {
-      font-size: 0.74rem;
+      font-size: 0.76rem;
       text-transform: uppercase;
-      letter-spacing: 0.14em;
-      color: #a5b4fc;
+      letter-spacing: 0.12em;
+      color: #6b7280;
       margin-bottom: 4px;
     }
 
     .question-text {
       font-size: 0.9rem;
-      color: #e5e7eb;
+      color: #111827;
       line-height: 1.5;
     }
 
@@ -387,11 +391,11 @@
     }
 
     .option-btn {
-      border-radius: 12px;
-      border: 1px solid rgba(55, 65, 81, 0.9);
-      background: linear-gradient(135deg, rgba(15, 23, 42, 0.97), rgba(15, 23, 42, 0.9));
-      color: var(--text);
-      font-size: 0.8rem;
+      border-radius: 10px;
+      border: 1px solid #e5e7eb;
+      background: #ffffff;
+      color: #111827;
+      font-size: 0.82rem;
       padding: 7px 9px;
       text-align: left;
       cursor: pointer;
@@ -411,9 +415,9 @@
       width: 18px;
       height: 18px;
       border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.8);
+      border: 1px solid #d4d4d8;
       font-size: 0.7rem;
-      color: var(--muted);
+      color: #6b7280;
       flex-shrink: 0;
       margin-top: 1px;
     }
@@ -423,63 +427,64 @@
     }
 
     .option-btn:hover {
-      border-color: rgba(59, 130, 246, 0.85);
-      background: radial-gradient(circle at top left, rgba(37, 99, 235, 0.35), rgba(15, 23, 42, 0.98));
+      border-color: #60a5fa;
+      background: #eff6ff;
       transform: translateY(-1px);
-      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.9);
+      box-shadow: 0 6px 16px rgba(148, 163, 184, 0.35);
     }
 
     .option-btn.selected {
-      border-color: var(--accent-strong);
-      background: radial-gradient(circle at 0 0, rgba(34, 197, 94, 0.35), rgba(15, 23, 42, 0.96));
-      box-shadow: 0 12px 28px rgba(22, 163, 74, 0.65);
+      border-color: var(--accent);
+      background: #ecfdf5;
+      box-shadow: 0 6px 16px rgba(34, 197, 94, 0.3);
     }
 
     .option-btn.correct {
-      border-color: var(--accent-strong);
-      background: radial-gradient(circle at 0 0, rgba(34, 197, 94, 0.35), rgba(15, 23, 42, 0.96));
+      border-color: var(--accent);
+      background: #ecfdf5;
     }
 
     .option-btn.incorrect {
-      border-color: rgba(248, 113, 113, 0.9);
-      background: radial-gradient(circle at 0 0, rgba(248, 113, 113, 0.3), rgba(15, 23, 42, 0.96));
+      border-color: #f97373;
+      background: #fee2e2;
     }
 
     .reasoning-block {
       margin-top: 10px;
       padding: 8px 9px;
       border-radius: 10px;
-      border: 1px solid rgba(55, 65, 81, 0.9);
-      background: radial-gradient(circle at 0 0, rgba(15, 118, 110, 0.28), rgba(15, 23, 42, 0.95));
+      border: 1px solid #e5e7eb;
+      background: #f3f4ff;
     }
 
     .reasoning-label {
-      font-size: 0.75rem;
+      font-size: 0.76rem;
       text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: #67e8f9;
+      letter-spacing: 0.1em;
+      color: #4b5563;
       margin-bottom: 4px;
     }
 
     .reasoning-input {
       width: 100%;
-      border-radius: 10px;
-      border: 1px solid rgba(55, 65, 81, 0.9);
-      background: rgba(15, 23, 42, 0.96);
-      color: var(--text);
-      font-size: 0.78rem;
+      border-radius: 8px;
+      border: 1px solid #d4d4d8;
+      background: #ffffff;
+      color: #111827;
+      font-size: 0.8rem;
       padding: 7px 8px;
       resize: none;
       min-height: 60px;
       outline: none;
-      transition: border-color var(--transition-fast), box-shadow var(--transition-fast),
+      transition: border-color var(--transition-fast),
+        box-shadow var(--transition-fast),
         background var(--transition-fast);
     }
 
     .reasoning-input:focus {
-      border-color: rgba(45, 212, 191, 0.9);
-      box-shadow: 0 0 0 1px rgba(45, 212, 191, 0.6);
-      background: rgba(15, 23, 42, 0.99);
+      border-color: #5cb85c;
+      box-shadow: 0 0 0 1px rgba(92, 184, 92, 0.5);
+      background: #ffffff;
     }
 
     .feedback {
@@ -489,7 +494,7 @@
     }
 
     .feedback.correct {
-      color: #bbf7d0;
+      color: #166534;
     }
 
     .feedback.incorrect {
@@ -506,29 +511,31 @@
 
     .btn {
       border-radius: var(--radius-full);
-      border: 1px solid rgba(148, 163, 184, 0.7);
+      border: 1px solid #d4d4d8;
       padding: 7px 14px;
       font-size: 0.8rem;
-      background: rgba(15, 23, 42, 0.96);
-      color: var(--text);
+      background: #f9fafb;
+      color: #111827;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      transition: background var(--transition-fast), border-color var(--transition-fast),
-        transform var(--transition-fast), box-shadow var(--transition-fast);
+      transition: background var(--transition-fast),
+        border-color var(--transition-fast),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
     }
 
     .btn-primary {
-      border-color: rgba(34, 197, 94, 0.92);
-      background: linear-gradient(135deg, rgba(16, 185, 129, 0.95), rgba(22, 163, 74, 0.98));
-      color: #ecfdf5;
-      box-shadow: 0 14px 30px rgba(22, 163, 74, 0.7);
+      border-color: #5cb85c;
+      background: #5cb85c;
+      color: #f9fafb;
+      box-shadow: 0 8px 18px rgba(16, 185, 129, 0.5);
     }
 
     .btn-primary:hover {
       transform: translateY(-1px);
-      box-shadow: 0 18px 40px rgba(22, 163, 74, 0.9);
+      box-shadow: 0 10px 24px rgba(16, 185, 129, 0.6);
     }
 
     .btn-ghost {
@@ -536,9 +543,9 @@
     }
 
     .btn-ghost:hover {
-      background: rgba(15, 23, 42, 0.9);
+      background: #f3f4f6;
       transform: translateY(-1px);
-      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.9);
+      box-shadow: 0 4px 12px rgba(148, 163, 184, 0.35);
     }
 
     .score-pill {
@@ -566,11 +573,12 @@
 
     @media (max-width: 640px) {
       body {
-        padding: 12px;
+        padding: 10px;
       }
 
       .app-shell {
-        border-radius: 22px;
+        border-radius: 16px;
+        padding: 12px 12px 16px;
       }
 
       .title-block h1 {
@@ -637,7 +645,7 @@
       </button>
     </div>
 
-    <!-- Secciones de cartillas -->
+    <!-- Secciones de cartillas + práctica -->
     <div class="content-grid">
 
       <!-- CARTILLA 1 -->
@@ -650,17 +658,23 @@
 
           <div class="card-section">
             <div class="section-label">Bloque A · Esquema</div>
-            <h3>¿Qué es la comunicación?</h3>
+            <h3>
+              ¿Qué es la comunicación?
+              <button class="audio-btn" type="button"
+                data-tts="La comunicación es el proceso en el que un emisor envía un mensaje a un receptor usando un código, a través de un canal, dentro de un contexto determinado.">
+                🔊
+              </button>
+            </h3>
             <p>
-              La <strong>comunicación</strong> es el proceso en el que un emisor envía un
-              mensaje a un receptor usando un código (por ejemplo, la lengua) a través
-              de un canal, dentro de un contexto determinado.[web:23][web:36]
+              La comunicación es el proceso en el que un emisor envía un
+              mensaje a un receptor usando un código (por ejemplo, la lengua)
+              a través de un canal, dentro de un contexto determinado.
             </p>
             <div class="chips-row">
               <span class="chip"><strong>Emisor</strong> · quien produce el mensaje</span>
               <span class="chip"><strong>Receptor</strong> · quien lo recibe</span>
               <span class="chip"><strong>Mensaje</strong> · lo que se comunica</span>
-              <span class="chip"><strong>Código</strong> · lengua/signos usados</span>
+              <span class="chip"><strong>Código</strong> · lengua o signos</span>
               <span class="chip"><strong>Canal</strong> · medio (voz, chat…)</span>
               <span class="chip"><strong>Contexto</strong> · situación</span>
             </div>
@@ -668,46 +682,52 @@
 
           <div class="card-section">
             <div class="section-label">Bloque B · Funciones</div>
-            <h3>Funciones del lenguaje (Jakobson)</h3>
+            <h3>
+              Funciones del lenguaje
+              <button class="audio-btn" type="button"
+                data-tts="Funciones del lenguaje: referencial, emotiva, apelativa, fática, poética y metalingüística.">
+                🔊
+              </button>
+            </h3>
             <ul class="examples-list">
               <li>
                 <strong>Referencial</strong>: informa sobre la realidad de forma objetiva.
-                Ej.: «Hoy hace 30 grados».[web:24][web:30][web:36]
+                Ejemplo: «Hoy hace 30 grados».
               </li>
               <li>
                 <strong>Emotiva</strong>: expresa sentimientos del emisor.
-                Ej.: «Estoy nervioso por el examen».[web:27][web:30][web:36]
+                Ejemplo: «Estoy nervioso por el examen».
               </li>
               <li>
                 <strong>Apelativa</strong>: intenta influir en el receptor.
-                Ej.: «Estudia este tema ahora mismo».[web:27][web:30][web:36]
+                Ejemplo: «Estudia este tema ahora mismo».
               </li>
               <li>
                 <strong>Fática</strong>: mantiene o comprueba el canal.
-                Ej.: «¿Me escuchás?».[web:27][web:30][web:36]
+                Ejemplo: «¿Me escuchás?».
               </li>
               <li>
                 <strong>Poética</strong>: se centra en la forma del mensaje.
-                Ej.: juegos de palabras, poemas.[web:27][web:30][web:36]
+                Ejemplo: juegos de palabras, poemas.
               </li>
               <li>
                 <strong>Metalingüística</strong>: habla del propio lenguaje.
-                Ej.: «‘Sustantivo’ es una palabra que nombra seres o cosas».[web:27][web:30][web:36]
+                Ejemplo: «Sustantivo es una palabra que nombra seres o cosas».
               </li>
             </ul>
             <div class="highlight-box">
-              En un mismo enunciado puede aparecer más de una función, pero suele haber
-              una que predomina según la intención del emisor.[web:30][web:36]
+              En un mismo enunciado puede aparecer más de una función, pero
+              suele haber una que predomina según la intención del emisor.
             </div>
           </div>
 
           <div class="card-section">
-            <div class="section-label">Bloque C · Regla en 1 línea</div>
+            <div class="section-label">Bloque C · Regla rápida</div>
             <p>
-              Para identificar la función del lenguaje, fijate en
-              cuál es la <strong>intención</strong> principal del emisor:
-              informar, expresar, convencer, mantener el contacto,
-              jugar con las palabras o explicar el propio lenguaje.[web:30][web:36]
+              Para identificar la función del lenguaje, fijate en cuál es la
+              intención principal del emisor: informar, expresar, convencer,
+              mantener el contacto, jugar con las palabras o explicar el propio
+              lenguaje.
             </p>
           </div>
         </div>
@@ -723,41 +743,48 @@
 
           <div class="card-section">
             <div class="section-label">Bloque A · Esquema</div>
-            <h3>Monosílabas y polisílabas</h3>
+            <h3>
+              Monosílabas y polisílabas
+              <button class="audio-btn" type="button"
+                data-tts="Una palabra monosílaba tiene una sola sílaba y por regla general no lleva tilde. Las polisílabas se acentúan según si son agudas, graves o esdrújulas.">
+                🔊
+              </button>
+            </h3>
             <p>
-              Una palabra <strong>monosílaba</strong> tiene una sola sílaba (fue, dio, sol)
-              y, por regla general, no lleva tilde.[web:31][web:34][web:40]
-              Las <strong>polisílabas</strong> tienen dos o más sílabas
-              y se acentúan según si son agudas, graves o esdrújulas.[web:34][web:40][web:48]
+              Una palabra monosílaba tiene una sola sílaba (fue, dio, sol)
+              y, por regla general, no lleva tilde.
+              Las polisílabas tienen dos o más sílabas y se acentúan según
+              si son agudas, graves o esdrújulas.
             </p>
           </div>
 
           <div class="card-section">
             <div class="section-label">Bloque B · Tilde diacrítica</div>
-            <h3>¿Cuándo se usa la tilde diacrítica?</h3>
+            <h3>Tilde diacrítica en monosílabos</h3>
             <p>
-              La tilde diacrítica distingue palabras que se escriben igual pero tienen
-              significado o función diferente.[web:28][web:31][web:37]
+              La tilde diacrítica distingue palabras que se escriben igual
+              pero tienen significado o función diferente.
             </p>
             <ul class="examples-list">
-              <li><strong>el</strong> (artículo) / <strong>él</strong> (pronombre personal).</li>
-              <li><strong>tu</strong> (adjetivo posesivo) / <strong>tú</strong> (pronombre).</li>
-              <li><strong>mi</strong> (posesivo) / <strong>mí</strong> (pronombre tónico).</li>
-              <li><strong>mas</strong> (pero) / <strong>más</strong> (cantidad).</li>
-              <li><strong>de</strong> (preposición) / <strong>dé</strong> (verbo dar).[web:28][web:31]</li>
+              <li>el (artículo) / él (pronombre personal).</li>
+              <li>tu (posesivo) / tú (pronombre).</li>
+              <li>mi (posesivo) / mí (pronombre tónico).</li>
+              <li>mas (pero) / más (cantidad).</li>
+              <li>de (preposición) / dé (verbo dar).</li>
             </ul>
             <div class="highlight-box">
-              En general, la forma con tilde suele ser pronombre, verbo o adverbio tónico,
-              mientras que la forma sin tilde es determinante, preposición o conjunción.[web:28][web:31]
+              En general, la forma con tilde suele ser pronombre, verbo o
+              adverbio tónico, mientras que la forma sin tilde es
+              determinante, preposición o conjunción.
             </div>
           </div>
 
           <div class="card-section">
-            <div class="section-label">Bloque C · Regla en 1 línea</div>
+            <div class="section-label">Bloque C · Regla rápida</div>
             <p>
-              Primero fijate si la palabra es monosílaba o polisílaba; luego aplicá las
-              reglas de agudas, graves y esdrújulas, y usá la tilde diacrítica sólo
-              cuando cambie el significado o la función.[web:34][web:37][web:40][web:48]
+              Primero fijate si la palabra es monosílaba o polisílaba; luego
+              aplicá las reglas de agudas, graves y esdrújulas, y usá la
+              tilde diacrítica solo cuando cambie el significado o la función.
             </p>
           </div>
         </div>
@@ -772,42 +799,40 @@
           </div>
           <div class="card-section">
             <div class="section-label">Bloque A · Esquema</div>
-            <h3>Palabras compuestas sin guion</h3>
+            <h3>Compuestas sin guion</h3>
             <p>
-              En las compuestas sin guion, la tilde la decide el <strong>último</strong>
-              elemento, y las tildes de los anteriores se pierden.[web:38][web:39][web:41][web:48]
+              En las palabras compuestas sin guion, la tilde la decide el
+              último elemento, y las tildes de los anteriores se pierden.
             </p>
             <ul class="examples-list">
-              <li><em>balón</em> + <em>cesto</em> → <strong>baloncesto</strong> (grave sin tilde).[web:41]</li>
-              <li><em>décimo</em> + <em>tercero</em> → <strong>decimotercero</strong>.[web:41]</li>
-              <li>
-                Los adverbios terminados en <strong>-mente</strong> conservan la tilde del adjetivo:
-                <em>fácil</em> → <strong>fácilmente</strong>.[web:41][web:48][web:51]
-              </li>
+              <li>balón + cesto → baloncesto (grave sin tilde).</li>
+              <li>décimo + tercero → decimotercero.</li>
+              <li>fácil → fácilmente (los adverbios en -mente conservan la tilde del adjetivo).</li>
             </ul>
           </div>
           <div class="card-section">
             <div class="section-label">Bloque B · Con guion</div>
             <h3>Compuestas con guion</h3>
             <p>
-              En las compuestas con guion, cada parte mantiene su tilde como si fueran
-              palabras independientes.[web:38][web:41][web:48]
+              En las compuestas con guion, cada parte mantiene su tilde como
+              si fueran palabras independientes.
             </p>
             <ul class="examples-list">
-              <li><strong>teórico-práctico</strong>.</li>
-              <li><strong>histórico-cultural</strong>.</li>
+              <li>teórico-práctico.</li>
+              <li>histórico-cultural.</li>
             </ul>
             <div class="highlight-box">
-              Preguntate siempre si la compuesta se escribe en una sola palabra, con
-              guion o separada; eso cambia totalmente la acentuación.[web:38][web:41][web:48][web:51]
+              Preguntate siempre si la compuesta se escribe en una sola
+              palabra, con guion o separada; eso cambia totalmente la
+              acentuación.
             </div>
           </div>
           <div class="card-section">
-            <div class="section-label">Bloque C · Regla en 1 línea</div>
+            <div class="section-label">Bloque C · Regla rápida</div>
             <p>
-              Si la palabra compuesta va unida, mirá sólo el último elemento para
-              decidir la tilde; si va con guion, cada palabra sigue sus propias reglas
-              de acentuación.[web:38][web:41][web:48][web:51]
+              Si la palabra compuesta va unida, mirá solo el último elemento
+              para decidir la tilde; si va con guion, cada palabra sigue sus
+              propias reglas de acentuación.
             </p>
           </div>
         </div>
@@ -824,34 +849,34 @@
             <div class="section-label">Bloque A · Esquema</div>
             <h3>Doble acentuación gráfica</h3>
             <p>
-              Algunas palabras admiten dos acentuaciones consideradas correctas
-              (por ejemplo, con y sin tilde), normalmente por variación de uso en
-              distintos países o registros.[web:40][web:48]
+              Algunas palabras admiten dos acentuaciones consideradas
+              correctas, normalmente por variación de uso en distintos
+              países o registros.
             </p>
             <ul class="examples-list">
-              <li><strong>video</strong> / <strong>vídeo</strong>.</li>
-              <li><strong>periodo</strong> / <strong>período</strong>.</li>
-              <li><strong>cardiaco</strong> / <strong>cardíaco</strong>.</li>
+              <li>video / vídeo.</li>
+              <li>periodo / período.</li>
+              <li>cardiaco / cardíaco.</li>
             </ul>
           </div>
           <div class="card-section">
             <div class="section-label">Bloque B · Idea clave</div>
             <p>
-              La norma admite ambas formas, aunque una suele ser más frecuente
-              en ciertos países o ámbitos; es importante ser consistente en
-              un mismo texto.[web:40][web:48]
+              La norma admite ambas formas, aunque una suele ser más
+              frecuente en ciertos países o ámbitos; es importante ser
+              consistente en un mismo texto.
             </p>
             <div class="highlight-box">
-              Consultar el diccionario o la Ortografía de la RAE ayuda a confirmar si
-              una variante está aceptada.[web:40][web:48]
+              Consultar el diccionario o una ortografía actualizada ayuda a
+              confirmar si una variante está aceptada.
             </div>
           </div>
           <div class="card-section">
-            <div class="section-label">Bloque C · Regla en 1 línea</div>
+            <div class="section-label">Bloque C · Regla rápida</div>
             <p>
-              Cuando haya doble acentuación válida, elegí una forma y mantenela en
-              todo el texto, salvo que tu profesor o institución indiquen una
-              preferencia concreta.[web:40][web:48]
+              Cuando haya doble acentuación válida, elegí una forma y
+              mantenela en todo el texto, salvo que tu profesor o institución
+              indiquen una preferencia concreta.
             </p>
           </div>
         </div>
@@ -872,27 +897,26 @@
               <li><strong>Descriptivo</strong>: detalla características de algo.</li>
               <li><strong>Expositivo</strong>: explica conceptos de forma objetiva.</li>
               <li><strong>Argumentativo</strong>: defiende opiniones con razones.</li>
-              <li><strong>Instructivo</strong>: da órdenes o instrucciones.[web:43][web:46][web:49][web:52]</li>
+              <li><strong>Instructivo</strong>: da órdenes o instrucciones.</li>
             </ul>
           </div>
           <div class="card-section">
             <div class="section-label">Bloque B · Contexto e intención</div>
             <p>
-              El <strong>contexto</strong> (dónde, cuándo, para quién) y la
-              <strong>intención</strong> del emisor influyen en el tipo de texto y
-              en cómo organiza el mensaje.[web:43][web:49][web:52]
+              El contexto (dónde, cuándo, para quién) y la intención del
+              emisor influyen en el tipo de texto y en cómo organiza el mensaje.
             </p>
             <div class="highlight-box">
-              Preguntate siempre: «¿qué quiere lograr el autor con este texto?»:
-              informar, convencer, emocionar, enseñar, ordenar, etc.[web:43][web:49][web:52]
+              Preguntate siempre: «¿qué quiere lograr el autor con este
+              texto?»: informar, convencer, emocionar, enseñar, ordenar, etc.
             </div>
           </div>
           <div class="card-section">
-            <div class="section-label">Bloque C · Regla en 1 línea</div>
+            <div class="section-label">Bloque C · Regla rápida</div>
             <p>
-              Para reconocer la tipología textual, fijate en la intención, en la
-              estructura (introducción, desarrollo, conclusión) y en el vocabulario
-              típico de cada tipo.[web:46][web:49][web:52]
+              Para reconocer la tipología textual, fijate en la intención, en
+              la estructura (introducción, desarrollo, conclusión) y en el
+              vocabulario típico de cada tipo.
             </p>
           </div>
         </div>
@@ -909,9 +933,9 @@
             <div class="section-label">Bloque A · Concepto</div>
             <h3>¿Qué es la progresión temática?</h3>
             <p>
-              Es la forma en que la información se va organizando y avanzando en un
-              texto: de un <strong>tema</strong> (lo ya conocido) se pasa a un
-              <strong>rema</strong> (información nueva) que lo desarrolla.[web:29][web:32][web:35]
+              Es la forma en que la información se va organizando y
+              avanzando en un texto: de un tema (lo ya conocido) se pasa a
+              un rema (información nueva) que lo desarrolla.
             </p>
           </div>
           <div class="card-section">
@@ -921,16 +945,16 @@
               <li><strong>Ideas secundarias</strong>: amplían, explican o justifican.</li>
             </ul>
             <div class="highlight-box">
-              Un buen texto evita repetir siempre lo mismo: cada oración aporta algo
-              nuevo, pero todo sigue conectado con la idea central.[web:32][web:35]
+              Un buen texto evita repetir siempre lo mismo: cada oración
+              aporta algo nuevo, pero todo sigue conectado con la idea central.
             </div>
           </div>
           <div class="card-section">
-            <div class="section-label">Bloque C · Regla en 1 línea</div>
+            <div class="section-label">Bloque C · Regla rápida</div>
             <p>
-              Para detectar la progresión temática, buscá cómo se repiten o cambian
-              los temas de una oración a otra y qué información nueva se va
-              agregando.[web:29][web:32][web:35]
+              Para detectar la progresión temática, buscá cómo se repiten o
+              cambian los temas de una oración a otra y qué información nueva
+              se va agregando.
             </p>
           </div>
         </div>
@@ -947,8 +971,8 @@
             <div class="section-label">Bloque A · Sustantivo</div>
             <h3>¿Qué es un sustantivo?</h3>
             <p>
-              El <strong>sustantivo</strong> nombra personas, animales, cosas, lugares,
-              ideas o sentimientos (libro, Ana, libertad).[web:47][web:50]
+              El sustantivo nombra personas, animales, cosas, lugares,
+              ideas o sentimientos (libro, Ana, libertad).
               Es el núcleo del grupo nominal.
             </p>
           </div>
@@ -956,23 +980,23 @@
             <div class="section-label">Bloque B · Grupo nominal</div>
             <h3>Componentes del grupo nominal</h3>
             <p>
-              El <strong>grupo nominal</strong> (sintagma nominal) se organiza alrededor
-              de un sustantivo núcleo, al que se le pueden añadir determinantes,
-              adjetivos y complementos.[web:47][web:50]
+              El grupo nominal (o sintagma nominal) se organiza alrededor
+              de un sustantivo núcleo, al que se le pueden añadir
+              determinantes, adjetivos y complementos.
             </p>
             <ul class="examples-list">
               <li>
                 «Los tres libros nuevos de historia»:
                 núcleo «libros»; determinante «los»; cuantificador «tres»;
-                adjetivo «nuevos»; complemento «de historia».[web:47][web:50]
+                adjetivo «nuevos»; complemento «de historia».
               </li>
             </ul>
           </div>
           <div class="card-section">
-            <div class="section-label">Bloque C · Regla en 1 línea</div>
+            <div class="section-label">Bloque C · Regla rápida</div>
             <p>
-              Para localizar el grupo nominal, buscá primero el sustantivo núcleo
-              y luego todo lo que lo acompaña directamente.[web:47][web:50]
+              Para localizar el grupo nominal, buscá primero el sustantivo
+              núcleo y luego todo lo que lo acompaña directamente.
             </p>
           </div>
         </div>
@@ -990,32 +1014,32 @@
             <h3>Modificadores del sustantivo</h3>
             <ul class="examples-list">
               <li>
-                <strong>Prepositivo</strong> (complemento preposicional):
-                «casa <em>de madera</em>», «libro <em>de Castellano</em>».[web:47][web:50]
+                Prepositivo (complemento preposicional):
+                «casa de madera», «libro de Castellano».
               </li>
               <li>
-                <strong>Apositivo</strong> (aposición explicativa):
-                «López, <em>mi profesor</em>, explicó el tema».[web:47][web:50]
+                Apositivo (aposición explicativa):
+                «López, mi profesor, explicó el tema».
               </li>
               <li>
-                <strong>Adjunto</strong>: complemento no obligatorio que añade
-                información (adjetivos, grupos preposicionales, etc.).[web:44][web:47][web:50]
+                Adjunto: complemento no obligatorio que añade información
+                (adjetivos, grupos preposicionales, etc.).
               </li>
             </ul>
           </div>
           <div class="card-section">
             <div class="section-label">Bloque B · Idea clave</div>
             <p>
-              Algunos complementos son exigidos por el sustantivo (obligatorios),
-              mientras que los adjuntos aportan datos extra pero se pueden omitir sin
-              que la estructura quede incompleta.[web:44][web:47][web:50]
+              Algunos complementos son exigidos por el sustantivo
+              (obligatorios), mientras que los adjuntos aportan datos extra
+              pero se pueden omitir sin que la estructura quede incompleta.
             </p>
           </div>
           <div class="card-section">
-            <div class="section-label">Bloque C · Regla en 1 línea</div>
+            <div class="section-label">Bloque C · Regla rápida</div>
             <p>
-              Preguntate si el complemento es necesario para entender a qué se refiere
-              el sustantivo; si no lo es, probablemente sea un adjunto.[web:47][web:50]
+              Preguntate si el complemento es necesario para entender a qué
+              se refiere el sustantivo; si no lo es, probablemente sea un adjunto.
             </p>
           </div>
         </div>
@@ -1032,27 +1056,27 @@
             <div class="section-label">Bloque A · Género</div>
             <h3>Masculino y femenino</h3>
             <p>
-              Muchos sustantivos marcan el género con terminaciones -o (masculino)
-              y -a (femenino), pero hay formas irregulares (hombre/mujer,
-              toro/vaca) y casos invariables donde el género lo marca el
-              determinante («el estudiante» / «la estudiante»).[web:47][web:50]
+              Muchos sustantivos marcan el género con terminaciones -o
+              (masculino) y -a (femenino), pero hay formas irregulares
+              (hombre/mujer, toro/vaca) y casos invariables donde el género
+              lo marca el determinante (el estudiante / la estudiante).
             </p>
           </div>
           <div class="card-section">
             <div class="section-label">Bloque B · Número</div>
             <h3>Singular y plural</h3>
             <p>
-              El plural suele formarse añadiendo -s o -es, siguiendo las reglas
-              ortográficas habituales: casa/casas, profesor/profesores.[web:47][web:50]
-              Hay formas invariables (el lunes / los lunes) y colectivos que son
-              singulares pero designan conjunto (gente, alumnado).[web:47][web:50]
+              El plural suele formarse añadiendo -s o -es, siguiendo las
+              reglas ortográficas habituales: casa/casas, profesor/profesores.
+              Hay formas invariables (el lunes / los lunes) y colectivos que
+              son singulares pero designan conjunto (gente, alumnado).
             </p>
           </div>
           <div class="card-section">
-            <div class="section-label">Bloque C · Regla en 1 línea</div>
+            <div class="section-label">Bloque C · Regla rápida</div>
             <p>
-              Siempre revisá qué forma usan los determinantes y adjetivos cercanos
-              para confirmar el género y número del sustantivo.[web:47][web:50]
+              Revisá qué forma usan los determinantes y adjetivos cercanos
+              para confirmar el género y número del sustantivo.
             </p>
           </div>
         </div>
@@ -1070,27 +1094,27 @@
             <h3>¿Qué es la concordancia nominal?</h3>
             <p>
               Es el acuerdo en género y número entre el sustantivo y los
-              determinantes, adjetivos y algunos pronombres que lo acompañan.[web:47][web:50]
+              determinantes, adjetivos y algunos pronombres que lo acompañan.
             </p>
             <ul class="examples-list">
-              <li>«<strong>Estos</strong> <strong>libros</strong> <strong>nuevos</strong>» (todo en masculino plural).</li>
-              <li>«<strong>Aquella</strong> <strong>casa</strong> <strong>vieja</strong>» (todo en femenino singular).</li>
+              <li>«Estos libros nuevos están limpios» (todo en masculino plural).</li>
+              <li>«Aquella casa vieja está lejos» (todo en femenino singular).</li>
             </ul>
           </div>
           <div class="card-section">
             <div class="section-label">Bloque B · Casos especiales</div>
             <p>
-              Cuando hay varios sustantivos, la concordancia suele ir al plural,
-              y si tienen distinto género, normalmente se usa el masculino
-              plural: «El profesor y la alumna <strong>nuevos</strong>».[web:47][web:50]
+              Cuando hay varios sustantivos, la concordancia suele ir al
+              plural, y si tienen distinto género, normalmente se usa el
+              masculino plural: «El profesor y la alumna nuevos».
             </p>
           </div>
           <div class="card-section">
-            <div class="section-label">Bloque C · Regla en 1 línea</div>
+            <div class="section-label">Bloque C · Regla rápida</div>
             <p>
-              Revisá siempre que todos los elementos que acompañan al sustantivo
-              coincidan con él en género y número para evitar errores de
-              concordancia.[web:47][web:50]
+              Revisá siempre que todos los elementos que acompañan al
+              sustantivo coincidan con él en género y número para evitar
+              errores de concordancia.
             </p>
           </div>
         </div>
@@ -1194,7 +1218,7 @@
             explanationCorrect:
               "Predomina la función apelativa porque el enunciado intenta influir en el receptor: se le pide que haga algo.",
             explanationIncorrect:
-              "Preguntate si el objetivo principal es informar, expresar un sentimiento, mantener el contacto o pedir/ordenar algo."
+              "Preguntate si el objetivo principal es informar, expresar un sentimiento, mantener el contacto o pedir u ordenar algo."
           }
         ]
       },
@@ -1213,7 +1237,7 @@
             explanationCorrect:
               "«sé» lleva tilde diacrítica porque es forma del verbo saber; «mas» (pero) y «de» (preposición) no llevan tilde, y «té» como bebida sí, pero en la opción está sin tilde.",
             explanationIncorrect:
-              "Revisá qué palabras cambian de categoría o significado cuando llevan tilde (sé/dé/té/más, etc.)."
+              "Revisá qué palabras cambian de categoría o significado cuando llevan tilde (sé, dé, té, más, etc.)."
           },
           {
             text: "«El también fue al cine.» ¿Por qué «también» lleva tilde?",
@@ -1225,12 +1249,12 @@
             ],
             correctIndex: 2,
             explanationCorrect:
-              "«También» es una palabra aguda que termina en -n, por eso lleva tilde.",
+              "«También» es una palabra aguda que termina en n, por eso lleva tilde.",
             explanationIncorrect:
               "Primero separá en sílabas, identificá si es aguda, grave o esdrújula y mirá en qué termina."
           },
           {
-            text: "¿Cuál de estas opciones contiene SOLO palabras monosílabas que, por regla general, no se tildan?",
+            text: "¿Cuál de estas opciones contiene solo palabras monosílabas que, por regla general, no se tildan?",
             options: [
               "fue, vio, dio",
               "sé, té, mí",
@@ -1305,7 +1329,7 @@
             ],
             correctIndex: 1,
             explanationCorrect:
-              "«video» y «vídeo» son dos formas válidas según la norma; el resto presentan errores de acentuación.",
+              "«video» y «vídeo» son dos formas válidas; el resto presentan errores de acentuación.",
             explanationIncorrect:
               "Recordá que la doble acentuación se da entre dos formas aceptadas por la norma, no entre formas mal escritas."
           },
@@ -1354,7 +1378,7 @@
             explanationCorrect:
               "Su intención principal es informar y explicar un contenido, por eso es un texto expositivo.",
             explanationIncorrect:
-              "Pensá si el objetivo es contar una historia, dar instrucciones, opinar o explicar un tema."
+              "Pensá si el objetivo es contar una historia, describir, dar instrucciones u opinar."
           },
           {
             text: "Una receta de cocina pertenece, sobre todo, al tipo de texto:",
@@ -1382,7 +1406,7 @@
             explanationCorrect:
               "La columna de opinión busca convencer al lector mediante argumentos y ejemplos.",
             explanationIncorrect:
-              "Pensá qué diferencia a un texto informativo (objetivo) de uno que defiende una postura."
+              "Pensá qué diferencia a un texto informativo de uno que defiende una postura."
           }
         ]
       },
@@ -1540,9 +1564,9 @@
             ],
             correctIndex: 0,
             explanationCorrect:
-              "Se elimina la -z y se añade -ces, manteniendo la tilde: lápiz → lápices.",
+              "Se elimina la z y se añade -ces, manteniendo la tilde: lápiz → lápices.",
             explanationIncorrect:
-              "Recordá la regla de las palabras terminadas en -z al formar el plural."
+              "Recordá la regla de las palabras terminadas en z al formar el plural."
           },
           {
             text: "«El estudiante / La estudiante» es un caso donde:",
@@ -1617,7 +1641,7 @@
             explanationCorrect:
               "«problema» es masculino; debería ser «ese problema grave».",
             explanationIncorrect:
-              "Revisa especialmente los sustantivos que terminan en -a pero son masculinos (tema, problema, sistema…)."
+              "Revisá especialmente los sustantivos que terminan en -a pero son masculinos (tema, problema, sistema…)."
           }
         ]
       }
@@ -1749,7 +1773,7 @@
       const qData = quizzes[currentCartilla];
       if (currentIndex < qData.questions.length - 1) {
         currentIndex++;
-        setTimeout(renderQuestion, 500);
+        setTimeout(renderQuestion, 400);
       } else {
         progressFill.style.width = "100%";
         nextBtn.textContent = "Cartilla completada";
@@ -1787,8 +1811,38 @@
       });
     });
 
-    // Inicialización
-    loadCartilla(1);
+    // === Audio de pronunciación / lectura de texto ===
+    let ttsUtterance = null;
+
+    function speakText(text) {
+      if (!("speechSynthesis" in window)) {
+        alert("Tu navegador no soporta síntesis de voz.");
+        return;
+      }
+      window.speechSynthesis.cancel();
+      ttsUtterance = new SpeechSynthesisUtterance(text);
+      ttsUtterance.lang = "es-ES";
+      ttsUtterance.rate = 1;
+      ttsUtterance.pitch = 1;
+      window.speechSynthesis.speak(ttsUtterance);
+    }
+
+    function initAudioButtons() {
+      const audioButtons = document.querySelectorAll(".audio-btn");
+      audioButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const text = btn.getAttribute("data-tts") || "";
+          if (text.trim().length > 0) {
+            speakText(text);
+          }
+        });
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      initAudioButtons();
+      loadCartilla(1);
+    });
   </script>
 </body>
 </html>
