@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ejercicios - Lengua Española</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --primary-light: #dbeafe;
+      --accent: #7c3aed;
+      --accent-light: #ede9fe;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #1e293b;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --success: #059669;
+      --success-light: #d1fae5;
+      --error: #dc2626;
+      --error-light: #fee2e2;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+    header {
+      background: linear-gradient(135deg, #7c3aed 0%, #2563eb 100%);
+      color: white; padding: 40px 24px 28px; text-align: center;
+    }
+    header h1 { font-size: 2rem; font-weight: 800; margin-bottom: 8px; }
+    header p { font-size: 1rem; opacity: 0.88; max-width: 560px; margin: 0 auto 18px; }
+    .btn {
+      display: inline-block; background: white; color: var(--accent);
+      font-weight: 700; padding: 10px 24px; border-radius: 50px;
+      text-decoration: none; box-shadow: 0 4px 12px rgba(0,0,0,.15);
+    }
+    .container { max-width: 860px; margin: 0 auto; padding: 40px 20px 60px; }
+    .section { background: var(--card); border-radius: 16px; padding: 28px 30px; margin-bottom: 28px; border: 1px solid var(--border); box-shadow: 0 2px 8px rgba(0,0,0,.05); }
+    .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+    .section-num {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: white; font-weight: 800; font-size: 0.95rem;
+      width: 36px; height: 36px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .section h2 { font-size: 1.15rem; font-weight: 700; color: var(--primary-dark); }
+    .question { margin-bottom: 22px; padding-bottom: 18px; border-bottom: 1px solid var(--border); }
+    .question:last-of-type { border-bottom: none; }
+    .question p { font-weight: 600; margin-bottom: 10px; font-size: 0.97rem; }
+    .options { display: flex; flex-direction: column; gap: 8px; }
+    .option-btn {
+      background: var(--bg); border: 2px solid var(--border); border-radius: 10px;
+      padding: 10px 16px; cursor: pointer; text-align: left; font-size: 0.93rem;
+      font-family: inherit; transition: border-color .2s, background .2s; width: 100%;
+    }
+    .option-btn:hover:not(:disabled) { border-color: var(--primary); background: var(--primary-light); }
+    .option-btn.correct { border-color: var(--success) !important; background: var(--success-light) !important; color: #065f46; font-weight: 600; }
+    .option-btn.wrong { border-color: var(--error) !important; background: var(--error-light) !important; color: var(--error); font-weight: 600; }
+    .option-btn:disabled { cursor: default; }
+    .feedback { margin-top: 8px; font-size: 0.88rem; font-weight: 600; padding: 8px 12px; border-radius: 8px; display: none; }
+    .feedback.show { display: block; }
+    .feedback.ok { background: var(--success-light); color: #065f46; }
+    .feedback.fail { background: var(--error-light); color: var(--error); }
+    .fill-blank { margin-bottom: 22px; padding-bottom: 18px; border-bottom: 1px solid var(--border); }
+    .fill-blank:last-of-type { border-bottom: none; }
+    .fill-blank p { font-weight: 600; margin-bottom: 8px; font-size: 0.97rem; }
+    .blank-input {
+      border: 2px solid var(--border); border-radius: 8px; padding: 8px 14px;
+      font-size: 0.95rem; font-family: inherit; width: 100%; max-width: 380px;
+      outline: none; transition: border-color .2s;
+    }
+    .blank-input:focus { border-color: var(--primary); }
+    .blank-input.correct { border-color: var(--success); background: var(--success-light); }
+    .blank-input.wrong { border-color: var(--error); background: var(--error-light); }
+    .check-btn {
+      margin-top: 8px; background: var(--primary); color: white; border: none;
+      border-radius: 8px; padding: 8px 20px; font-size: 0.9rem; font-weight: 700;
+      cursor: pointer; font-family: inherit; transition: background .2s;
+    }
+    .check-btn:hover { background: var(--primary-dark); }
+    .progress-bar-wrap { background: var(--border); border-radius: 50px; height: 10px; margin: 18px 0 6px; }
+    .progress-bar { background: linear-gradient(90deg, var(--primary), var(--accent)); height: 10px; border-radius: 50px; width: 0%; transition: width .4s; }
+    .progress-label { font-size: 0.82rem; color: var(--muted); text-align: right; }
+    .score-box {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: white; border-radius: 16px; padding: 28px; text-align: center;
+      margin-top: 30px;
+    }
+    .score-box h3 { font-size: 1.4rem; margin-bottom: 6px; }
+    .score-box .score-num { font-size: 3rem; font-weight: 800; }
+    .score-box p { opacity: 0.9; margin-top: 6px; }
+    .reset-btn {
+      margin-top: 16px; background: white; color: var(--primary);
+      border: none; border-radius: 50px; padding: 10px 28px;
+      font-weight: 700; cursor: pointer; font-family: inherit; font-size: 0.95rem;
+    }
+    nav {
+      background: white; border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; z-index: 100;
+      padding: 0 24px; display: flex; flex-wrap: wrap; gap: 4px; justify-content: center;
+    }
+    nav a {
+      text-decoration: none; color: var(--muted); font-size: 0.80rem; font-weight: 600;
+      padding: 9px 11px; border-bottom: 3px solid transparent; transition: color .2s, border-color .2s;
+    }
+    nav a:hover { color: var(--primary); border-bottom-color: var(--primary); }
+    footer { text-align: center; padding: 24px; color: var(--muted); font-size: 0.85rem; border-top: 1px solid var(--border); }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>✏️ Ejercicios de Práctica</h1>
+  <p>50 ejercicios interactivos · 5 por cada tema. Respondé todos y obtené tu puntaje final.</p>
+  <a href="index.html" class="btn">← Volver al Temario</a>
+</header>
+
+<nav>
+  <a href="#s1">1. Núcleo</a>
+  <a href="#s2">2. Abstractos</a>
+  <a href="#s3">3. Tipología</a>
+  <a href="#s4">4. Derivadas</a>
+  <a href="#s5">5. Concordancia</a>
+  <a href="#s6">6. Funciones</a>
+  <a href="#s7">7. Enunciados</a>
+  <a href="#s8">8. Polisémicos</a>
+  <a href="#s9">9. Tilde</a>
+  <a href="#s10">10. Porqués</a>
+</nav>
+
+<div class="container">
+
+  <div class="progress-bar-wrap"><div class="progress-bar" id="prog"></div></div>
+  <p class="progress-label" id="prog-label">0 / 50 respondidos</p>
+
+  <!-- ===== SECCIÓN 1 ===== -->
+  <div class="section" id="s1">
+    <div class="section-header"><div class="section-num">1</div><h2>Núcleo del Sujeto y del Predicado</h2></div>
+
+    <div class="question" id="q1_1">
+      <p>1. «Los perros del vecino ladraron toda la noche.» ¿Cuál es el núcleo del sujeto?</p>
+      <div class="options">
+        <button class="option-btn" onclick="check(this,'q1_1',false)">vecino</button>
+        <button class="option-btn" onclick="check(this,'q1_1',true)">perros</button>
+        <button class="option-btn" onclick="check(this,'q1_1',false)">ladraron</button>
+        <button class="option-btn" onclick="check(this,'q1_1',false)">noche</button>
+      </div>
+      <div class="feedback" id="fb-q1_1"></div>
+    </div>
+
+    <div class="question" id="q1_2">
+      <p>2. «Mi hermana mayor estudia medicina en la universidad.» ¿Cuál es el núcleo del predicado?</p>
+      <div class="options">
+        <button class="option-btn" onclick="check(this,'q1_2',false)">hermana</button>
+        <button class="option-btn" onclick="check(this,'q1_2',false)">medicina</button>
+        <button class="option-btn" onclick="check(this,'q1_2',true)">estudia</button>
+        <button class="option-btn" onclick="check(this,'q1_2',false)">universidad</button>
+      </div>
+      <div class="feedback" id="fb-q1_2"></div>
+    </div>
+
+    <div class="question" id="q1_3">
+      <p>3. «El viejo árbol del parque cayó con la tormenta.» Identifica AMBOS núcleos correctamente:</p>
+      <div class="options">
+        <button class="option-btn" onclick="check(this,'q1_3',false)">N. Sujeto: parque / N. Predicado: cayó</button>
+        <button class="option-btn" onclick="check(this,'q1_3',true)">N. Sujeto: árbol / N. Predicado: cayó</button>
+        <button class="option-btn" onclick="check(this,'q1_3',false)">N. Sujeto: árbol / N. Predicado: tormenta</button>
+        <button class="option-btn" onclick="check(this,'q1_3',false)">N. Sujeto: viejo / N. Predicado: cayó</button>
+      </div>
+      <div class="feedback" id="fb-q1_3"></div>
+    </div>
+
+    <div class="question" id="q1_4">
+      <p>4. ¿Cuál de estas oraciones tiene sujeto tácito (no expreso)?</p>
+      <div class="options">
+        <button class="option-btn" onclick="check(this,'q1_4',false)">«La lluvia cae sobre el techo.»</button>
+        <button class="option-btn" onclick="check(this,'q1_4',true)">«Comimos pizza anoche.»</button>
+        <button class="option-btn" onclick="check(this,'q1_4',false)">«Los estudiantes aprobaron.»</button>
+        <button class="option-btn" onclick="check(this,'q1_4',false)">«El gato duerme.»</button>
+      </div>
+      <div class="feedback" id="fb-q1_4"></div>
+    </div>
+
+    <div class="fill-blank">
+      <p>5. «Las flores del jardín <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u> muy bien.» Escribe el núcleo del predicado de esta oración (huelen).</p>
+      <input class="blank-input" type="text" id="f1_5" placeholder="Escribe el núcleo del predicado..."/>
+      <br/><button class="check-btn" onclick="checkFill('f1_5','huelen','fb-f1_5')">Verificar</button>
+      <div class="feedback" id="fb-f1_5"></div>
+    </div>
+  </div>
+
+  <!-- ===== SECCIÓN 2 ===== -->
+  <div class="section" id="s2">
+    <div class="section-header"><div class="section-num">2</div><h2>Sustantivos Abstractos</h2></div>
+
+    <div class="question" id="q2_1">
+      <p>6. ¿Cuál de las siguientes palabras es un sustantivo abstracto?</p>
+      <div class="options">
+        <button class="option-btn" onclick="check(this,'q2_1',false)">mesa</button>
+        <button class="option-btn" onclick="check(this,'q2_1',false)">río</button>
+        <button class="option-btn" onclick="check(this,'q2_1',true)">lealtad</button>
+        <button class="option-btn" onclick="check(this,'q2_1',false)">zapato</button>
+      </div>
+      <div class="feedback" id="fb-q2_1"></div>
+    </div>
+
+    <div class="question" id="q2_2">
+      <p>7. Del texto: «La envidia destruye la amistad y la paz entre las personas», ¿cuántos sustantivos abstractos hay?</p>
+      <div class="options">
+        <button class="option-btn" onclick="check(this,'q2_2',false)">1</button>
+        <button class="option-btn" onclick="check(this,'q2_2',false)">2</button>
+        <button class="option-btn" onclick="check(this,'q2_2',true)">3 (envidia, amistad, paz)</button>
+        <button class="option-btn" onclick="check(this,'q2_2',false)">4</button>
+      </div>
+      <div class="feedback" id="fb-q2_2"></div>
+    </div>
+
+    <div class="question" id="q2_3">
+      <p>8. ¿Cuál de estos grupos contiene SOLO sustantivos abstractos?</p>
+      <div class="options">
+        <button class="option-btn" onclick="check(this,'q2_3',false)">amor, piedra, miedo</button>
+        <button class="option-btn" onclick="check(this,'q2_3',true)">fe, libertad, tristeza</button>
+        <button class="option-btn" onclick="check(this,'q2_3',false)">esperanza, árbol, odio</button>
+        <button class="option-btn" onclick="check(this,'q2_3',false)">paz, agua, valor</button>
+      </div>
+      <div class="feedback" id="fb-q2_3"></div>
+    </div>
+
+    <div class="question" id="q2_4">
+      <p>9. «La sabiduría del anciano impresionó a todos.» El sustantivo abstracto en esta oración es:</p>
+      <div class="options">
+        <button class="option-btn" onclick="check(this,'q2_4',true)">sabiduría</button>
+        <button class="option-btn" onclick="check(this,'q2_4',false)">anciano</button>
+        <button class="option-btn" onclick="check(this,'q2_4',false)">todos</button>
+        <button class="option-btn" onclick="check(this,'q2_4',false)">impresionó</button>
+      </div>
+      <div class="feedback" id="fb-q2_4"></div>
+    </div>
+
+    <div class="fill-blank">
+      <p>10. Escribe UN sustantivo abstracto que exprese un sentimiento negativo (por ejemplo: odio, rencor, miedo, envidia, tristeza...).</p>
+      <input class="blank-input" type="text" id="f2_5" placeholder="Escribe un sustantivo abstracto..."/>
+      <br/><button class="check-btn" onclick="checkFillMulti('f2_5',['odio','rencor','miedo','envidia','tristeza','angustia','ira','temor','soledad','amargura','dolor','culpa'],'fb-f2_5')">Verificar</button>
+      <div class="feedback" id="fb-f2_5"></div>
+    </div>
+  </div>
+
+  <!-- ===== SECCIÓN 3 ===== -->
+  <div class="section" id="s3">
+    <div class="section-header"><div class="section-num">3</div><h2>Tipología Expositiva y Argumentativa</h2></div>
+
+    <div class="question" id="q3_1">
+      <p>11. «El ciclo del agua consiste en evaporación, condensación y precipitación.» Este texto es:</p>
+      <div class="options">
+        <button class="option-btn" onclick="check(this,'q3_1',true)">Expositivo</button>
+        <button class="option-btn" onclick="check(this,'q3_1',false)">Argumentativo</button>
+      </div>
+      <div class="feedback" id="fb-q3_1"></div>
+    </div>
+
+    <div class="question" id="q3_2">
+      <p>12. «La educación pública debe ser gratuita porque es un derecho humano fundamental y garantiza igualdad de oportunidades.» Este texto es:</p>
+      <div class="options">
+        <button class="option-btn" onclick="check(this,'q3_2',false)">Expositivo</button>
+        <button class="option-btn" onclick="check(this,'q3_2',true)">Argumentativo</button>
+      </div>
+      <div class="feedback" id="fb-q3_2"></div>
+    </div>
+
+    <div class="question" id="q3_3">
+      <p>13. ¿Cuál de estas características corresponde al texto argumentativo?</p>
+      <div class="options">
+        <button class="option-btn" onclick="check(this,'q3_3',false)">Presenta datos de forma objetiva e imparcial</button>
+        <button class="option-btn" onclick="check(this,'q3_3',false)">Se usa en enciclopedias y artículos científicos</button>
+        <button class="option-btn" onclick="check(this,'q3_3',true)">Defiende una tesis con razones y evidencias</button>
+        <button class="option-btn" onclick="check(this,'q3_3',false)">Evita el uso de valoraciones personales</button>
+      </div>
+      <div class="feedback" id="fb-q3_3"></div>
+    </div>
+
+    <div class="question" id="q3_4">
+      <p>14. «Paraguay tiene una extensión territorial de 406.752 km² y limita con Argentina, Brasil y Bolivia.» ¿Qué tipo de texto es?</p>
+      <div class="options">
+        <button class="option-btn" onclick="check(this,'q3_4',true)">Expositivo, porque solo informa datos objetivos</button>
+        <button class="option-btn" onclick="check(this,'q3_4',false)">Argumentativo, porque defiende una postura</button>
+        <button class="option-btn" onclick="check(this,'q3_4',false)">Narrativo, porque cuenta una historia</button>
+      </div>
+      <div class="feedback" id="fb-q3_4"></div>
+    </div>
+
+    <div class="question" id="q3_5">
+      <p>15. Un editorial de diario que critica una ley reciente y pide su derogación es un texto:</p>
+      <div class="options">
+        <button class="option-btn" onclick="check(this,'q3_5',false)">Expositivo</button>
+        <button class="option-btn" onclick="check(this,'q3_5',true)">Argumentativo</button>
+        <button class="option-btn" onclick="check(this,'q3_5',false)">Descriptivo</button>
+      </div>
+      <div class="feedback" id="fb-q3_5"></div>
+    </div>
+  </div>
+
+  <!-- ===== SECCIÓN 4 ===== -->
+  <div class="section" id="s4">
+    <div class="section-header"><div class="section-num">4</div><h2>Palabras Derivadas</h2></div>
+
+    <div class="question" id="q4_1">
+      <p>16. ¿Cuál de estas palabras NO pertenece a la familia léxica de «pan»?</p>
+      <div class="options">
+        <button class="option-btn" onclick="check(this,'q4_1',false)">panadero</button>
+        <button class="option-btn" onclick="check(this,'q4_1',false)">panadería</button>
+        <button class="option-btn" onclick="check(this,'q4_1',true)">pantalla</button>
+        <button class="option-btn" onclick="check(this,'q4_1',false)">panecillo</button>
+      </div>
+      <div class="feedback" id="fb-q4_1"></div>
+    </div>
+
+    <div class="question" id="q4_2">
+      <p>17. La palabra «rápidamente» está formada por la raíz «rápid-» y el sufijo:</p>
+      <div class="options">
+        <button class="option-btn" onclick="check(this,'q4_2',false)">-ción</button>
+        <button class="option-btn" onclick="check(this,'q4_2',false)">-ero</button>
+        <button class="option-btn" onclick="check(this,'q4_2',true)">-mente</button>
+        <button class="option-btn" onclick="check(this,'q4_2',false)">-dad</button>
+      </div>
+      <div class="feedback" id="fb-q4_2"></div>
+    </div>
+
+    <div class="question" id="q4_3">
+      <p>18. «Submarino» contiene el prefijo sub- que significa:</p>
+      <div class="options">
+        <button class="option-btn" onclick="check(this,'q4_3',false)">encima de</button>
+        <button class="option-btn" onclick="check(this,'q4_3',true)">debajo de</button>
+        <button class="option-btn" onclick="check(this,'q4_3',false)">antes de</button>
+        <button class="option-btn" onclick="check(this,'q4_3',false)">contra</button>
+      </div>
+      <div class="feedback" id="fb-q4_3"></div>
+    </div>
+
+    <div class="fill-blank">
+      <p>19. Forma una palabra derivada de «ciudad» usando el sufijo <strong>-ano/a</strong>: ciudad → <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u></p>
+      <input class="blank-input" type="text" id="f4_4" placeholder="Escribe la palabra derivada..."/>
+      <br/><button class="check-btn" onclick="checkFillMulti('f4_4',['ciudadano','ciudadana'],'fb-f4_4')">Verificar</button>
+      <div class="feedback" id="fb-f4_4"></div>
+    </div>
+
+    <div class="fill-blank">
+      <p>20. Añade el prefijo <strong>in-</strong> para crear el antónimo de «justo»: in + justo = <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u></p>
+      <input class="blank-input" type="text" id="f4_5" placeholder="Escribe la palabra..."/>
+      <br/><button class="check-btn" onclick="checkFill('f4_5','injusto','fb-f4_5')">Verificar</button>
+      <div class="feedback" id="fb-f4_5"></div>
+    </div>
+  </div>
+
+  <!-- ===== SECCIÓN 5 ===== -->
+  <div class="section" id="s5">
+    <div class="section-header"><div class="section-num">5</div><h2>Concordancia</h2></div>
+
+    <div class="question" id="q5_1">
+      <p>21. ¿Cuál de estas oraciones tiene concordancia correcta?</p>
+      <div class="options">
+        <button class="option-btn" onclick="check(this,'q5_1',true)">«Las flores amarillas huelen muy bien.»</button>
+        <button class="option-btn" onclick="check(this,'q5_1',false)">«Las flor amarilla huelen muy bien.»</button>
+        <button class="option-btn" onclick="check(this,'q5_1',false)">«La flores amarilla huelen bien.»</button>
+        <button class="option-btn" onclick="check(this,'q5_1',false)">«Las flores amarillo huele bien.»</button>
+      </div>
+      <div class="feedback" id="fb-q5_1"></div>
+    </div>
+
+    <div class="question" id="q5_2">
+      <p>22. «Los niño grande corrieron mucho.» ¿Qué error de concordancia hay?</p>
+      <div class="options">
+        <button class="option-btn" onclick="check(this,'q5_2',false)">Solo error verbal</button>
+        <button class="option-btn" onclick="check(this,'q5_2',false)">Solo error nominal</button>
+        <button class="option-btn" onclick="check(this,'q5_2',true)">Error nominal (niño/grande en singular cuando debería ser plural)</button>
+        <button class="option-btn" onclick="check(this,'q5_2',false)">No hay error</button>
+      </div>
+      <div class="feedback" id="fb-q5_2"></div>
+    </div>
+
+    <div class="question" id="q5_3">
+      <p>23. Elige la forma verbal correcta: «Las alumnas ___ muy bien el examen.»</p>
+      <div class="options">
+        <button class="option-btn" onclick="check(this,'q5_3',false)">aprobó</button>
+        <button class="option-btn" onclick="check(this,'q5_3',true)">aprobaron</button>
+        <button class="option-btn" onclick="check(this,'q5_3',false)">aprobarán (no concuerda en tiempo)</button>
+        <button class="option-btn" onclick="check(this,'q5_3',false)">aprueba</button>
+      </div>
+      <div class="feedback" id="fb-q5_3"></div>
+    </div>
+
+    <div class="question" id="q5_4">
+      <p>24. ¿Cuál de estas frases tiene concordancia nominal correcta?</p>
+      <div class="options">
+        <button class="option-btn" onclick="check(this,'q5_4',false)">«un libro interesantes»</button>
+        <button class="option-btn" onclick="check(this,'q5_4',true)">«unos libros interesantes»</button>
+        <button class="option-btn" onclick="check(this,'q5_4',false)">«unas libro interesante»</button>
+        <button class="option-btn" onclick="check(this,'q5_4',false)">«un libros interesante»</button>
+      </div>
+      <div class="feedback" id="fb-q5_4"></div>
+    </div>
+
+    <div class="fill-blank">
+      <p>25. Corrige el error de concordancia: «Mis amigos llegó tarde a la fiesta.» → Mis amigos <u>&nbsp;&nbsp;&nbsp;&nbsp;</u> tarde a la fiesta.</p>
+      <input class="blank-input" type="text" id="f5_5" placeholder="Escribe el verbo correcto..."/>
+      <br/><button class="check-btn" onclick="checkFill('f5_5','llegaron','fb-f5_5')">Verificar</button>
+      <div class="feedback" id="fb-f5_5"></div>
+    </div>
+  </div>
+
+  <!-- ===== SECCIÓN 6 ===== -->
+  <div class="section" id="s6">
+    <div class="section-header"><div class="section-num">6</div><h2>Funciones del Lenguaje</h2></div>
+
+    <div class="question" id="q6_1">
+      <p>26. «El agua hierve a 100 °C al nivel del mar.» ¿Qué función del lenguaje predomina?</p>
+      <div class="options">
+        <button class="option-btn" onclick="check(this,'q6_1',true)">Referencial</button>
+        <button class="option-btn" onclick="check(this,'q6_1',false)">Expresiva</button>
+        <button class="option-btn" onclick="check(this,'q6_1',false)">Apelativa</button>
+        <button class="option-btn" onclick="check(this,'q6_1',false)">Fática</button>
+      </div>
+      <div class="feedback" id="fb-q6_1"></div>
+    </div>
+
+    <div class="question" id="q6_2">
+      <p>27. «¡Qué hermoso es vivir!» es un ejemplo de función:</p>
+      <div class="options">
+        <button class="option-btn" onclick="check(this,'q6_2',false)">Referencial</button>
+        <button class="option-btn" onclick="check(this,'q6_2',true)">Expresiva / Emotiva</button>
+        <button class="option-btn" onclick="check(this,'q6_2',false)">Metalingüística</button>
+        <button class="option-btn" onclick="check(this,'q6_2',false)">Poética</button>
+      </div>
+      <div class="feedback" id="fb-q6_2"></div>
+    </div>
+
+    <div class="question" id="q6_3">
+      <p>28. «"Gato" es un sustantivo que designa un felino doméstico.» Esta oración tiene función:</p>
+      <div class="options">
+        <button class="option-btn" onclick="check(this,'q6_3',false)">Referencial</button>
+        <button class="option-btn" onclick="check(this,'q6_3',false)">Apelativa</button>
+        <button class="option-btn" onclick="check(this,'q6_3',true)">Metalingüística</button>
+        <button class="option-btn" onclick="check(this,'q6_3',false)">Fática</button>
+      </div>
+      <div class="feedback" id="fb-q6_3"></div>
+    </div>
+
+    <div class="question" id="q6_4">
+      <p>29. Un slogan publicitario que dice «¡Comprá ahora, no te lo pierdas!» tiene función:</p>
+      <div class="options">
+        <button class="option-btn" onclick="check(this,'q6_4',false)">Referencial</button>
+        <button class="option-btn" onclick="check(this,'q6_4',true)">Apelativa / Conativa</button>
+        <button class="option-btn" onclick="check(this,'q6_4',false)">Fática</button>
+        <button class="option-btn" onclick="check(this,'q6_4',false)">Poética</button>
+      </div>
+      <div class="feedback" id="fb-q6_4"></div>
+    </div>
+
+    <div class="question" id="q6_5">
+      <p>30. «Buenos días, ¿todo bien?» / «Sí, gracias, ¿y vos?» es un ejemplo de función:</p>
+      <div class="options">
+        <button class="option-btn" onclick="check(this,'q6_5',false)">Referencial</button>
+        <button class="option-btn" onclick="check(this,'q6_5',false)">Expresiva</button>
+        <button class="option-btn" onclick="check(this,'q6_5',true)">Fática</button>
+        <button class="option-btn" onclick="check(this,'q6_5',false)">Metalingüística</button>
+      </div>
+      <div class="feedback" id="fb-q6_5"></div>
+    </div>
+  </div>
+
+  <!-- ===== SECCIÓN 7 ===== -->
+  <div class="section" id="s7">
+    <div class="section-header"><div class="section-num">7</div><h2>Enunciados: Referencial, Apelativo, Fático y Expresivo</h2></div>
+
+    <div class="question" id="q7_1">
+      <p>31. «Paraguay se independizó de España el 14 y 15 de mayo de 1811.» ¿Qué tipo de enunciado es?</p>
+      <div class="options">
+        <button class="option-btn" onclick="check(this,'q7_1',true)">Referencial</button>
+        <button class="option-btn" onclick="check(this,'q7_1',false)">Apelativo</button>
+        <button class="option-btn" onclick="check(this,'q7_1',false)">Expresivo</button>
+        <button class="option-btn" onclick="check(this,'q7_1',false)">Fático</button>
+      </div>
+      <div class="feedback" id="fb-q7_1"></div>
+    </div>
+
+    <div class="question" id="q7_2">
+      <p>32. «¡Cierra esa ventana, por favor!» es un enunciado:</p>
+      <div class="options">
+        <button class="option-btn" onclick="check(this,'q7_2',false)">Referencial</button>
+        <button class="option-btn" onclick="check(this,'q7_2',true)">Apelativo</button>
+        <button class="option-btn" onclick="check(this,'q7_2',false)">Expresivo</button>
+        <button class="option-btn" onclick="check(this,'q7_2',false)">Fático</button>
+      </div>
+      <div class="feedback" id="fb-q7_2"></div>
+    </div>
+
+    <div class="question" id="q7_3">
+      <p>33. «¡Me alegra tanto verte después de tanto tiempo!» es un enunciado:</p>
+      <div class="options">
+        <button class="option-btn" onclick="check(this,'q7_3',false)">Referencial</button>
+        <button class="option-btn" onclick="check(this,'q7_3',false)">Apelativo</button>
+        <button class="option-btn" onclick="check(this,'q7_3',true)">Expresivo</button>
+        <button class="option-btn" onclick="check(this,'q7_3',false)">Fático</button>
+      </div>
+      <div class="feedback" id="fb-q7_3"></div>
+    </div>
+
+    <div class="question" id="q7_4">
+      <p>34. «¿Hola? ¿Seguís ahí? La llamada se cortó.» es un enunciado predominantemente:</p>
+      <div class="options">
+        <button class="option-btn" onclick="check(this,'q7_4',false)">Referencial</button>
+        <button class="option-btn" onclick="check(this,'q7_4',false)">Apelativo</button>
+        <button class="option-btn" onclick="check(this,'q7_4',false)">Expresivo</button>
+        <button class="option-btn" onclick="check(this,'q7_4',true)">Fático</button>
+      </div>
+      <div class="feedback" id="fb-q7_4"></div>
+    </div>
+
+    <div class="question" id="q7_5">
+      <p>35. «Votá por el cambio. El futuro está en tus manos.» (campaña política) es un enunciado:</p>
+      <div class="options">
+        <button class="option-btn" onclick="check(this,'q7_5',false)">Referencial</button>
+        <button class="option-btn" onclick="check(this,'q7_5',true)">Apelativo</button>
+        <button class="option-btn" onclick="check(this,'q7_5',false)">Expresivo</button>
+        <button class="option-btn" onclick="check(this,'q7_5',false)">Fático</button>
+      </div>
+      <div class="feedback" id="fb-q7_5"></div>
+    </div>
+  </div>
+
+  <!-- ===== SECCIÓN 8 ===== -->
+  <div class="section" id="s8">
+    <div class="section-header"><div class="section-num">8</div><h2>Sustantivos Polisémicos</h2></div>
+
+    <div class="question" id="q8_1">
+      <p>36. En «Fui al banco a retirar dinero», la palabra «banco» significa:</p>
+      <div class="options">
+        <button class="option-btn" onclick="check(this,'q8_1',true)">Entidad financiera</button>
+        <button class="option-btn" onclick="check(this,'q8_1',false)">Asiento largo</button>
+        <button class="option-btn" onclick="check(this,'q8_1',false)">Conjunto de peces</button>
+      </div>
+      <div class="feedback" id="fb-q8_1"></div>
+    </div>
+
+    <div class="question" id="q8_2">
+      <p>37. «Vivimos en el tercer piso del edificio.» ¿Cuál es el significado de «piso» aquí?</p>
+      <div class="options">
+        <button class="option-btn" onclick="check(this,'q8_2',false)">Suelo o pavimento</button>
+        <button class="option-btn" onclick="check(this,'q8_2',true)">Planta / nivel de un edificio</button>
+        <button class="option-btn" onclick="check(this,'q8_2',false)">Apartamento o vivienda</button>
+      </div>
+      <div class="feedback" id="fb-q8_2"></div>
+    </div>
+
+    <div class="question" id="q8_3">
+      <p>38. ¿Cuál de estas palabras es polisémica?</p>
+      <div class="options">
+        <button class="option-btn" onclick="check(this,'q8_3',false)">«matemática» (solo ciencia de los números)</button>
+        <button class="option-btn" onclick="check(this,'q8_3',true)">«sierra» (herramienta / cordillera / período del año)</button>
+        <button class="option-btn" onclick="check(this,'q8_3',false)">«hidrógeno» (solo elemento químico)</button>
+      </div>
+      <div class="feedback" id="fb-q8_3"></div>
+    </div>
+
+    <div class="question" id="q8_4">
+      <p>39. «La carta del restaurante era muy extensa.» La palabra «carta» significa aquí:</p>
+      <div class="options">
+        <button class="option-btn" onclick="check(this,'q8_4',false)">Documento escrito o misiva</button>
+        <button class="option-btn" onclick="check(this,'q8_4',false)">Naipe de baraja</button>
+        <button class="option-btn" onclick="check(this,'q8_4',true)">Menú con los platos disponibles</button>
+      </div>
+      <div class="feedback" id="fb-q8_4"></div>
+    </div>
+
+    <div class="fill-blank">
+      <p>40. Escribe DOS significados distintos de la palabra «<strong>pluma</strong>» separados por una coma.</p>
+      <input class="blank-input" type="text" id="f8_5" placeholder="Ej: ave, instrumento para escribir"/>
+      <br/><button class="check-btn" onclick="checkFillContains('f8_5',['ave','pájaro','escribir','bolígrafo','pluma fuente','plumaje'],'fb-f8_5', 2)">Verificar</button>
+      <div class="feedback" id="fb-f8_5"></div>
+    </div>
+  </div>
+
+  <!-- ===== SECCIÓN 9 ===== -->
+  <div class="section" id="s9">
+    <div class="section-header"><div class="section-num">9</div><h2>Tilde Diacrítica</h2></div>
+
+    <div class="question" id="q9_1">
+      <p>41. «___ libro es tuyo.» ¿Qué forma completa correctamente la oración?</p>
+      <div class="options">
+        <button class="option-btn" onclick="check(this,'q9_1',false)">Él</button>
+        <button class="option-btn" onclick="check(this,'q9_1',true)">El</button>
+      </div>
+      <div class="feedback" id="fb-q9_1"></div>
+    </div>
+
+    <div class="question" id="q9_2">
+      <p>42. «___ que venir mañana.» ¿Cuál es la forma correcta de "se" en este contexto? (verbo saber: yo sé)</p>
+      <div class="options">
+        <button class="option-btn" onclick="check(this,'q9_2',true)">Sé</button>
+        <button class="option-btn" onclick="check(this,'q9_2',false)">Se</button>
+      </div>
+      <div class="feedback" id="fb-q9_2"></div>
+    </div>
+
+    <div class="question" id="q9_3">
+      <p>43. «No sé ___ llegó tarde.» ¿Qué palabra interrogativa corresponde al espacio?</p>
+      <div class="options">
+        <button class="option-btn" onclick="check(this,'q9_3',false)">como</button>
+        <button class="option-btn" onclick="check(this,'q9_3',true)">por qué</button>
+        <button class="option-btn" onclick="check(this,'q9_3',false)">porque</button>
+        <button class="option-btn" onclick="check(this,'q9_3',false)">que</button>
+      </div>
+      <div class="feedback" id="fb-q9_3"></div>
+    </div>
+
+    <div class="question" id="q9_4">
+      <p>44. «Quiero ___ (infusión caliente).» ¿Qué forma corresponde?</p>
+      <div class="options">
+        <button class="option-btn" onclick="check(this,'q9_4',true)">té</button>
+        <button class="option-btn" onclick="check(this,'q9_4',false)">te</button>
+      </div>
+      <div class="feedback" id="fb-q9_4"></div>
+    </div>
+
+    <div class="fill-blank">
+      <p>45. Escribe la forma correcta (con o sin tilde): «Ella llegó ___ (ella misma, pronombre personal) sola.»</p>
+      <input class="blank-input" type="text" id="f9_5" placeholder="él / el / tú / tu / sí / si..."/>
+      <br/><button class="check-btn" onclick="checkFill('f9_5','ella','fb-f9_5', 'La respuesta es "ella" — pronombre personal sin tilde diacrítica en este caso.')">Verificar</button>
+      <div class="feedback" id="fb-f9_5"></div>
+    </div>
+  </div>
+
+  <!-- ===== SECCIÓN 10 ===== -->
+  <div class="section" id="s10">
+    <div class="section-header"><div class="section-num">10</div><h2>Los Cuatro Usos del "Porque"</h2></div>
+
+    <div class="question" id="q10_1">
+      <p>46. «No fui a la fiesta ___ estaba cansado.» ¿Qué forma es correcta?</p>
+      <div class="options">
+        <button class="option-btn" onclick="check(this,'q10_1',true)">porque</button>
+        <button class="option-btn" onclick="check(this,'q10_1',false)">por qué</button>
+        <button class="option-btn" onclick="check(this,'q10_1',false)">porqué</button>
+        <button class="option-btn" onclick="check(this,'q10_1',false)">por que</button>
+      </div>
+      <div class="feedback" id="fb-q10_1"></div>
+    </div>
+
+    <div class="question" id="q10_2">
+      <p>47. «¿___ no estudias más?» ¿Qué forma es correcta?</p>
+      <div class="options">
+        <button class="option-btn" onclick="check(this,'q10_2',false)">porque</button>
+        <button class="option-btn" onclick="check(this,'q10_2',true)">Por qué</button>
+        <button class="option-btn" onclick="check(this,'q10_2',false)">porqué</button>
+        <button class="option-btn" onclick="check(this,'q10_2',false)">por que</button>
+      </div>
+      <div class="feedback" id="fb-q10_2"></div>
+    </div>
+
+    <div class="question" id="q10_3">
+      <p>48. «Nunca entenderé el ___ de su comportamiento.» ¿Qué forma es correcta?</p>
+      <div class="options">
+        <button class="option-btn" onclick="check(this,'q10_3',false)">porque</button>
+        <button class="option-btn" onclick="check(this,'q10_3',false)">por qué</button>
+        <button class="option-btn" onclick="check(this,'q10_3',true)">porqué</button>
+        <button class="option-btn" onclick="check(this,'q10_3',false)">por que</button>
+      </div>
+      <div class="feedback" id="fb-q10_3"></div>
+    </div>
+
+    <div class="question" id="q10_4">
+      <p>49. «Me pregunto ___ no llamó.» (pregunta indirecta) ¿Qué forma es correcta?</p>
+      <div class="options">
+        <button class="option-btn" onclick="check(this,'q10_4',false)">porque</button>
+        <button class="option-btn" onclick="check(this,'q10_4',true)">por qué</button>
+        <button class="option-btn" onclick="check(this,'q10_4',false)">porqué</button>
+        <button class="option-btn" onclick="check(this,'q10_4',false)">por que</button>
+      </div>
+      <div class="feedback" id="fb-q10_4"></div>
+    </div>
+
+    <div class="fill-blank">
+      <p>50. Completá con la forma correcta: «Estudia mucho ___ quieres aprobar.» (causa / explicación)</p>
+      <input class="blank-input" type="text" id="f10_5" placeholder="porque / por qué / porqué / por que"/>
+      <br/><button class="check-btn" onclick="checkFill('f10_5','porque','fb-f10_5')">Verificar</button>
+      <div class="feedback" id="fb-f10_5"></div>
+    </div>
+  </div>
+
+  <div class="score-box" id="score-box" style="display:none">
+    <h3>🏆 Resultado Final</h3>
+    <div class="score-num" id="score-display">0/50</div>
+    <p id="score-msg"></p>
+    <button class="reset-btn" onclick="location.reload()">🔄 Reiniciar ejercicios</button>
+  </div>
+
+</div>
+
+<footer>
+  ✏️ Ejercicios de Lengua Española · <a href="index.html" style="color:var(--primary)">← Volver al Temario</a>
+</footer>
+
+<script>
+  const TOTAL = 50;
+  let answered = 0, correct = 0;
+
+  function updateProgress() {
+    const pct = (answered / TOTAL) * 100;
+    document.getElementById('prog').style.width = pct + '%';
+    document.getElementById('prog-label').textContent = answered + ' / ' + TOTAL + ' respondidos';
+    if (answered >= TOTAL) showScore();
+  }
+
+  function check(btn, qId, isCorrect) {
+    const q = document.getElementById(qId);
+    const btns = q.querySelectorAll('.option-btn');
+    btns.forEach(b => b.disabled = true);
+    const fb = document.getElementById('fb-' + qId);
+    if (isCorrect) {
+      btn.classList.add('correct');
+      fb.textContent = '✅ ¡Correcto!';
+      fb.className = 'feedback show ok';
+      correct++;
+    } else {
+      btn.classList.add('wrong');
+      btns.forEach(b => {
+        if (b.getAttribute('onclick') && b.getAttribute('onclick').includes(',true')) b.classList.add('correct');
+      });
+      fb.textContent = '❌ Incorrecto. La respuesta correcta está marcada en verde.';
+      fb.className = 'feedback show fail';
+    }
+    answered++;
+    updateProgress();
+  }
+
+  function checkFill(inputId, answer, fbId, customMsg) {
+    const input = document.getElementById(inputId);
+    const fb = document.getElementById(fbId);
+    const val = input.value.trim().toLowerCase();
+    input.disabled = true;
+    if (val === answer.toLowerCase()) {
+      input.classList.add('correct');
+      fb.textContent = '✅ ¡Correcto!';
+      fb.className = 'feedback show ok';
+      correct++;
+    } else {
+      input.classList.add('wrong');
+      fb.textContent = customMsg || ('❌ Incorrecto. La respuesta correcta es: "' + answer + '"');
+      fb.className = 'feedback show fail';
+    }
+    answered++;
+    updateProgress();
+  }
+
+  function checkFillMulti(inputId, answers, fbId) {
+    const input = document.getElementById(inputId);
+    const fb = document.getElementById(fbId);
+    const val = input.value.trim().toLowerCase();
+    input.disabled = true;
+    if (answers.map(a => a.toLowerCase()).includes(val)) {
+      input.classList.add('correct');
+      fb.textContent = '✅ ¡Correcto!';
+      fb.className = 'feedback show ok';
+      correct++;
+    } else {
+      input.classList.add('wrong');
+      fb.textContent = '❌ Incorrecto. Respuestas válidas: ' + answers.join(', ');
+      fb.className = 'feedback show fail';
+    }
+    answered++;
+    updateProgress();
+  }
+
+  function checkFillContains(inputId, keywords, fbId, minMatches) {
+    const input = document.getElementById(inputId);
+    const fb = document.getElementById(fbId);
+    const val = input.value.trim().toLowerCase();
+    input.disabled = true;
+    const matched = keywords.filter(k => val.includes(k.toLowerCase()));
+    if (matched.length >= minMatches) {
+      input.classList.add('correct');
+      fb.textContent = '✅ ¡Correcto! Identificaste al menos dos significados.';
+      fb.className = 'feedback show ok';
+      correct++;
+    } else {
+      input.classList.add('wrong');
+      fb.textContent = '❌ Incluí al menos dos significados distintos. Ej: "pluma de ave" y "instrumento para escribir".';
+      fb.className = 'feedback show fail';
+    }
+    answered++;
+    updateProgress();
+  }
+
+  function showScore() {
+    const box = document.getElementById('score-box');
+    box.style.display = 'block';
+    document.getElementById('score-display').textContent = correct + '/' + TOTAL;
+    const pct = Math.round((correct / TOTAL) * 100);
+    let msg = pct >= 90 ? '🌟 ¡Excelente! Dominás muy bien todos los temas.' :
+              pct >= 75 ? '👍 ¡Muy bien! Repasá los temas en los que fallaste.' :
+              pct >= 55 ? '📖 Aprobado, pero te conviene repasar el temario con calma.' :
+                          '💪 No te rindas, volvé al temario y practicá de nuevo.';
+    document.getElementById('score-msg').textContent = msg;
+    box.scrollIntoView({ behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
