@@ -8,788 +8,533 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-/* ===================== DESIGN TOKENS ===================== */
-:root, [data-theme="light"] {
-  --color-bg:             #f5f3ee;
-  --color-surface:        #faf9f6;
-  --color-surface-2:      #ffffff;
-  --color-surface-offset: #ede9e2;
-  --color-surface-dynamic:#e3ddd5;
-  --color-divider:        #d8d3cc;
-  --color-border:         #cec8bf;
-
-  --color-text:           #2a2620;
-  --color-text-muted:     #6e6860;
-  --color-text-faint:     #a09890;
-  --color-text-inverse:   #f5f3ee;
-
-  /* Accent: deep teal-green */
-  --color-primary:        #1a6b5c;
-  --color-primary-hover:  #145549;
-  --color-primary-active: #0e3e35;
-  --color-primary-highlight: #c8ddd9;
-  --color-primary-light:  #e8f3f1;
-
-  /* Cards tones */
-  --color-card1:          #1a6b5c;   /* Texto */
-  --color-card1-bg:       #e8f3f1;
-  --color-card2:          #6b421a;   /* Bimembre */
-  --color-card2-bg:       #f3ece8;
-  --color-card3:          #1a4a6b;   /* Unimembre */
-  --color-card3-bg:       #e8eef3;
-  --color-card4:          #5c1a6b;   /* Actitud */
-  --color-card4-bg:       #f0e8f3;
-
-  --shadow-sm: 0 1px 3px oklch(0.2 0.01 80 / 0.07);
-  --shadow-md: 0 4px 16px oklch(0.2 0.01 80 / 0.1);
-  --shadow-lg: 0 12px 40px oklch(0.2 0.01 80 / 0.13);
-
-  --radius-sm: 0.375rem;
-  --radius-md: 0.625rem;
-  --radius-lg: 1rem;
-  --radius-xl: 1.5rem;
-  --radius-full: 9999px;
-
-  --font-display: 'Lora', Georgia, serif;
-  --font-body: 'Inter', 'Helvetica Neue', sans-serif;
-
-  --text-xs:   clamp(0.75rem,  0.7rem  + 0.25vw, 0.875rem);
-  --text-sm:   clamp(0.875rem, 0.8rem  + 0.35vw, 1rem);
-  --text-base: clamp(1rem,     0.95rem + 0.25vw, 1.125rem);
-  --text-lg:   clamp(1.125rem, 1rem    + 0.75vw, 1.5rem);
-  --text-xl:   clamp(1.5rem,   1.2rem  + 1.25vw, 2.25rem);
-  --text-2xl:  clamp(2rem,     1.2rem  + 2.5vw,  3.5rem);
-
-  --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem;
-  --space-4: 1rem; --space-5: 1.25rem; --space-6: 1.5rem;
-  --space-8: 2rem; --space-10: 2.5rem; --space-12: 3rem;
-  --space-16: 4rem; --space-20: 5rem;
-
-  --transition: 180ms cubic-bezier(0.16, 1, 0.3, 1);
+:root,[data-theme="light"]{
+  --bg:#f5f3ee;--surface:#faf9f6;--surface2:#ffffff;--surface-off:#ede9e2;--surface-dyn:#e3ddd5;
+  --divider:#d8d3cc;--border:#cec8bf;
+  --text:#2a2620;--muted:#6e6860;--faint:#a09890;--inverse:#f5f3ee;
+  --primary:#1a6b5c;--primary-h:#145549;--primary-a:#0e3e35;--primary-hl:#c8ddd9;--primary-lt:#e8f3f1;
+  --c1:#1a6b5c;--c1bg:#e8f3f1;--c2:#6b421a;--c2bg:#f3ece8;--c3:#1a4a6b;--c3bg:#e8eef3;--c4:#5c1a6b;--c4bg:#f0e8f3;
+  --c-quiz:#b5451b;--c-quizbg:#fdf0ec;
+  --sh-sm:0 1px 3px oklch(0.2 0.01 80/0.07);--sh-md:0 4px 16px oklch(0.2 0.01 80/0.1);--sh-lg:0 12px 40px oklch(0.2 0.01 80/0.13);
+  --r-sm:.375rem;--r-md:.625rem;--r-lg:1rem;--r-xl:1.5rem;--r-full:9999px;
+  --ff-d:'Lora',Georgia,serif;--ff-b:'Inter','Helvetica Neue',sans-serif;
+  --tx-xs:clamp(.75rem,.7rem + .25vw,.875rem);--tx-sm:clamp(.875rem,.8rem + .35vw,1rem);
+  --tx-base:clamp(1rem,.95rem + .25vw,1.125rem);--tx-lg:clamp(1.125rem,1rem + .75vw,1.5rem);
+  --tx-xl:clamp(1.5rem,1.2rem + 1.25vw,2.25rem);--tx-2xl:clamp(2rem,1.2rem + 2.5vw,3.5rem);
+  --tr:180ms cubic-bezier(.16,1,.3,1);
 }
+[data-theme="dark"]{
+  --bg:#181612;--surface:#1e1c18;--surface2:#242220;--surface-off:#2a2824;--surface-dyn:#323028;
+  --divider:#2e2c28;--border:#3a3830;--text:#d4d0ca;--muted:#7a7670;--faint:#524e48;--inverse:#1e1c18;
+  --primary:#4fa89b;--primary-h:#3a8e82;--primary-a:#2c6e64;--primary-hl:#1f3530;--primary-lt:#1a2e2c;
+  --c1:#4fa89b;--c1bg:#1a2e2c;--c2:#c8844e;--c2bg:#2e2018;--c3:#5a90c8;--c3bg:#182030;--c4:#a06ab8;--c4bg:#281838;
+  --c-quiz:#e07850;--c-quizbg:#2a1810;
+  --sh-sm:0 1px 3px oklch(0 0 0/.25);--sh-md:0 4px 16px oklch(0 0 0/.35);--sh-lg:0 12px 40px oklch(0 0 0/.45);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:72px;-webkit-font-smoothing:antialiased}
+body{min-height:100dvh;font-family:var(--ff-b);font-size:var(--tx-base);color:var(--text);background:var(--bg);line-height:1.65}
+h1,h2,h3,h4{font-family:var(--ff-d);line-height:1.2;text-wrap:balance}
+p,li{text-wrap:pretty}
+button{cursor:pointer;background:none;border:none;font:inherit;color:inherit}
+a{color:inherit;text-decoration:none}
+ul{list-style:none}
+::selection{background:oklch(from var(--primary) l c h/.2)}
+:focus-visible{outline:2px solid var(--primary);outline-offset:3px;border-radius:var(--r-sm)}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 
-[data-theme="dark"] {
-  --color-bg:             #181612;
-  --color-surface:        #1e1c18;
-  --color-surface-2:      #242220;
-  --color-surface-offset: #2a2824;
-  --color-surface-dynamic:#323028;
-  --color-divider:        #2e2c28;
-  --color-border:         #3a3830;
-  --color-text:           #d4d0ca;
-  --color-text-muted:     #7a7670;
-  --color-text-faint:     #524e48;
-  --color-text-inverse:   #1e1c18;
-  --color-primary:        #4fa89b;
-  --color-primary-hover:  #3a8e82;
-  --color-primary-active: #2c6e64;
-  --color-primary-highlight: #1f3530;
-  --color-primary-light:  #1a2e2c;
-  --color-card1:          #4fa89b;  --color-card1-bg: #1a2e2c;
-  --color-card2:          #c8844e;  --color-card2-bg: #2e2018;
-  --color-card3:          #5a90c8;  --color-card3-bg: #182030;
-  --color-card4:          #a06ab8;  --color-card4-bg: #281838;
-  --shadow-sm: 0 1px 3px oklch(0 0 0 / 0.25);
-  --shadow-md: 0 4px 16px oklch(0 0 0 / 0.35);
-  --shadow-lg: 0 12px 40px oklch(0 0 0 / 0.45);
+/* SCROLL ANIM */
+.fi{opacity:1}
+@supports(animation-timeline:scroll()){
+  .fi{opacity:0;animation:rfade linear both;animation-timeline:view();animation-range:entry 0% entry 80%}
 }
+@keyframes rfade{to{opacity:1}}
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme]) {
-    --color-bg:#181612;--color-surface:#1e1c18;--color-surface-2:#242220;
-    --color-surface-offset:#2a2824;--color-surface-dynamic:#323028;
-    --color-divider:#2e2c28;--color-border:#3a3830;
-    --color-text:#d4d0ca;--color-text-muted:#7a7670;--color-text-faint:#524e48;
-    --color-text-inverse:#1e1c18;
-    --color-primary:#4fa89b;--color-primary-hover:#3a8e82;--color-primary-active:#2c6e64;
-    --color-primary-highlight:#1f3530;--color-primary-light:#1a2e2c;
-    --color-card1:#4fa89b;--color-card1-bg:#1a2e2c;
-    --color-card2:#c8844e;--color-card2-bg:#2e2018;
-    --color-card3:#5a90c8;--color-card3-bg:#182030;
-    --color-card4:#a06ab8;--color-card4-bg:#281838;
-    --shadow-sm:0 1px 3px oklch(0 0 0/0.25);
-    --shadow-md:0 4px 16px oklch(0 0 0/0.35);
-    --shadow-lg:0 12px 40px oklch(0 0 0/0.45);
-  }
-}
+/* HEADER */
+.hdr{position:sticky;top:0;z-index:100;background:oklch(from var(--bg) l c h/.9);backdrop-filter:blur(16px);border-bottom:1px solid oklch(from var(--text) l c h/.08);padding:.75rem 1.5rem}
+.hdr-in{max-width:1100px;margin-inline:auto;display:flex;align-items:center;gap:1rem;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:.75rem}
+.logo-t{font-family:var(--ff-d);font-size:var(--tx-lg);font-weight:700;color:var(--primary)}
+.logo-s{font-size:var(--tx-xs);color:var(--muted);line-height:1.3}
+.nav-l{display:flex;gap:.25rem;flex-wrap:wrap}
+.nav-l a{font-size:var(--tx-sm);padding:.375rem .75rem;border-radius:var(--r-full);color:var(--muted);font-weight:500;transition:color var(--tr),background var(--tr)}
+.nav-l a:hover{color:var(--text);background:var(--surface-off)}
+.nav-l a.active{color:var(--primary);background:var(--primary-lt)}
+.btn-th{padding:.5rem;border-radius:var(--r-full);color:var(--muted);display:flex;align-items:center;justify-content:center;transition:background var(--tr),color var(--tr)}
+.btn-th:hover{background:var(--surface-off);color:var(--text)}
 
-/* ===================== BASE ===================== */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; scroll-padding-top: 80px; -webkit-font-smoothing: antialiased; }
-body { min-height: 100dvh; font-family: var(--font-body); font-size: var(--text-base); color: var(--color-text); background: var(--color-bg); line-height: 1.65; }
-img { display: block; max-width: 100%; }
-h1,h2,h3,h4 { font-family: var(--font-display); line-height: 1.2; text-wrap: balance; }
-p, li { text-wrap: pretty; }
-button { cursor: pointer; background: none; border: none; font: inherit; color: inherit; }
-a { color: inherit; text-decoration: none; }
-ul { list-style: none; }
-::selection { background: oklch(from var(--color-primary) l c h / 0.2); }
-:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 3px; border-radius: var(--radius-sm); }
-a, button { transition: color var(--transition), background var(--transition), border-color var(--transition), box-shadow var(--transition); }
-@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
+/* HERO */
+.hero{padding:clamp(3rem,8vw,5rem) 1.5rem;max-width:1100px;margin-inline:auto;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center}
+.badge{display:inline-flex;align-items:center;gap:.5rem;background:var(--primary-lt);color:var(--primary);padding:.25rem .75rem;border-radius:var(--r-full);font-size:var(--tx-xs);font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin-bottom:1.25rem}
+.hero h1{font-size:var(--tx-2xl);font-weight:700;margin-bottom:1.25rem}
+.hero h1 em{font-style:italic;color:var(--primary)}
+.hero-d{font-size:var(--tx-base);color:var(--muted);max-width:52ch;line-height:1.75;margin-bottom:2rem}
+.hero-ctas{display:flex;gap:.75rem;flex-wrap:wrap}
+.btn-p{background:var(--primary);color:var(--inverse);padding:.75rem 1.5rem;border-radius:var(--r-full);font-size:var(--tx-sm);font-weight:600;display:inline-flex;align-items:center;gap:.5rem;transition:background var(--tr)}
+.btn-p:hover{background:var(--primary-h)}
+.btn-g{border:1px solid oklch(from var(--text) l c h/.15);color:var(--muted);padding:.75rem 1.25rem;border-radius:var(--r-full);font-size:var(--tx-sm);font-weight:500;transition:background var(--tr),color var(--tr)}
+.btn-g:hover{background:var(--surface-off);color:var(--text)}
+.hero-vis{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.mc{background:var(--surface);border-radius:var(--r-lg);padding:1.25rem;box-shadow:var(--sh-md);border:1px solid oklch(from var(--text) l c h/.07);display:flex;flex-direction:column;gap:.5rem}
+.mc.acc{background:var(--primary);color:var(--inverse)}
+.mc-n{font-family:var(--ff-d);font-size:var(--tx-xl);font-weight:700;opacity:.25}
+.mc h4{font-size:var(--tx-sm);font-weight:600}
+.mc p{font-size:var(--tx-xs);opacity:.75}
 
-/* ===================== SCROLL ANIMATIONS ===================== */
-.fade-in { opacity: 1; }
-@supports (animation-timeline: scroll()) {
-  .fade-in {
-    opacity: 0;
-    animation: reveal-fade linear both;
-    animation-timeline: view();
-    animation-range: entry 0% entry 85%;
-  }
-}
-@keyframes reveal-fade { to { opacity: 1; } }
+/* OVERVIEW */
+.ovw{background:var(--surface);border-top:1px solid oklch(from var(--text) l c h/.07);border-bottom:1px solid oklch(from var(--text) l c h/.07);padding:3rem 1.5rem}
+.ovw-in{max-width:1100px;margin-inline:auto}
+.ovw-t{font-size:var(--tx-xl);font-weight:700;margin-bottom:.5rem}
+.ovw-s{color:var(--muted);margin-bottom:2rem;font-size:var(--tx-base)}
+.ovw-g{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem}
+.oc{padding:1.5rem;border-radius:var(--r-lg);border:1px solid oklch(from var(--text) l c h/.08);cursor:pointer;transition:transform var(--tr),box-shadow var(--tr);text-decoration:none;display:flex;flex-direction:column;gap:.75rem}
+.oc:hover{transform:translateY(-3px);box-shadow:var(--sh-lg)}
+.oc[data-c="1"]{background:var(--c1bg)}.oc[data-c="2"]{background:var(--c2bg)}.oc[data-c="3"]{background:var(--c3bg)}.oc[data-c="4"]{background:var(--c4bg)}.oc[data-c="5"]{background:var(--c-quizbg)}
+.cn{font-family:var(--ff-d);font-size:var(--tx-xl);font-weight:700;line-height:1}
+.oc[data-c="1"] .cn{color:var(--c1)}.oc[data-c="2"] .cn{color:var(--c2)}.oc[data-c="3"] .cn{color:var(--c3)}.oc[data-c="4"] .cn{color:var(--c4)}.oc[data-c="5"] .cn{color:var(--c-quiz)}
+.oc h3{font-size:var(--tx-sm);font-weight:700;color:var(--text);line-height:1.35}
+.oc p{font-size:var(--tx-xs);color:var(--muted)}
 
-/* ===================== HEADER / NAV ===================== */
-.site-header {
-  position: sticky; top: 0; z-index: 100;
-  background: oklch(from var(--color-bg) l c h / 0.9);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid oklch(from var(--color-text) l c h / 0.08);
-  padding: var(--space-3) var(--space-6);
-}
-.header-inner { max-width: 1100px; margin-inline: auto; display: flex; align-items: center; gap: var(--space-4); justify-content: space-between; }
-.logo { display: flex; align-items: center; gap: var(--space-3); }
-.logo-text { font-family: var(--font-display); font-size: var(--text-lg); font-weight: 700; color: var(--color-primary); }
-.logo-sub { font-size: var(--text-xs); color: var(--color-text-muted); line-height: 1.3; }
-.nav-links { display: flex; gap: var(--space-1); flex-wrap: wrap; }
-.nav-links a {
-  font-size: var(--text-sm); padding: var(--space-2) var(--space-3);
-  border-radius: var(--radius-full); color: var(--color-text-muted);
-  font-weight: 500; transition: color var(--transition), background var(--transition);
-}
-.nav-links a:hover { color: var(--color-text); background: var(--color-surface-offset); }
-.nav-links a.active { color: var(--color-primary); background: var(--color-primary-light); }
-.header-actions { display: flex; align-items: center; gap: var(--space-2); }
-.btn-theme { padding: var(--space-2); border-radius: var(--radius-full); color: var(--color-text-muted); display: flex; align-items: center; justify-content: center; }
-.btn-theme:hover { background: var(--color-surface-offset); color: var(--color-text); }
+/* TOPIC SECTION */
+.ts{padding:clamp(3rem,6vw,5rem) 1.5rem}
+.ts:nth-child(even){background:var(--surface)}
+.ti{max-width:1100px;margin-inline:auto}
+.th{display:flex;align-items:flex-start;gap:1.5rem;margin-bottom:2.5rem}
+.tnb{width:56px;height:56px;border-radius:var(--r-lg);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:var(--ff-d);font-size:var(--tx-xl);font-weight:700}
+.b1{background:var(--c1bg);color:var(--c1)}.b2{background:var(--c2bg);color:var(--c2)}.b3{background:var(--c3bg);color:var(--c3)}.b4{background:var(--c4bg);color:var(--c4)}.b5{background:var(--c-quizbg);color:var(--c-quiz)}
+.th h2{font-size:var(--tx-xl);font-weight:700;margin-bottom:.5rem}
+.pills{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.5rem}
+.pill{padding:.25rem .75rem;border-radius:var(--r-full);font-size:var(--tx-xs);font-weight:600;border:1px solid oklch(from var(--text) l c h/.12);color:var(--muted)}
+.ctx{background:var(--surface-off);border-left:3px solid var(--ac,var(--primary));border-radius:0 var(--r-md) var(--r-md) 0;padding:1rem 1.25rem;margin-bottom:2rem;font-size:var(--tx-sm);color:var(--muted);font-style:italic}
+.ctx strong{color:var(--text);font-style:normal}
+.t1{--ac:var(--c1)}.t2{--ac:var(--c2)}.t3{--ac:var(--c3)}.t4{--ac:var(--c4)}.t5{--ac:var(--c-quiz)}
 
-/* ===================== HERO ===================== */
-.hero {
-  padding: clamp(var(--space-12), 8vw, var(--space-20)) var(--space-6);
-  max-width: 1100px; margin-inline: auto;
-  display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-12); align-items: center;
-}
-.hero-badge {
-  display: inline-flex; align-items: center; gap: var(--space-2);
-  background: var(--color-primary-light); color: var(--color-primary);
-  padding: var(--space-1) var(--space-3); border-radius: var(--radius-full);
-  font-size: var(--text-xs); font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;
-  margin-bottom: var(--space-5);
-}
-.hero h1 { font-size: var(--text-2xl); font-weight: 700; color: var(--color-text); margin-bottom: var(--space-5); }
-.hero h1 em { font-style: italic; color: var(--color-primary); }
-.hero-desc { font-size: var(--text-base); color: var(--color-text-muted); max-width: 52ch; line-height: 1.75; margin-bottom: var(--space-8); }
-.hero-ctas { display: flex; gap: var(--space-3); flex-wrap: wrap; }
-.btn-primary {
-  background: var(--color-primary); color: var(--color-text-inverse);
-  padding: var(--space-3) var(--space-6); border-radius: var(--radius-full);
-  font-size: var(--text-sm); font-weight: 600; display: inline-flex; align-items: center; gap: var(--space-2);
-}
-.btn-primary:hover { background: var(--color-primary-hover); }
-.btn-ghost {
-  border: 1px solid oklch(from var(--color-text) l c h / 0.15);
-  color: var(--color-text-muted); padding: var(--space-3) var(--space-5);
-  border-radius: var(--radius-full); font-size: var(--text-sm); font-weight: 500;
-}
-.btn-ghost:hover { background: var(--color-surface-offset); color: var(--color-text); }
+/* DEF BOX */
+.def-box{background:var(--surface2);border:2px solid oklch(from var(--ac,var(--primary)) l c h/.3);border-radius:var(--r-xl);padding:1.5rem 2rem;margin-bottom:2rem}
+.def-lbl{font-size:var(--tx-xs);font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ac,var(--primary));margin-bottom:.75rem}
+.def-box p{font-family:var(--ff-d);font-size:var(--tx-lg);color:var(--text);line-height:1.6;font-style:italic}
 
-.hero-visual {
-  display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4);
-}
-.mini-card {
-  background: var(--color-surface); border-radius: var(--radius-lg);
-  padding: var(--space-5); box-shadow: var(--shadow-md);
-  border: 1px solid oklch(from var(--color-text) l c h / 0.07);
-  display: flex; flex-direction: column; gap: var(--space-2);
-}
-.mini-card.accent { background: var(--color-primary); color: var(--color-text-inverse); }
-.mini-card-num { font-family: var(--font-display); font-size: var(--text-xl); font-weight: 700; opacity: 0.25; }
-.mini-card h4 { font-size: var(--text-sm); font-weight: 600; }
-.mini-card p { font-size: var(--text-xs); opacity: 0.75; }
-.mini-card.span-2 { grid-column: span 2; flex-direction: row; align-items: center; }
+/* CARDS */
+.cg{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2rem}
+.cc{background:var(--surface2);border-radius:var(--r-lg);padding:1.5rem;border:1px solid oklch(from var(--text) l c h/.08);box-shadow:var(--sh-sm)}
+.cc h3{font-size:var(--tx-base);font-weight:700;margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem}
+.cc p{font-size:var(--tx-sm);color:var(--muted);line-height:1.7}
+.cc ul{display:flex;flex-direction:column;gap:.5rem}
+.cc li{font-size:var(--tx-sm);color:var(--muted);padding-left:1rem;position:relative;line-height:1.6}
+.cc li::before{content:"›";position:absolute;left:0;color:var(--ac,var(--primary));font-weight:700}
+.fw{grid-column:span 2}
 
-/* ===================== SECTION OVERVIEW ===================== */
-.section-overview {
-  background: var(--color-surface);
-  border-top: 1px solid oklch(from var(--color-text) l c h / 0.07);
-  border-bottom: 1px solid oklch(from var(--color-text) l c h / 0.07);
-  padding: var(--space-12) var(--space-6);
-}
-.overview-inner { max-width: 1100px; margin-inline: auto; }
-.overview-title { font-size: var(--text-xl); font-weight: 700; margin-bottom: var(--space-2); }
-.overview-sub { color: var(--color-text-muted); margin-bottom: var(--space-8); font-size: var(--text-base); }
-.overview-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-4); }
-.overview-card {
-  padding: var(--space-6); border-radius: var(--radius-lg);
-  border: 1px solid oklch(from var(--color-text) l c h / 0.08);
-  cursor: pointer; transition: transform var(--transition), box-shadow var(--transition);
-  text-decoration: none; display: flex; flex-direction: column; gap: var(--space-3);
-}
-.overview-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
-.overview-card[data-theme-c="1"] { background: var(--color-card1-bg); }
-.overview-card[data-theme-c="2"] { background: var(--color-card2-bg); }
-.overview-card[data-theme-c="3"] { background: var(--color-card3-bg); }
-.overview-card[data-theme-c="4"] { background: var(--color-card4-bg); }
-.card-number { font-family: var(--font-display); font-size: var(--text-xl); font-weight: 700; line-height: 1; }
-.overview-card[data-theme-c="1"] .card-number { color: var(--color-card1); }
-.overview-card[data-theme-c="2"] .card-number { color: var(--color-card2); }
-.overview-card[data-theme-c="3"] .card-number { color: var(--color-card3); }
-.overview-card[data-theme-c="4"] .card-number { color: var(--color-card4); }
-.overview-card h3 { font-size: var(--text-sm); font-weight: 700; color: var(--color-text); line-height: 1.35; }
-.overview-card p { font-size: var(--text-xs); color: var(--color-text-muted); }
+/* EXAMPLES */
+.ex-list{display:flex;flex-direction:column;gap:.75rem;margin-bottom:2rem}
+.ex{background:var(--surface-off);border-radius:var(--r-md);padding:1rem 1.25rem;border-left:3px solid var(--ac,var(--primary))}
+.ex .et{font-family:var(--ff-d);font-size:var(--tx-base);color:var(--text);font-style:italic;margin-bottom:.5rem}
+.ex .en{font-size:var(--tx-xs);color:var(--muted)}
+.ex .en strong{color:var(--ac,var(--primary))}
 
-/* ===================== CARTILLA (TOPIC SECTION) ===================== */
-.topic-section { padding: clamp(var(--space-12), 6vw, var(--space-20)) var(--space-6); }
-.topic-section:nth-child(even) { background: var(--color-surface); }
-.topic-inner { max-width: 1100px; margin-inline: auto; }
+/* TABLE */
+.tw{overflow-x:auto;margin-bottom:1.5rem;border-radius:var(--r-lg);box-shadow:var(--sh-sm)}
+table{width:100%;border-collapse:collapse;font-size:var(--tx-sm)}
+thead tr{background:var(--ac,var(--primary));color:white}
+thead th{padding:.75rem 1rem;text-align:left;font-weight:600;font-family:var(--ff-d)}
+tbody tr{border-bottom:1px solid oklch(from var(--text) l c h/.06);background:var(--surface2)}
+tbody tr:hover{background:var(--surface-off)}
+tbody td{padding:.75rem 1rem;color:var(--muted);vertical-align:top;line-height:1.6}
+tbody td:first-child{font-weight:600;color:var(--text)}
+tbody td em{font-style:italic;color:var(--text)}
 
-.topic-header { display: flex; align-items: flex-start; gap: var(--space-6); margin-bottom: var(--space-10); }
-.topic-num-badge {
-  width: 56px; height: 56px; border-radius: var(--radius-lg); flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--font-display); font-size: var(--text-xl); font-weight: 700;
+/* NIVELES */
+.ng{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem}
+.nc{border-radius:var(--r-lg);padding:1.25rem;border:1px solid oklch(from var(--text) l c h/.08);text-align:center}
+.nc-n{font-family:var(--ff-d);font-size:var(--tx-xl);font-weight:700;margin-bottom:.5rem}
+.nc h4{font-size:var(--tx-sm);font-weight:700;margin-bottom:.5rem}
+.nc p{font-size:var(--tx-xs);color:var(--muted)}
+.n1{background:var(--c1bg)}.n1 .nc-n{color:var(--c1)}
+.n2{background:var(--c2bg)}.n2 .nc-n{color:var(--c2)}
+.n3{background:var(--c4bg)}.n3 .nc-n{color:var(--c4)}
+
+/* BIMEMBRE DIAGRAM */
+.od{display:grid;grid-template-columns:1fr 1fr;border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--sh-md);margin-bottom:2rem;border:1px solid oklch(from var(--text) l c h/.1)}
+.dh{padding:1.5rem;display:flex;flex-direction:column;gap:.5rem}
+.dh.sj{background:var(--c2bg)}.dh.pd{background:var(--c3bg)}
+.dh .dl{font-size:var(--tx-xs);font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+.dh.sj .dl{color:var(--c2)}.dh.pd .dl{color:var(--c3)}
+.dh .dt{font-family:var(--ff-d);font-size:var(--tx-base);font-weight:700;color:var(--text)}
+.dh .dd{font-size:var(--tx-sm);color:var(--muted)}
+.hl-s{color:var(--c2);font-weight:600}.hl-p{color:var(--c3);font-weight:600}
+
+/* VERBOS */
+.vg{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-bottom:1.5rem}
+.vc{background:var(--surface2);border-radius:var(--r-lg);padding:1.25rem;border:1px solid oklch(from var(--c3) l c h/.2)}
+.vtag{display:inline-block;background:var(--c3bg);color:var(--c3);font-size:var(--tx-xs);font-weight:700;padding:2px .5rem;border-radius:var(--r-full);margin-bottom:.75rem;text-transform:uppercase}
+.vc h4{font-size:var(--tx-sm);font-weight:700;margin-bottom:.5rem;color:var(--text)}
+.vc .eg{font-style:italic;font-size:var(--tx-sm);color:var(--muted)}
+
+/* ACTITUD */
+.ag{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-bottom:2rem}
+.ac2{background:var(--surface2);border-radius:var(--r-lg);padding:1.25rem;border:1px solid oklch(from var(--text) l c h/.08);box-shadow:var(--sh-sm)}
+.atag{display:inline-flex;align-items:center;gap:.25rem;background:var(--c4bg);color:var(--c4);font-size:var(--tx-xs);font-weight:700;padding:2px .75rem;border-radius:var(--r-full);margin-bottom:.75rem;text-transform:uppercase}
+.ac2 h4{font-size:var(--tx-sm);font-weight:700;margin-bottom:.5rem;color:var(--text)}
+.ac2 .def{font-size:var(--tx-xs);color:var(--muted);margin-bottom:.5rem;line-height:1.6}
+.ac2 .eg{font-style:italic;font-size:var(--tx-xs);color:var(--muted)}
+
+/* TIPOLOGIA TEXTUAL */
+.tip-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem}
+.tip-card{background:var(--surface2);border-radius:var(--r-lg);padding:1.25rem;border:1px solid oklch(from var(--text) l c h/.08);box-shadow:var(--sh-sm);display:flex;flex-direction:column;gap:.5rem}
+.tip-icon{font-size:1.6rem;line-height:1}
+.tip-card h4{font-size:var(--tx-sm);font-weight:700;color:var(--text)}
+.tip-card .tip-tag{display:inline-block;font-size:var(--tx-xs);font-weight:700;padding:2px .5rem;border-radius:var(--r-full);text-transform:uppercase;margin-bottom:.25rem}
+.tip-card p{font-size:var(--tx-xs);color:var(--muted);line-height:1.6}
+.tip-card .tip-ej{font-size:var(--tx-xs);color:var(--muted);font-style:italic;margin-top:.25rem}
+.tip-narr .tip-tag{background:var(--c1bg);color:var(--c1)}
+.tip-desc .tip-tag{background:var(--c2bg);color:var(--c2)}
+.tip-exp .tip-tag{background:var(--c3bg);color:var(--c3)}
+.tip-arg .tip-tag{background:var(--c4bg);color:var(--c4)}
+.tip-ins .tip-tag{background:var(--c-quizbg);color:var(--c-quiz)}
+.tip-conv .tip-tag{background:#f0f4e8;color:#4a7a1a}
+
+/* QUIZ */
+.quiz-wrap{max-width:1100px;margin-inline:auto;padding:clamp(3rem,6vw,5rem) 1.5rem}
+.quiz-header{margin-bottom:2.5rem}
+.quiz-header h2{font-size:var(--tx-xl);font-weight:700;margin-bottom:.5rem}
+.quiz-header p{color:var(--muted);font-size:var(--tx-base)}
+.quiz-progress{height:6px;background:var(--surface-off);border-radius:var(--r-full);margin-bottom:2rem;overflow:hidden}
+.quiz-bar{height:100%;background:var(--c-quiz);border-radius:var(--r-full);transition:width .4s cubic-bezier(.16,1,.3,1);width:0%}
+.quiz-counter{font-size:var(--tx-sm);color:var(--muted);margin-bottom:1rem;font-weight:600}
+.q-card{background:var(--surface2);border-radius:var(--r-xl);padding:2rem;box-shadow:var(--sh-md);border:1px solid oklch(from var(--text) l c h/.08);margin-bottom:1.5rem}
+.q-num{font-size:var(--tx-xs);font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--c-quiz);margin-bottom:.75rem}
+.q-text{font-family:var(--ff-d);font-size:var(--tx-lg);color:var(--text);line-height:1.5;margin-bottom:1.5rem;font-style:italic}
+.q-type-badge{display:inline-block;font-size:var(--tx-xs);font-weight:700;padding:3px 10px;border-radius:var(--r-full);margin-bottom:1rem;text-transform:uppercase}
+.qb-imp{background:var(--c3bg);color:var(--c3)}
+.qb-act{background:var(--c4bg);color:var(--c4)}
+.opts{display:flex;flex-direction:column;gap:.75rem}
+.opt{padding:1rem 1.25rem;border-radius:var(--r-lg);border:2px solid oklch(from var(--text) l c h/.12);background:var(--surface);cursor:pointer;font-size:var(--tx-sm);color:var(--text);text-align:left;transition:border-color var(--tr),background var(--tr);line-height:1.5;font-weight:500}
+.opt:hover:not(:disabled){border-color:var(--c-quiz);background:var(--c-quizbg)}
+.opt.correct{border-color:#1a7a4a;background:#e8f5ee;color:#1a7a4a}
+.opt.wrong{border-color:#c0392b;background:#fdf0ee;color:#c0392b}
+.opt.reveal-correct{border-color:#1a7a4a;background:#e8f5ee;color:#1a7a4a}
+.opt:disabled{cursor:default}
+.feedback{border-radius:var(--r-lg);padding:1rem 1.25rem;margin-top:1rem;font-size:var(--tx-sm);line-height:1.7;display:none}
+.feedback.show{display:block}
+.feedback.ok{background:#e8f5ee;border:1px solid #a8d5b8;color:#155a35}
+.feedback.ko{background:#fdf0ee;border:1px solid #f0b8b0;color:#7a1a10}
+.quiz-nav{display:flex;align-items:center;justify-content:space-between;margin-top:1.5rem}
+.q-next{background:var(--c-quiz);color:white;padding:.75rem 2rem;border-radius:var(--r-full);font-size:var(--tx-sm);font-weight:700;display:none;transition:background var(--tr)}
+.q-next:hover{background:#9a3a16}
+.q-next.show{display:block}
+.score-card{background:var(--surface2);border-radius:var(--r-xl);padding:3rem 2rem;text-align:center;box-shadow:var(--sh-lg);border:1px solid oklch(from var(--text) l c h/.08);display:none}
+.score-card.show{display:block}
+.score-emoji{font-size:3.5rem;margin-bottom:1rem}
+.score-card h3{font-family:var(--ff-d);font-size:var(--tx-xl);font-weight:700;margin-bottom:.5rem}
+.score-card p{color:var(--muted);font-size:var(--tx-base);margin-bottom:2rem}
+.score-num{font-family:var(--ff-d);font-size:var(--tx-2xl);font-weight:700;color:var(--c-quiz);margin-bottom:1rem}
+.restart-btn{background:var(--c-quiz);color:white;padding:.75rem 2rem;border-radius:var(--r-full);font-size:var(--tx-sm);font-weight:700;transition:background var(--tr);cursor:pointer;border:none}
+.restart-btn:hover{background:#9a3a16}
+
+/* FOOTER */
+.ftr{background:var(--surface);border-top:1px solid oklch(from var(--text) l c h/.08);padding:2.5rem 1.5rem;text-align:center}
+.ftr-in{max-width:600px;margin-inline:auto}
+.ftr-l{font-family:var(--ff-d);font-size:var(--tx-lg);font-weight:700;color:var(--primary);margin-bottom:.75rem}
+.ftr p{font-size:var(--tx-sm);color:var(--muted);line-height:1.7}
+
+/* BACK TOP */
+.btt{position:fixed;bottom:1.5rem;right:1.5rem;z-index:50;width:44px;height:44px;border-radius:var(--r-full);background:var(--primary);color:white;box-shadow:var(--sh-md);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity var(--tr),background var(--tr);border:none;cursor:pointer}
+.btt.vis{opacity:1;pointer-events:all}
+.btt:hover{background:var(--primary-h)}
+
+/* RESPONSIVE */
+@media(max-width:900px){.ovw-g{grid-template-columns:repeat(3,1fr)}.tip-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:768px){
+  .hero{grid-template-columns:1fr;gap:2rem}.hero-vis{display:none}
+  .cg{grid-template-columns:1fr}.ng{grid-template-columns:1fr}
+  .od{grid-template-columns:1fr}.vg{grid-template-columns:1fr}.ag{grid-template-columns:1fr}
+  .nav-l{display:none}.th{flex-direction:column;gap:.75rem}
+  .tip-grid{grid-template-columns:1fr}
 }
-.topic-header-text h2 { font-size: var(--text-xl); font-weight: 700; margin-bottom: var(--space-2); }
-.topic-context {
-  background: var(--color-surface-offset);
-  border-left: 3px solid var(--accent-color, var(--color-primary));
-  border-radius: 0 var(--radius-md) var(--radius-md) 0;
-  padding: var(--space-4) var(--space-5);
-  margin-bottom: var(--space-8);
-  font-size: var(--text-sm); color: var(--color-text-muted); font-style: italic;
-}
-.topic-context strong { color: var(--color-text); font-style: normal; }
-
-/* CARTILLA GRID */
-.cartilla-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6); margin-bottom: var(--space-8); }
-.cartilla-card {
-  background: var(--color-surface-2); border-radius: var(--radius-lg);
-  padding: var(--space-6); border: 1px solid oklch(from var(--color-text) l c h / 0.08);
-  box-shadow: var(--shadow-sm);
-}
-.cartilla-card h3 { font-size: var(--text-base); font-weight: 700; margin-bottom: var(--space-3); display: flex; align-items: center; gap: var(--space-2); }
-.cartilla-card h3 .icon { font-size: 1.1em; }
-.cartilla-card p { font-size: var(--text-sm); color: var(--color-text-muted); line-height: 1.7; }
-.cartilla-card ul { display: flex; flex-direction: column; gap: var(--space-2); }
-.cartilla-card ul li { font-size: var(--text-sm); color: var(--color-text-muted); padding-left: var(--space-4); position: relative; line-height: 1.6; }
-.cartilla-card ul li::before { content: "›"; position: absolute; left: 0; color: var(--accent-color, var(--color-primary)); font-weight: 700; }
-.cartilla-card.full-width { grid-column: span 2; }
-.cartilla-card.accent-bg { background: var(--color-primary-light); border-color: oklch(from var(--color-primary) l c h / 0.2); }
-
-/* DEFINICIÓN DESTACADA */
-.definition-box {
-  background: var(--color-surface-2);
-  border: 2px solid oklch(from var(--accent-color, var(--color-primary)) l c h / 0.3);
-  border-radius: var(--radius-xl); padding: var(--space-6) var(--space-8);
-  margin-bottom: var(--space-8);
-}
-.definition-box .def-label { font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent-color, var(--color-primary)); margin-bottom: var(--space-3); }
-.definition-box p { font-family: var(--font-display); font-size: var(--text-lg); color: var(--color-text); line-height: 1.6; font-style: italic; }
-
-/* EJEMPLOS */
-.examples-section { margin-bottom: var(--space-8); }
-.examples-section h3 { font-size: var(--text-base); font-weight: 700; margin-bottom: var(--space-4); color: var(--color-text); }
-.example-list { display: flex; flex-direction: column; gap: var(--space-3); }
-.example-item {
-  background: var(--color-surface-offset);
-  border-radius: var(--radius-md); padding: var(--space-4) var(--space-5);
-  border-left: 3px solid var(--accent-color, var(--color-primary));
-}
-.example-item .example-text { font-family: var(--font-display); font-size: var(--text-base); color: var(--color-text); font-style: italic; margin-bottom: var(--space-2); }
-.example-item .example-note { font-size: var(--text-xs); color: var(--color-text-muted); }
-.example-item .example-note strong { color: var(--accent-color, var(--color-primary)); }
-
-/* TABLA */
-.table-wrap { overflow-x: auto; margin-bottom: var(--space-6); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); }
-table { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
-thead tr { background: var(--accent-color, var(--color-primary)); color: white; }
-thead th { padding: var(--space-3) var(--space-4); text-align: left; font-weight: 600; font-family: var(--font-display); }
-tbody tr { border-bottom: 1px solid oklch(from var(--color-text) l c h / 0.06); background: var(--color-surface-2); }
-tbody tr:hover { background: var(--color-surface-offset); }
-tbody td { padding: var(--space-3) var(--space-4); color: var(--color-text-muted); vertical-align: top; line-height: 1.6; }
-tbody td:first-child { font-weight: 600; color: var(--color-text); }
-tbody td em { font-style: italic; color: var(--color-text); }
-
-/* REFLEXIÓN */
-.reflexion-box {
-  background: linear-gradient(135deg, oklch(from var(--accent-color, var(--color-primary)) l c h / 0.08), oklch(from var(--accent-color, var(--color-primary)) l c h / 0.04));
-  border: 1px solid oklch(from var(--accent-color, var(--color-primary)) l c h / 0.2);
-  border-radius: var(--radius-xl); padding: var(--space-6) var(--space-8);
-  margin-top: var(--space-8);
-}
-.reflexion-box .ref-label { font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent-color, var(--color-primary)); margin-bottom: var(--space-3); display: flex; align-items: center; gap: var(--space-2); }
-.reflexion-box p { font-size: var(--text-base); color: var(--color-text); line-height: 1.75; }
-.reflexion-box .answer { margin-top: var(--space-4); font-size: var(--text-sm); color: var(--color-text-muted); line-height: 1.75; border-top: 1px solid oklch(from var(--color-text) l c h / 0.1); padding-top: var(--space-4); }
-
-/* TIPO-SPECIFIC COLORS */
-.topic-1 { --accent-color: var(--color-card1); }
-.topic-2 { --accent-color: var(--color-card2); }
-.topic-3 { --accent-color: var(--color-card3); }
-.topic-4 { --accent-color: var(--color-card4); }
-
-.t1-badge { background: var(--color-card1-bg); color: var(--color-card1); }
-.t2-badge { background: var(--color-card2-bg); color: var(--color-card2); }
-.t3-badge { background: var(--color-card3-bg); color: var(--color-card3); }
-.t4-badge { background: var(--color-card4-bg); color: var(--color-card4); }
-
-/* PILL TAGS */
-.pill-tags { display: flex; gap: var(--space-2); flex-wrap: wrap; margin-bottom: var(--space-6); }
-.pill { padding: var(--space-1) var(--space-3); border-radius: var(--radius-full); font-size: var(--text-xs); font-weight: 600; border: 1px solid oklch(from var(--color-text) l c h / 0.12); color: var(--color-text-muted); }
-
-/* NIVELES LECTURA */
-.niveles-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); margin-bottom: var(--space-8); }
-.nivel-card {
-  border-radius: var(--radius-lg); padding: var(--space-5);
-  border: 1px solid oklch(from var(--color-text) l c h / 0.08);
-  text-align: center;
-}
-.nivel-card .nivel-num { font-family: var(--font-display); font-size: var(--text-xl); font-weight: 700; margin-bottom: var(--space-2); }
-.nivel-card h4 { font-size: var(--text-sm); font-weight: 700; margin-bottom: var(--space-2); }
-.nivel-card p { font-size: var(--text-xs); color: var(--color-text-muted); }
-.nivel-card.n1 { background: var(--color-card1-bg); } .nivel-card.n1 .nivel-num { color: var(--color-card1); }
-.nivel-card.n2 { background: var(--color-card2-bg); } .nivel-card.n2 .nivel-num { color: var(--color-card2); }
-.nivel-card.n3 { background: var(--color-card4-bg); } .nivel-card.n3 .nivel-num { color: var(--color-card4); }
-
-/* ORACION DIAGRAM */
-.oracion-diagram {
-  display: grid; grid-template-columns: 1fr 1fr;
-  border-radius: var(--radius-lg); overflow: hidden;
-  box-shadow: var(--shadow-md); margin-bottom: var(--space-8);
-  border: 1px solid oklch(from var(--color-text) l c h / 0.1);
-}
-.diag-half { padding: var(--space-6); display: flex; flex-direction: column; gap: var(--space-2); }
-.diag-half.sujeto { background: var(--color-card2-bg); }
-.diag-half.predicado { background: var(--color-card3-bg); }
-.diag-half .diag-label { font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
-.diag-half.sujeto .diag-label { color: var(--color-card2); }
-.diag-half.predicado .diag-label { color: var(--color-card3); }
-.diag-half .diag-title { font-family: var(--font-display); font-size: var(--text-base); font-weight: 700; color: var(--color-text); }
-.diag-half .diag-desc { font-size: var(--text-sm); color: var(--color-text-muted); }
-
-/* ORACION UNIMEMBRE */
-.verbos-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4); margin-bottom: var(--space-6); }
-.verbo-card {
-  background: var(--color-surface-2); border-radius: var(--radius-lg);
-  padding: var(--space-5); border: 1px solid oklch(from var(--color-card3) l c h / 0.2);
-}
-.verbo-card .verbo-tag {
-  display: inline-block; background: var(--color-card3-bg); color: var(--color-card3);
-  font-size: var(--text-xs); font-weight: 700; padding: 2px var(--space-2);
-  border-radius: var(--radius-full); margin-bottom: var(--space-3); text-transform: uppercase;
-}
-.verbo-card h4 { font-size: var(--text-sm); font-weight: 700; margin-bottom: var(--space-2); color: var(--color-text); }
-.verbo-card .eg { font-style: italic; font-size: var(--text-sm); color: var(--color-text-muted); }
-
-/* ACTITUD TABLE */
-.actitud-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4); margin-bottom: var(--space-8); }
-.actitud-card {
-  background: var(--color-surface-2); border-radius: var(--radius-lg);
-  padding: var(--space-5); border: 1px solid oklch(from var(--color-text) l c h / 0.08);
-  box-shadow: var(--shadow-sm);
-}
-.actitud-card .actitud-tag {
-  display: inline-flex; align-items: center; gap: var(--space-1);
-  background: var(--color-card4-bg); color: var(--color-card4);
-  font-size: var(--text-xs); font-weight: 700; padding: 2px var(--space-3);
-  border-radius: var(--radius-full); margin-bottom: var(--space-3); text-transform: uppercase;
-}
-.actitud-card h4 { font-size: var(--text-sm); font-weight: 700; margin-bottom: var(--space-2); color: var(--color-text); }
-.actitud-card .def { font-size: var(--text-xs); color: var(--color-text-muted); margin-bottom: var(--space-2); line-height: 1.6; }
-.actitud-card .eg { font-style: italic; font-size: var(--text-xs); color: var(--color-text-muted); }
-
-/* HIGHLIGHT INLINE */
-.hl { background: oklch(from var(--accent-color, var(--color-primary)) l c h / 0.15); color: var(--color-text); padding: 1px 5px; border-radius: 3px; font-style: italic; }
-.hl-s { color: var(--color-card2); font-weight: 600; }
-.hl-p { color: var(--color-card3); font-weight: 600; }
-
-/* ===================== FOOTER ===================== */
-.site-footer {
-  background: var(--color-surface);
-  border-top: 1px solid oklch(from var(--color-text) l c h / 0.08);
-  padding: var(--space-10) var(--space-6);
-  text-align: center;
-}
-.footer-inner { max-width: 600px; margin-inline: auto; }
-.footer-logo { font-family: var(--font-display); font-size: var(--text-lg); font-weight: 700; color: var(--color-primary); margin-bottom: var(--space-3); }
-.footer-text { font-size: var(--text-sm); color: var(--color-text-muted); line-height: 1.7; }
-
-/* BACK TO TOP */
-.back-top {
-  position: fixed; bottom: var(--space-6); right: var(--space-6); z-index: 50;
-  width: 44px; height: 44px; border-radius: var(--radius-full);
-  background: var(--color-primary); color: white;
-  box-shadow: var(--shadow-md); display: flex; align-items: center; justify-content: center;
-  opacity: 0; pointer-events: none; transition: opacity var(--transition);
-}
-.back-top.visible { opacity: 1; pointer-events: all; }
-.back-top:hover { background: var(--color-primary-hover); }
-
-/* ===================== RESPONSIVE ===================== */
-@media (max-width: 768px) {
-  .hero { grid-template-columns: 1fr; gap: var(--space-8); }
-  .hero-visual { display: none; }
-  .overview-grid { grid-template-columns: repeat(2, 1fr); }
-  .cartilla-grid { grid-template-columns: 1fr; }
-  .niveles-grid { grid-template-columns: 1fr; }
-  .oracion-diagram { grid-template-columns: 1fr; }
-  .verbos-grid { grid-template-columns: 1fr; }
-  .actitud-grid { grid-template-columns: 1fr; }
-  .nav-links { display: none; }
-  .topic-header { flex-direction: column; gap: var(--space-3); }
-}
-@media (max-width: 480px) {
-  .overview-grid { grid-template-columns: 1fr; }
-}
+@media(max-width:600px){.ovw-g{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.ovw-g{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 
-<!-- ===================== HEADER ===================== -->
-<header class="site-header">
-  <div class="header-inner">
+<!-- HEADER -->
+<header class="hdr">
+  <div class="hdr-in">
     <div class="logo">
-      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-label="Logo Gramática">
-        <rect width="32" height="32" rx="8" fill="var(--color-primary)"/>
-        <path d="M8 10 Q16 6 24 10" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-        <rect x="9" y="12" width="6" height="10" rx="1" fill="white" opacity="0.9"/>
-        <rect x="17" y="12" width="6" height="10" rx="1" fill="white" opacity="0.6"/>
-        <rect x="9" y="24" width="14" height="1.5" rx="0.75" fill="white" opacity="0.4"/>
-      </svg>
-      <div>
-        <div class="logo-text">Gramática del Español</div>
-        <div class="logo-sub">Cartillas universitarias</div>
-      </div>
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="var(--primary)"/><path d="M8 10 Q16 6 24 10" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/><rect x="9" y="12" width="6" height="10" rx="1" fill="white" opacity=".9"/><rect x="17" y="12" width="6" height="10" rx="1" fill="white" opacity=".6"/><rect x="9" y="24" width="14" height="1.5" rx=".75" fill="white" opacity=".4"/></svg>
+      <div><div class="logo-t">Gramática del Español</div><div class="logo-s">Cartillas universitarias</div></div>
     </div>
-    <nav class="nav-links" aria-label="Temas">
+    <nav class="nav-l">
       <a href="#texto">1. Texto</a>
-      <a href="#bimembre">2. Bimembre</a>
-      <a href="#unimembre">3. Unimembre</a>
-      <a href="#actitud">4. Actitud</a>
+      <a href="#tipologia">2. Tipología</a>
+      <a href="#bimembre">3. Bimembre</a>
+      <a href="#unimembre">4. Unimembre</a>
+      <a href="#actitud">5. Actitud</a>
+      <a href="#ejercicios">Ejercicios</a><a href="#quiz">Quiz</a>
     </nav>
-    <div class="header-actions">
-      <button class="btn-theme" data-theme-toggle aria-label="Cambiar modo visual">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="5"/>
-          <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
-        </svg>
-      </button>
-    </div>
+    <button class="btn-th" data-tt aria-label="Cambiar tema visual">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+    </button>
   </div>
 </header>
 
-<!-- ===================== HERO ===================== -->
+<!-- HERO -->
 <section class="hero">
-  <div class="hero-content">
-    <div class="hero-badge">
-      <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor"><circle cx="6" cy="6" r="6"/></svg>
+  <div>
+    <div class="badge">
+      <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><circle cx="5" cy="5" r="5"/></svg>
       Lingüística y Gramática
     </div>
     <h1>Fundamentos de la <em>Gramática Española</em></h1>
-    <p class="hero-desc">Cartillas de estudio universitario que cubren los conceptos esenciales del análisis lingüístico: desde la comprensión de textos hasta la clasificación de oraciones según su estructura y la actitud del hablante.</p>
+    <p class="hero-d">Cartillas universitarias que cubren los conceptos esenciales del análisis lingüístico: texto, tipología textual, estructura oracional y clasificación de oraciones. Incluye quiz interactivo.</p>
     <div class="hero-ctas">
-      <a href="#texto" class="btn-primary">Comenzar a estudiar →</a>
-      <a href="#actitud" class="btn-ghost">Ver todos los temas</a>
+      <a href="#texto" class="btn-p">Comenzar →</a>
+      <a href="#quiz" class="btn-g">Ir al Quiz ✏️</a>
     </div>
   </div>
-  <div class="hero-visual">
-    <div class="mini-card">
-      <div class="mini-card-num">01</div>
-      <h4>Texto</h4>
-      <p>Coherencia · Cohesión · Niveles de lectura</p>
-    </div>
-    <div class="mini-card accent">
-      <div class="mini-card-num">02</div>
-      <h4>Bimembre</h4>
-      <p>Sujeto · Predicado</p>
-    </div>
-    <div class="mini-card">
-      <div class="mini-card-num">03</div>
-      <h4>Unimembre</h4>
-      <p>Verbos impersonales</p>
-    </div>
-    <div class="mini-card">
-      <div class="mini-card-num">04</div>
-      <h4>Actitud</h4>
-      <p>7 tipos de oraciones</p>
+  <div class="hero-vis">
+    <div class="mc"><div class="mc-n">01</div><h4>Texto</h4><p>Coherencia · Cohesión · Niveles</p></div>
+    <div class="mc acc"><div class="mc-n">02</div><h4>Tipología</h4><p>6 tipos textuales</p></div>
+    <div class="mc"><div class="mc-n">03</div><h4>Oraciones</h4><p>Bimembre · Unimembre</p></div>
+    <div class="mc"><div class="mc-n">Quiz</div><h4>Práctica</h4><p>10 preguntas · Con explicación</p></div>
+  </div>
+</section>
+
+<!-- OVERVIEW -->
+<section class="ovw fi">
+  <div class="ovw-in">
+    <h2 class="ovw-t">Mapa de temas</h2>
+    <p class="ovw-s">Seleccioná cualquier cartilla para ir directamente al tema.</p>
+    <div class="ovw-g">
+      <a href="#texto" class="oc fi" data-c="1"><div class="cn">01</div><h3>Texto y Comprensión</h3><p>Propiedades textuales y niveles de lectura.</p></a>
+      <a href="#tipologia" class="oc fi" data-c="2"><div class="cn">02</div><h3>Tipología Textual</h3><p>Narrativo, descriptivo, argumentativo y más.</p></a>
+      <a href="#bimembre" class="oc fi" data-c="3"><div class="cn">03</div><h3>Oración Bimembre</h3><p>Sujeto, predicado y sujeto tácito.</p></a>
+      <a href="#unimembre" class="oc fi" data-c="4"><div class="cn">04</div><h3>Oración Unimembre</h3><p>Verbos impersonales y sus tipos.</p></a>
+      <a href="#actitud" class="oc fi" data-c="1"><div class="cn">05</div><h3>Actitud del Hablante</h3><p>Los 7 tipos de oraciones según intención.</p></a>
     </div>
   </div>
 </section>
 
-<!-- ===================== OVERVIEW ===================== -->
-<section class="section-overview fade-in">
-  <div class="overview-inner">
-    <h2 class="overview-title">Mapa de temas</h2>
-    <p class="overview-sub">Haz clic en cualquier cartilla para ir directamente al tema.</p>
-    <div class="overview-grid">
-      <a href="#texto" class="overview-card fade-in" data-theme-c="1">
-        <div class="card-number">01</div>
-        <h3>Texto y Comprensión Lectora</h3>
-        <p>Propiedades textuales, niveles de lectura y análisis del discurso.</p>
-      </a>
-      <a href="#bimembre" class="overview-card fade-in" data-theme-c="2">
-        <div class="card-number">02</div>
-        <h3>Oración Bimembre</h3>
-        <p>Sujeto, predicado, núcleos, tipos de predicado y sujeto tácito.</p>
-      </a>
-      <a href="#unimembre" class="overview-card fade-in" data-theme-c="3">
-        <div class="card-number">03</div>
-        <h3>Oración Unimembre</h3>
-        <p>Verbos impersonales meteorológicos, existenciales y con "se".</p>
-      </a>
-      <a href="#actitud" class="overview-card fade-in" data-theme-c="4">
-        <div class="card-number">04</div>
-        <h3>Oración según Actitud</h3>
-        <p>Los 7 tipos: enunciativa, interrogativa, exclamativa, imperativa y más.</p>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== TEMA 1: TEXTO ===================== -->
-<section id="texto" class="topic-section topic-1">
-  <div class="topic-inner">
-    <div class="topic-header fade-in">
-      <div class="topic-num-badge t1-badge">01</div>
-      <div class="topic-header-text">
+<!-- TEMA 1: TEXTO -->
+<section id="texto" class="ts t1">
+  <div class="ti">
+    <div class="th fi">
+      <div class="tnb b1">01</div>
+      <div>
         <h2>Texto y Comprensión Lectora</h2>
-        <div class="pill-tags">
-          <span class="pill">Lingüística Textual</span>
-          <span class="pill">Análisis del Discurso</span>
-          <span class="pill">Beaugrande & Dressler</span>
-          <span class="pill">Van Dijk</span>
-        </div>
+        <div class="pills"><span class="pill">Lingüística Textual</span><span class="pill">Beaugrande & Dressler</span><span class="pill">Van Dijk</span></div>
       </div>
     </div>
+    <div class="ctx fi"><strong>¿Por qué es relevante?</strong> Antes de analizar oraciones, necesitamos entender la unidad máxima de comunicación: el texto. Desde el <em>Análisis del Discurso</em> (Van Dijk, Halliday) y la <em>Lingüística Textual</em> (Beaugrande y Dressler), el texto es la unidad real de la comunicación humana.</div>
+    <div class="def-box fi"><div class="def-lbl">Definición</div><p>Un <strong>texto</strong> es una unidad comunicativa coherente y cohesionada, oral o escrita, producida con una intención específica en un contexto determinado.</p></div>
 
-    <div class="topic-context fade-in">
-      <strong>¿Por qué es relevante?</strong> Antes de analizar oraciones o estructuras gramaticales, necesitamos entender la unidad máxima de comunicación: el texto. Desde el <em>Análisis del Discurso</em> (Van Dijk, Halliday) y la <em>Lingüística Textual</em> (Beaugrande y Dressler), se sostiene que el texto es la unidad real de la comunicación humana.
-    </div>
-
-    <div class="definition-box fade-in">
-      <div class="def-label">Definición</div>
-      <p>Un <strong>texto</strong> es una unidad comunicativa coherente y cohesionada, oral o escrita, producida con una intención específica en un contexto determinado.</p>
-    </div>
-
-    <h3 style="font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-5);">Las 7 propiedades del texto (Beaugrande y Dressler, 1981)</h3>
-
-    <div class="table-wrap fade-in">
+    <h3 style="font-size:var(--tx-base);font-weight:700;margin-bottom:1.25rem" class="fi">Las 7 propiedades textuales (Beaugrande y Dressler, 1981)</h3>
+    <div class="tw fi">
       <table>
-        <thead>
-          <tr>
-            <th>Propiedad</th>
-            <th>Definición</th>
-            <th>Ejemplo</th>
-          </tr>
-        </thead>
+        <thead><tr><th>Propiedad</th><th>Definición</th><th>Ejemplo</th></tr></thead>
         <tbody>
-          <tr><td>Coherencia</td><td>Las ideas se relacionan lógicamente entre sí (unidad de sentido)</td><td><em>"Llovía fuerte. Decidí no salir."</em> → causa y efecto lógico</td></tr>
-          <tr><td>Cohesión</td><td>Conexión mediante recursos lingüísticos (pronombres, conectores, sinónimos)</td><td><em>"María estudia. <strong>Ella</strong> es brillante."</em> → pronombre anafórico</td></tr>
+          <tr><td>Coherencia</td><td>Las ideas se relacionan lógicamente (unidad de sentido)</td><td><em>"Llovía. Decidí no salir."</em> → causa-efecto</td></tr>
+          <tr><td>Cohesión</td><td>Conexión mediante recursos lingüísticos (pronombres, conectores)</td><td><em>"María estudia. <strong>Ella</strong> es brillante."</em></td></tr>
           <tr><td>Intencionalidad</td><td>El emisor tiene un propósito comunicativo</td><td>Persuadir, informar, entretener</td></tr>
           <tr><td>Aceptabilidad</td><td>El receptor reconoce el mensaje como relevante</td><td>El lector puede interpretar el texto</td></tr>
-          <tr><td>Informatividad</td><td>El texto aporta información nueva o significativa</td><td>Evita repetir lo ya conocido sin aportar valor</td></tr>
+          <tr><td>Informatividad</td><td>El texto aporta información nueva o significativa</td><td>Evita repetir lo ya conocido sin valor</td></tr>
           <tr><td>Situacionalidad</td><td>El texto es adecuado al contexto en que se produce</td><td>Un contrato difiere de una carta informal</td></tr>
-          <tr><td>Intertextualidad</td><td>Todo texto dialoga con otros textos anteriores</td><td>Una novela que cita o alude a otra obra</td></tr>
+          <tr><td>Intertextualidad</td><td>Todo texto dialoga con textos anteriores</td><td>Una novela que alude a otra obra</td></tr>
         </tbody>
       </table>
     </div>
 
-    <h3 style="font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-5);">Los 3 niveles de lectura</h3>
-
-    <div class="niveles-grid fade-in">
-      <div class="nivel-card n1">
-        <div class="nivel-num">I</div>
-        <h4>Nivel Literal</h4>
-        <p>Se extrae la información explícita del texto.<br><em>¿Qué dice?</em></p>
-      </div>
-      <div class="nivel-card n2">
-        <div class="nivel-num">II</div>
-        <h4>Nivel Inferencial</h4>
-        <p>Se interpreta lo implícito, se deduce lo no dicho.<br><em>¿Qué sugiere?</em></p>
-      </div>
-      <div class="nivel-card n3">
-        <div class="nivel-num">III</div>
-        <h4>Nivel Crítico</h4>
-        <p>Se evalúa y cuestiona el texto con perspectiva propia.<br><em>¿Qué opino?</em></p>
-      </div>
+    <h3 style="font-size:var(--tx-base);font-weight:700;margin-bottom:1.25rem" class="fi">Los 3 niveles de lectura</h3>
+    <div class="ng fi">
+      <div class="nc n1"><div class="nc-n">I</div><h4>Literal</h4><p>Información explícita del texto.<br><em>¿Qué dice?</em></p></div>
+      <div class="nc n2"><div class="nc-n">II</div><h4>Inferencial</h4><p>Se interpreta lo implícito y se deduce lo no dicho.<br><em>¿Qué sugiere?</em></p></div>
+      <div class="nc n3"><div class="nc-n">III</div><h4>Crítico-Valorativo</h4><p>Se evalúa, juzga y cuestiona el texto.<br><em>¿Qué opino?</em></p></div>
     </div>
 
-    <div class="examples-section fade-in">
-      <h3>Ejemplo práctico — aplicación de los 3 niveles</h3>
-      <div class="example-list">
-        <div class="example-item">
-          <div class="example-text">"El cielo se cubrió de nubes oscuras y el viento comenzó a silbar entre los árboles."</div>
-          <div class="example-note"><strong>Literal:</strong> Hay nubes oscuras y viento fuerte.</div>
-        </div>
-        <div class="example-item">
-          <div class="example-text">Nivel inferencial</div>
-          <div class="example-note"><strong>Inferencial:</strong> Va a llover. El ambiente se vuelve amenazante.</div>
-        </div>
-        <div class="example-item">
-          <div class="example-text">Nivel crítico-valorativo</div>
-          <div class="example-note"><strong>Crítico:</strong> ¿Qué función cumple esta descripción en el texto? ¿Crea tensión dramática? ¿Es un símbolo del estado emocional del personaje?</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="reflexion-box fade-in">
-      <div class="ref-label">💬 Cierre reflexivo</div>
-      <p>¿En qué nivel de lectura te quedás habitualmente cuando leés un texto académico? ¿Cómo podrías entrenar el nivel inferencial y crítico en tu práctica cotidiana?</p>
-      <div class="answer">
-        <strong>Respuesta guiada:</strong> La mayoría de los lectores novatos se quedan en el nivel literal. Leer para "extraer información" es lo que se enseña desde la escuela primaria. El nivel inferencial requiere un esfuerzo cognitivo mayor: relacionar lo dicho con lo no dicho, activar conocimientos previos y tolerar la ambigüedad. Una forma práctica de entrenarlo es preguntarse: <em>"¿Por qué el autor eligió esta palabra y no otra?"</em> o <em>"¿Qué está dando por sentado el texto?"</em> El nivel crítico —el más valioso en la universidad— implica dialogar con el texto, cuestionarlo y confrontarlo con otras fuentes. Un estudiante de Derecho o Ciencias Políticas que solo lee literalmente está en desventaja, pues los textos legales y políticos están cargados de implicaturas e ideología que solo se detectan leyendo entre líneas.
-      </div>
+    <h3 style="font-size:var(--tx-base);font-weight:700;margin-bottom:1rem" class="fi">Ejemplo práctico</h3>
+    <div class="ex-list fi">
+      <div class="ex"><div class="et">"El cielo se cubrió de nubes oscuras y el viento comenzó a silbar entre los árboles."</div><div class="en"><strong>Literal:</strong> Hay nubes oscuras y viento. | <strong>Inferencial:</strong> Va a llover; ambiente amenazante. | <strong>Crítico:</strong> ¿Qué función cumple esta descripción? ¿Crea tensión dramática o es un símbolo del estado emocional del personaje?</div></div>
     </div>
   </div>
 </section>
 
-<!-- ===================== TEMA 2: BIMEMBRE ===================== -->
-<section id="bimembre" class="topic-section topic-2">
-  <div class="topic-inner">
-    <div class="topic-header fade-in">
-      <div class="topic-num-badge t2-badge">02</div>
-      <div class="topic-header-text">
-        <h2>La Oración Bimembre: Sujeto y Predicado</h2>
-        <div class="pill-tags">
-          <span class="pill">Estructuralismo</span>
-          <span class="pill">Generativismo (Chomsky)</span>
-          <span class="pill">Gramática Tradicional</span>
-          <span class="pill">RAE</span>
-        </div>
+<!-- TEMA 2: TIPOLOGÍA TEXTUAL -->
+<section id="tipologia" class="ts t2">
+  <div class="ti">
+    <div class="th fi">
+      <div class="tnb b2">02</div>
+      <div>
+        <h2>Tipología Textual</h2>
+        <div class="pills"><span class="pill">Lingüística del texto</span><span class="pill">Werlich (1975)</span><span class="pill">Adam (1992)</span><span class="pill">Análisis del Discurso</span></div>
+      </div>
+    </div>
+    <div class="ctx fi"><strong>¿Por qué es relevante?</strong> No todos los textos tienen la misma función ni la misma estructura. La clasificación de los textos según su <em>propósito comunicativo</em> y su <em>organización interna</em> es fundamental tanto para la comprensión lectora como para la producción escrita. Los lingüistas Werlich (1975) y Adam (1992) sistematizaron estas categorías que hoy son referencia en la enseñanza del español.</div>
+    <div class="def-box fi"><div class="def-lbl">Definición</div><p>La <strong>tipología textual</strong> es la clasificación de los textos según su <em>función comunicativa dominante</em>, su estructura interna y los recursos lingüísticos que emplean.</p></div>
+
+    <div class="tip-grid fi">
+      <div class="tip-card tip-narr">
+        <div class="tip-icon">📖</div>
+        <div class="tip-tag">Narrativo</div>
+        <h4>Cuenta hechos o sucesos</h4>
+        <p>Presenta una secuencia de eventos ordenados en el tiempo, con personajes y un conflicto. Predomina la <strong>acción</strong> y el <strong>orden cronológico</strong>.</p>
+        <p class="tip-ej">Ej.: novelas, cuentos, noticias, crónicas, fábulas.</p>
+      </div>
+      <div class="tip-card tip-desc">
+        <div class="tip-icon">🔍</div>
+        <div class="tip-tag">Descriptivo</div>
+        <h4>Representa características</h4>
+        <p>Presenta las cualidades, rasgos o propiedades de personas, objetos, lugares o procesos. Predominan los <strong>adjetivos</strong> y el <strong>presente atemporal</strong>.</p>
+        <p class="tip-ej">Ej.: retratos, definiciones de diccionario, manuales científicos.</p>
+      </div>
+      <div class="tip-card tip-exp">
+        <div class="tip-icon">📚</div>
+        <div class="tip-tag">Expositivo</div>
+        <h4>Informa y explica</h4>
+        <p>Transmite información objetiva sobre un tema de manera clara y organizada. Busca que el receptor <strong>comprenda</strong> un concepto o fenómeno.</p>
+        <p class="tip-ej">Ej.: textos académicos, enciclopedias, artículos científicos, informes.</p>
+      </div>
+      <div class="tip-card tip-arg">
+        <div class="tip-icon">⚖️</div>
+        <div class="tip-tag">Argumentativo</div>
+        <h4>Convence y persuade</h4>
+        <p>El emisor defiende una <strong>tesis</strong> mediante argumentos y busca modificar la opinión del receptor. Pueden incluir contra-argumentos.</p>
+        <p class="tip-ej">Ej.: ensayos, editoriales, discursos políticos, debates, reseñas críticas.</p>
+      </div>
+      <div class="tip-card tip-ins">
+        <div class="tip-icon">📋</div>
+        <div class="tip-tag">Instructivo</div>
+        <h4>Guía para realizar acciones</h4>
+        <p>Indica pasos o procedimientos a seguir para alcanzar un objetivo. Usa el <strong>imperativo</strong> o el <strong>infinitivo</strong> con frecuencia.</p>
+        <p class="tip-ej">Ej.: recetas, manuales de uso, reglamentos, constituciones, normas legales.</p>
+      </div>
+      <div class="tip-card tip-conv">
+        <div class="tip-icon">💬</div>
+        <div class="tip-tag">Conversacional / Dialógico</div>
+        <h4>Intercambio comunicativo</h4>
+        <p>Se produce en el marco de un <strong>diálogo entre dos o más hablantes</strong>. Alterna turnos de habla y está marcado por el contexto situacional.</p>
+        <p class="tip-ej">Ej.: conversaciones cotidianas, entrevistas, obras de teatro, chat.</p>
       </div>
     </div>
 
-    <div class="topic-context fade-in">
-      <strong>¿Por qué es relevante?</strong> La oración es la unidad mínima con sentido completo y autonomía sintáctica. Su estudio es central tanto en la gramática tradicional (RAE) como en el <em>estructuralismo</em> (Saussure, Bloomfield) y el <em>generativismo</em> (Chomsky). Entender la estructura interna de la oración nos permite comprender cómo construimos y transmitimos significado.
+    <h3 style="font-size:var(--tx-base);font-weight:700;margin-bottom:1rem" class="fi">Características lingüísticas por tipo</h3>
+    <div class="tw fi">
+      <table>
+        <thead><tr><th>Tipo</th><th>Tiempo verbal dominante</th><th>Persona gramatical</th><th>Recursos clave</th></tr></thead>
+        <tbody>
+          <tr><td>Narrativo</td><td>Pretérito indefinido / imperfecto</td><td>3.ª persona (o 1.ª)</td><td><em>Conectores temporales: luego, después, entonces</em></td></tr>
+          <tr><td>Descriptivo</td><td>Presente o imperfecto</td><td>3.ª persona</td><td><em>Adjetivos, comparaciones, metáforas</em></td></tr>
+          <tr><td>Expositivo</td><td>Presente atemporal</td><td>3.ª persona impersonal</td><td><em>Definiciones, enumeraciones, clasificaciones</em></td></tr>
+          <tr><td>Argumentativo</td><td>Presente / futuro</td><td>1.ª persona (o impersonal)</td><td><em>Conectores causales y concesivos: aunque, sin embargo</em></td></tr>
+          <tr><td>Instructivo</td><td>Imperativo / infinitivo</td><td>2.ª persona</td><td><em>Verbos de acción, numeración de pasos</em></td></tr>
+          <tr><td>Conversacional</td><td>Variable</td><td>1.ª y 2.ª persona</td><td><em>Marcadores discursivos: bueno, o sea, mira</em></td></tr>
+        </tbody>
+      </table>
     </div>
 
-    <div class="definition-box fade-in">
-      <div class="def-label">Definición</div>
-      <p>La <strong>oración bimembre</strong> es aquella que puede dividirse en dos constituyentes inmediatos: un <strong>Sujeto</strong> (de quien se habla) y un <strong>Predicado</strong> (lo que se dice del sujeto).</p>
-    </div>
-
-    <div class="oracion-diagram fade-in">
-      <div class="diag-half sujeto">
-        <div class="diag-label">Sujeto (S)</div>
-        <div class="diag-title">¿De quién se habla?</div>
-        <div class="diag-desc">Núcleo: siempre un <strong>sustantivo</strong> o elemento sustantivado. Puede omitirse cuando es recuperable desde el verbo.</div>
-      </div>
-      <div class="diag-half predicado">
-        <div class="diag-label">Predicado (P)</div>
-        <div class="diag-title">¿Qué se dice del sujeto?</div>
-        <div class="diag-desc">Núcleo: siempre el <strong>verbo</strong>. Puede ser verbal (acción) o nominal (estado + atributo).</div>
-      </div>
-    </div>
-
-    <div class="cartilla-grid fade-in">
-      <div class="cartilla-card">
-        <h3><span class="icon">📘</span> Predicado Verbal (PV)</h3>
-        <p>El núcleo es un verbo que indica <strong>acción, proceso o estado</strong>. Es el tipo más frecuente.</p>
-        <br>
-        <div class="example-item" style="border-color:var(--color-card2)">
-          <div class="example-text"><span class="hl-s">Los estudiantes</span> / <span class="hl-p">leyeron el texto con atención.</span></div>
-          <div class="example-note"><strong>S</strong> = Los estudiantes | <strong>PV</strong> = leyeron el texto con atención</div>
-        </div>
-      </div>
-      <div class="cartilla-card">
-        <h3><span class="icon">📗</span> Predicado Nominal (PN)</h3>
-        <p>Se construye con un <strong>verbo copulativo</strong> (<em>ser, estar, parecer</em>) más un <strong>atributo</strong>.</p>
-        <br>
-        <div class="example-item" style="border-color:var(--color-card3)">
-          <div class="example-text"><span class="hl-s">La propuesta</span> / <span class="hl-p">es innovadora.</span></div>
-          <div class="example-note"><strong>S</strong> = La propuesta | <strong>PN</strong> = es (v. copulativo) + innovadora (atributo)</div>
-        </div>
-      </div>
-      <div class="cartilla-card full-width">
-        <h3><span class="icon">🔍</span> Sujeto Tácito o Elíptico</h3>
-        <p>En español, el sujeto puede estar <strong>omitido</strong> porque la desinencia verbal lo indica con claridad. Esto ocurre porque el español es una lengua de <strong>sujeto nulo</strong> (<em>pro-drop</em>), característica estudiada por la gramática generativa de Chomsky.</p>
-        <br>
-        <div class="example-list" style="margin-top:var(--space-3)">
-          <div class="example-item" style="border-color:var(--color-card2)">
-            <div class="example-text">"Estudié toda la noche."</div>
-            <div class="example-note">Sujeto tácito: <strong>yo</strong> — recuperable por la terminación verbal <em>-é</em></div>
-          </div>
-          <div class="example-item" style="border-color:var(--color-card2)">
-            <div class="example-text">"Llegamos tarde."</div>
-            <div class="example-note">Sujeto tácito: <strong>nosotros</strong> — recuperable por la terminación verbal <em>-amos</em></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="reflexion-box fade-in">
-      <div class="ref-label">💬 Cierre reflexivo</div>
-      <p>¿Por qué el español permite omitir el sujeto mientras que el inglés no? ¿Qué nos dice eso sobre la estructura gramatical de cada lengua?</p>
-      <div class="answer">
-        <strong>Respuesta guiada:</strong> Esta diferencia tiene una explicación morfológica muy concreta. El español es una lengua con <em>flexión verbal rica</em>: el verbo cambia su terminación según la persona y el número (<em>hablo, hablas, habla, hablamos</em>). Cada forma es diferente, lo que permite recuperar el sujeto directamente desde el verbo. El inglés, en cambio, tiene una <em>flexión verbal empobrecida</em>: casi todas las personas comparten la misma forma (<em>I speak, you speak, we speak</em>), por lo que sin el pronombre sujeto, la oración sería ambigua. El español "comprime" información en el verbo; el inglés la distribuye en pronombres explícitos. El guaraní, por cierto, también es una lengua de sujeto nulo, algo que comparte con el español y que facilita estructuralmente el bilingüismo en Paraguay.
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== TEMA 3: UNIMEMBRE ===================== -->
-<section id="unimembre" class="topic-section topic-3">
-  <div class="topic-inner">
-    <div class="topic-header fade-in">
-      <div class="topic-num-badge t3-badge">03</div>
-      <div class="topic-header-text">
-        <h2>La Oración Unimembre y los Verbos Impersonales</h2>
-        <div class="pill-tags">
-          <span class="pill">Gramática Normativa</span>
-          <span class="pill">Análisis Crítico del Discurso</span>
-          <span class="pill">Fairclough</span>
-          <span class="pill">Van Dijk</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="topic-context fade-in">
-      <strong>¿Por qué es relevante?</strong> No toda comunicación lingüística se ajusta al esquema binario sujeto-predicado. La oración unimembre desafía la concepción tradicional e invita a reflexionar sobre los límites de la gramática normativa. Además, el uso estratégico de verbos impersonales en el discurso político y jurídico tiene implicaciones ideológicas fundamentales.
-    </div>
-
-    <div class="definition-box fade-in">
-      <div class="def-label">Definición</div>
-      <p>La <strong>oración unimembre</strong> es aquella que <strong>no puede dividirse en sujeto y predicado</strong>, ya sea porque tiene un solo constituyente o porque la naturaleza del verbo impide la presencia de un sujeto gramatical.</p>
-    </div>
-
-    <h3 style="font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-5);">Tipos de verbos impersonales</h3>
-    <div class="verbos-grid fade-in">
-      <div class="verbo-card">
-        <span class="verbo-tag">Meteorológicos</span>
-        <h4>Fenómenos climáticos</h4>
-        <p class="eg">Llueve intensamente.<br>Nieva en la cordillera.<br>Amanece tarde en invierno.</p>
-      </div>
-      <div class="verbo-card">
-        <span class="verbo-tag">Haber existencial</span>
-        <h4>Existencia o presencia</h4>
-        <p class="eg">Hay muchos problemas.<br>Había estudiantes en el pasillo.<br><em>⚠ "estudiantes" es OD, no sujeto</em></p>
-      </div>
-      <div class="verbo-card">
-        <span class="verbo-tag">Hacer temporal</span>
-        <h4>Tiempo atmosférico y cronológico</h4>
-        <p class="eg">Hace frío.<br>Hace tres años que no la veo.<br>Hacía calor esa tarde.</p>
-      </div>
-      <div class="verbo-card">
-        <span class="verbo-tag">Impersonales con "se"</span>
-        <h4>Agente indeterminado</h4>
-        <p class="eg">Se vive bien en esta ciudad.<br>Se trabaja mucho allí.<br>Se dice que...</p>
-      </div>
-    </div>
-
-    <div class="cartilla-grid fade-in">
-      <div class="cartilla-card">
-        <h3><span class="icon">⚠️</span> Error frecuente: "Hubieron"</h3>
-        <p>Con el verbo <em>haber</em> existencial, el elemento que lo acompaña <strong>NO es sujeto sino objeto directo</strong>. Por eso es incorrecto concordar en número:</p>
+    <div class="cg fi">
+      <div class="cc">
+        <h3>⚠️ Los textos son híbridos</h3>
+        <p>En la práctica, la mayoría de los textos <strong>mezclan varios tipos</strong>. Un artículo periodístico puede ser expositivo y argumentativo. Una novela histórica combina narración y descripción.</p>
         <br>
         <ul>
-          <li>❌ "Hubieron muchos problemas en el sistema."</li>
-          <li>✅ "Hubo muchos problemas en el sistema."</li>
+          <li>El tipo dominante determina la <em>función principal</em> del texto</li>
+          <li>Los tipos secundarios enriquecen el mensaje</li>
+          <li>Identificar la combinación es parte del análisis textual</li>
+        </ul>
+      </div>
+      <div class="cc">
+        <h3>📌 Relevancia para el Derecho</h3>
+        <p>En los estudios jurídicos, los textos legales combinan varios tipos:</p>
+        <br>
+        <ul>
+          <li><strong>Constitución:</strong> expositivo + instructivo + argumentativo</li>
+          <li><strong>Sentencia judicial:</strong> expositivo + argumentativo + narrativo</li>
+          <li><strong>Contrato:</strong> instructivo + expositivo</li>
+          <li><strong>Discurso político:</strong> argumentativo + narrativo</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEMA 3: BIMEMBRE -->
+<section id="bimembre" class="ts t3">
+  <div class="ti">
+    <div class="th fi">
+      <div class="tnb b3">03</div>
+      <div>
+        <h2>La Oración Bimembre: Sujeto y Predicado</h2>
+        <div class="pills"><span class="pill">Estructuralismo</span><span class="pill">Generativismo (Chomsky)</span><span class="pill">Gramática RAE</span></div>
+      </div>
+    </div>
+    <div class="ctx fi"><strong>¿Por qué es relevante?</strong> La oración es la unidad mínima con sentido completo y autonomía sintáctica. Su estudio es central tanto en la gramática tradicional (RAE) como en el <em>estructuralismo</em> (Saussure, Bloomfield) y el <em>generativismo</em> de Chomsky.</div>
+    <div class="def-box fi"><div class="def-lbl">Definición</div><p>La <strong>oración bimembre</strong> es aquella que puede dividirse en dos constituyentes inmediatos: un <strong>Sujeto</strong> y un <strong>Predicado</strong>.</p></div>
+
+    <div class="od fi">
+      <div class="dh sj"><div class="dl">Sujeto (S)</div><div class="dt">¿De quién se habla?</div><div class="dd">Núcleo: siempre un <strong>sustantivo</strong> o elemento sustantivado. Puede omitirse cuando es recuperable desde el verbo.</div></div>
+      <div class="dh pd"><div class="dl">Predicado (P)</div><div class="dt">¿Qué se dice del sujeto?</div><div class="dd">Núcleo: siempre el <strong>verbo</strong>. Puede ser verbal (acción) o nominal (estado + atributo).</div></div>
+    </div>
+
+    <div class="cg fi">
+      <div class="cc">
+        <h3>📘 Predicado Verbal (PV)</h3>
+        <p>Núcleo: un verbo que indica <strong>acción, proceso o estado</strong>.</p>
+        <br>
+        <div class="ex"><div class="et"><span class="hl-s">Los estudiantes</span> / <span class="hl-p">leyeron el texto con atención.</span></div><div class="en">S = Los estudiantes | PV = leyeron el texto con atención</div></div>
+      </div>
+      <div class="cc">
+        <h3>📗 Predicado Nominal (PN)</h3>
+        <p>Verbo copulativo (<em>ser, estar, parecer</em>) + <strong>atributo</strong>.</p>
+        <br>
+        <div class="ex"><div class="et"><span class="hl-s">La propuesta</span> / <span class="hl-p">es innovadora.</span></div><div class="en">S = La propuesta | PN = es (cop.) + innovadora (atributo)</div></div>
+      </div>
+      <div class="cc fw">
+        <h3>🔍 Sujeto Tácito — lengua de sujeto nulo</h3>
+        <p>En español el sujeto puede omitirse porque la desinencia verbal lo indica. Esta característica se llama <strong>pro-drop</strong> en la gramática generativa.</p>
+        <br>
+        <div class="ex-list">
+          <div class="ex"><div class="et">"Estudié toda la noche."</div><div class="en">Sujeto tácito: <strong>yo</strong> — desinencia <em>-é</em></div></div>
+          <div class="ex"><div class="et">"Llegamos tarde."</div><div class="en">Sujeto tácito: <strong>nosotros</strong> — desinencia <em>-amos</em></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEMA 4: UNIMEMBRE -->
+<section id="unimembre" class="ts t4">
+  <div class="ti">
+    <div class="th fi">
+      <div class="tnb b4">04</div>
+      <div>
+        <h2>La Oración Unimembre y los Verbos Impersonales</h2>
+        <div class="pills"><span class="pill">Gramática Normativa</span><span class="pill">Análisis Crítico del Discurso</span><span class="pill">Fairclough</span></div>
+      </div>
+    </div>
+    <div class="ctx fi"><strong>¿Por qué es relevante?</strong> No toda comunicación se ajusta al esquema sujeto-predicado. La oración unimembre desafía la concepción tradicional e invita a reflexionar sobre la impersonalidad como estrategia discursiva en textos jurídicos y políticos.</div>
+    <div class="def-box fi"><div class="def-lbl">Definición</div><p>La <strong>oración unimembre</strong> es aquella que <em>no puede dividirse</em> en sujeto y predicado porque la naturaleza del verbo impide la presencia de un sujeto gramatical.</p></div>
+
+    <div class="vg fi">
+      <div class="vc"><span class="vtag">Meteorológicos</span><h4>Fenómenos climáticos</h4><p class="eg">Llueve intensamente.<br>Nieva en la cordillera.<br>Amanece tarde en invierno.<br>Tronó toda la noche.</p></div>
+      <div class="vc"><span class="vtag">Haber existencial</span><h4>Existencia o presencia</h4><p class="eg">Hay muchos problemas.<br>Había estudiantes en el pasillo.<br><strong>⚠ "estudiantes" es OD, no sujeto</strong></p></div>
+      <div class="vc"><span class="vtag">Hacer temporal</span><h4>Tiempo atmosférico y cronológico</h4><p class="eg">Hace frío.<br>Hace tres años que no la veo.<br>Hacía calor esa tarde.</p></div>
+      <div class="vc"><span class="vtag">Impersonales con "se"</span><h4>Agente indeterminado</h4><p class="eg">Se vive bien en esta ciudad.<br>Se trabaja mucho allí.<br>Se dice que habrá cambios.</p></div>
+    </div>
+
+    <div class="cg fi">
+      <div class="cc">
+        <h3>⚠️ Error frecuente: "Hubieron"</h3>
+        <p>Con <em>haber</em> existencial el elemento que lo acompaña es <strong>objeto directo</strong>, no sujeto. Por eso no concuerda en número:</p>
+        <br>
+        <ul>
+          <li>❌ "Hubieron muchos problemas."</li>
+          <li>✅ "Hubo muchos problemas."</li>
           <li>❌ "Habrán novedades esta semana."</li>
           <li>✅ "Habrá novedades esta semana."</li>
         </ul>
       </div>
-      <div class="cartilla-card">
-        <h3><span class="icon">🎭</span> Impersonalidad y discurso</h3>
-        <p>Desde el <strong>Análisis Crítico del Discurso</strong> (Fairclough, Van Dijk), las construcciones impersonales son un mecanismo de <strong>opacidad ideológica</strong>: el agente responsable desaparece de la oración.</p>
+      <div class="cc">
+        <h3>🎭 Impersonalidad y poder discursivo</h3>
+        <p>Desde el Análisis Crítico del Discurso, las impersonales son un mecanismo de <strong>opacidad ideológica</strong>: el agente responsable desaparece de la oración.</p>
         <br>
         <ul>
           <li>"<em>Se decidió cerrar la fábrica.</em>" → ¿quién decidió?</li>
@@ -798,151 +543,758 @@ tbody td em { font-style: italic; color: var(--color-text); }
         </ul>
       </div>
     </div>
+  </div>
+</section>
 
-    <div class="reflexion-box fade-in">
-      <div class="ref-label">💬 Cierre reflexivo</div>
-      <p>¿Qué función discursiva cumple la impersonalidad? ¿Qué efecto político produce que se diga "se decidió" en lugar de "el gobierno decidió"?</p>
-      <div class="answer">
-        <strong>Respuesta guiada:</strong> La impersonalidad es una <em>estrategia discursiva de evasión de responsabilidad</em>. Al borrar al agente de la oración, se presenta una acción como si ocurriera sola, naturalmente, sin intervención humana. Esto es extremadamente común en el discurso político, burocrático y jurídico. Como futuro profesional del Derecho y las Ciencias Políticas, desarrollar la capacidad de detectar estas construcciones en documentos oficiales, leyes y discursos es una habilidad analítica de primer orden.
+<!-- TEMA 5: ACTITUD -->
+<section id="actitud" class="ts t1">
+  <div class="ti">
+    <div class="th fi">
+      <div class="tnb b1">05</div>
+      <div>
+        <h2>La Oración según la Actitud del Hablante</h2>
+        <div class="pills"><span class="pill">Pragmática</span><span class="pill">Actos de Habla (Austin & Searle)</span><span class="pill">Modalidad oracional</span></div>
       </div>
+    </div>
+    <div class="ctx fi"><strong>¿Por qué es relevante?</strong> La gramática no es solo estructura: es también <em>intención</em>. Esta clasificación conecta la sintaxis con la <strong>pragmática</strong> y la <strong>teoría de los actos de habla</strong> (Austin y Searle, siglo XX).</div>
+    <div class="def-box fi"><div class="def-lbl">Definición</div><p>Las oraciones se clasifican según la <strong>actitud del hablante</strong>, es decir, la <em>modalidad</em> con que se presenta el contenido: afirmación, pregunta, deseo, orden, emoción, duda u esperanza.</p></div>
+
+    <div class="ag fi">
+      <div class="ac2"><div class="atag">1. Enunciativa</div><h4>Afirma o niega un hecho</h4><div class="def">Las más neutrales. El hablante declara algo como real o no real.</div><div class="eg">✅ "Paraguay es un país bilingüe."<br>❌ "No asistí a la conferencia."</div></div>
+      <div class="ac2"><div class="atag">2. Interrogativa</div><h4>Solicita información</h4><div class="def">Total (sí/no), parcial (información específica) o indirecta (incrustada en otra oración).</div><div class="eg">¿Estudiaste? / ¿Cuándo fue? / Quiero saber si vendrás.</div></div>
+      <div class="ac2"><div class="atag">3. Exclamativa</div><h4>Expresa emoción intensa</h4><div class="def">Sorpresa, alegría, indignación, admiración. Lleva signos ¡ !</div><div class="eg">¡Qué hermosa es la literatura latinoamericana! / ¡Cuánto hemos avanzado!</div></div>
+      <div class="ac2"><div class="atag">4. Imperativa</div><h4>Orden, ruego o consejo</h4><div class="def">Acto ilocutivo directivo (Searle): busca modificar la conducta del receptor.</div><div class="eg">"Lee el capítulo antes de clase." / "Por favor, explícame el concepto."</div></div>
+      <div class="ac2"><div class="atag">5. Dubitativa</div><h4>Expresa duda o posibilidad</h4><div class="def">Usa futuro de probabilidad o subjuntivo. Indica incertidumbre del hablante.</div><div class="eg">"Quizás llueva esta tarde." / "Habrá llegado tarde."</div></div>
+      <div class="ac2"><div class="atag">6. Desiderativa</div><h4>Expresa deseo o esperanza</h4><div class="def">Subjuntivo frecuente. Conectores: <em>ojalá, que, así</em>.</div><div class="eg">¡Ojalá apruebe el parcial! / ¡Que tengas éxito!</div></div>
+      <div class="ac2" style="grid-column:span 2"><div class="atag">7. Optativa / De posibilidad</div><h4>Posibilidad real con esperanza</h4><div class="def">Similar a la desiderativa pero el hablante percibe la situación como más probable o alcanzable.</div><div class="eg">"Puede que lleguen a tiempo." / "A lo mejor aprueba el examen." / "Tal vez lo encontremos allí."</div></div>
     </div>
   </div>
 </section>
 
-<!-- ===================== TEMA 4: ACTITUD ===================== -->
-<section id="actitud" class="topic-section topic-4">
-  <div class="topic-inner">
-    <div class="topic-header fade-in">
-      <div class="topic-num-badge t4-badge">04</div>
-      <div class="topic-header-text">
-        <h2>La Oración según la Actitud del Hablante</h2>
-        <div class="pill-tags">
-          <span class="pill">Pragmática</span>
-          <span class="pill">Actos de Habla (Austin & Searle)</span>
-          <span class="pill">Modalidad oracional</span>
+<!-- QUIZ -->
+<section id="quiz" style="background:var(--surface)">
+  <div class="quiz-wrap">
+    <div class="quiz-header fi">
+      <div class="th">
+        <div class="tnb b5">✏️</div>
+        <div>
+          <h2>Quiz: Verbos Impersonales y Actitud del Hablante</h2>
+          <p>10 preguntas de selección múltiple con explicación de cada respuesta.</p>
         </div>
       </div>
     </div>
-
-    <div class="topic-context fade-in">
-      <strong>¿Por qué es relevante?</strong> La gramática no es solo estructura: es también <em>intención</em>. Cuando hablamos, no solo describimos realidades, sino que expresamos deseos, dudas, órdenes y emociones. Esta clasificación conecta la sintaxis con la <strong>pragmática</strong> y la <strong>teoría de los actos de habla</strong> (Austin y Searle, siglo XX).
+    <div class="quiz-progress"><div class="quiz-bar" id="qBar"></div></div>
+    <div class="quiz-counter" id="qCounter">Pregunta 1 de 10</div>
+    <div id="quizContainer"></div>
+    <div class="quiz-nav">
+      <div></div>
+      <button class="q-next" id="qNext">Siguiente →</button>
     </div>
-
-    <div class="definition-box fade-in">
-      <div class="def-label">Definición</div>
-      <p>Las oraciones se clasifican según la <strong>actitud del hablante</strong> en el momento de emitirlas, es decir, según la <em>modalidad</em> con que se presenta el contenido proposicional.</p>
-    </div>
-
-    <div class="actitud-grid fade-in">
-      <div class="actitud-card">
-        <div class="actitud-tag">1. Enunciativa</div>
-        <h4>Declarativa / Aseverativa</h4>
-        <div class="def">El hablante afirma o niega un hecho. Las más neutras y objetivas.</div>
-        <div class="eg">✅ "Paraguay es un país bilingüe."<br>❌ "No asistí a la conferencia."</div>
-      </div>
-      <div class="actitud-card">
-        <div class="actitud-tag">2. Interrogativa</div>
-        <h4>Solicita información</h4>
-        <div class="def">Total (sí/no), parcial (info específica) o indirecta (incrustada).</div>
-        <div class="eg">¿Estudiaste para el examen? / ¿Cuándo fue? / Quiero saber si vendrás.</div>
-      </div>
-      <div class="actitud-card">
-        <div class="actitud-tag">3. Exclamativa</div>
-        <h4>Emoción intensa</h4>
-        <div class="def">Expresa sorpresa, alegría, indignación o admiración.</div>
-        <div class="eg">¡Qué hermosa es la literatura latinoamericana! / ¡Cuánto hemos avanzado!</div>
-      </div>
-      <div class="actitud-card">
-        <div class="actitud-tag">4. Imperativa</div>
-        <h4>Orden, ruego o consejo</h4>
-        <div class="def">Acto ilocutivo directivo: busca influir en la conducta del receptor.</div>
-        <div class="eg">"Lee el capítulo antes de clase." / "Por favor, explícame el concepto."</div>
-      </div>
-      <div class="actitud-card">
-        <div class="actitud-tag">5. Dubitativa</div>
-        <h4>Duda o posibilidad</h4>
-        <div class="def">Usa futuro de probabilidad o subjuntivo. Expresa incertidumbre.</div>
-        <div class="eg">"Quizás llueva esta tarde." / "Habrá llegado tarde al examen."</div>
-      </div>
-      <div class="actitud-card">
-        <div class="actitud-tag">6. Desiderativa</div>
-        <h4>Deseo o esperanza</h4>
-        <div class="def">Frecuentemente usa el subjuntivo. Conectores: <em>ojalá, que, así</em>.</div>
-        <div class="eg">¡Ojalá apruebe el parcial! / ¡Que tengas éxito en tu exposición!</div>
-      </div>
-      <div class="actitud-card" style="grid-column:span 2">
-        <div class="actitud-tag">7. Optativa / De posibilidad</div>
-        <h4>Esperanza con matiz de posibilidad real</h4>
-        <div class="def">Similar a la desiderativa pero con mayor probabilidad percibida por el hablante. Frecuente en el habla cotidiana.</div>
-        <div class="eg">"Puede que lleguen a tiempo." / "A lo mejor aprueba el examen." / "Tal vez lo encontremos allí."</div>
-      </div>
-    </div>
-
-    <div class="reflexion-box fade-in">
-      <div class="ref-label">💬 Cierre reflexivo</div>
-      <p>Pensá en un discurso político que hayas escuchado recientemente. ¿Qué tipos de oraciones predominan? ¿Por qué un político usaría más oraciones imperativas o desiderativas que enunciativas?</p>
-      <div class="answer">
-        <strong>Respuesta guiada:</strong> En los discursos políticos predominan las oraciones <em>imperativas, desiderativas y exclamativas</em>, y esta elección no es casual. Las imperativas (<em>"¡Construyamos un país mejor!"</em>) generan un efecto de movilización y comunidad: el político no solo describe, sino que convoca. Las desiderativas (<em>"¡Ojalá recuperemos la prosperidad!"</em>) apelan al deseo colectivo y crean identificación emocional. Las exclamativas amplifican emociones: indignación ante el adversario, orgullo nacional, esperanza en el futuro. En contraste, las enunciativas frías y objetivas son las menos frecuentes en la oratoria política, porque generan distancia emocional. Un político que solo da datos estadísticos sin carga emotiva difícilmente moviliza a sus seguidores.
-      </div>
+    <div class="score-card" id="scoreCard">
+      <div class="score-emoji" id="scoreEmoji"></div>
+      <div class="score-num" id="scoreNum"></div>
+      <h3 id="scoreTitle"></h3>
+      <p id="scoreDesc"></p>
+      <button class="restart-btn" onclick="startQuiz()">Reiniciar Quiz 🔄</button>
     </div>
   </div>
 </section>
 
-<!-- ===================== FOOTER ===================== -->
-<footer class="site-footer">
-  <div class="footer-inner">
-    <div class="footer-logo">Gramática del Español</div>
-    <p class="footer-text">Cartillas de estudio universitario elaboradas para la cátedra de <em>Comunicación y Lengua Castellana</em>. Basadas en los aportes teóricos de Beaugrande & Dressler, Van Dijk, Chomsky, Austin y Searle. Material de apoyo pedagógico — no reemplaza la bibliografía obligatoria de la asignatura.</p>
+
+<!-- ===================== EJERCICIOS ===================== -->
+<section id="ejercicios" style="background:var(--bg)">
+<div style="max-width:1100px;margin-inline:auto;padding:clamp(3rem,6vw,5rem) 1.5rem">
+
+  <div class="th fi">
+    <div class="tnb" style="background:#fff3e0;color:#e65100;width:56px;height:56px;border-radius:var(--r-lg);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:var(--ff-d);font-size:var(--tx-xl);font-weight:700">📝</div>
+    <div>
+      <h2 style="font-size:var(--tx-xl);font-weight:700;margin-bottom:.5rem">Ejercicios de Práctica</h2>
+      <div class="pills">
+        <span class="pill">UNA — Fac. de Derecho y Cs. Sociales</span>
+        <span class="pill">Comunicación y Redacción Castellana</span>
+        <span class="pill">Sustantivos · Concordancia · Sujeto · Impersonales</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:2rem;border-bottom:2px solid oklch(from var(--text) l c h/.1);padding-bottom:.75rem" id="ejTabs">
+    <button class="ej-tab active" data-tab="ej1">1. Concordancia</button>
+    <button class="ej-tab" data-tab="ej2">2. Grupos Nominales</button>
+    <button class="ej-tab" data-tab="ej3">3. Tipo de Sujeto</button>
+    <button class="ej-tab" data-tab="ej4">4. Impersonales</button>
+    <button class="ej-tab" data-tab="ej5">5. Con/Sin Sujeto</button>
+    <button class="ej-tab" data-tab="ej6">6. Múltiple Opción</button>
+  </div>
+
+  <!-- ===== EJ 1 ===== -->
+  <div id="ej1" class="ej-panel">
+    <div class="ctx" style="--ac:#e65100"><strong>Ejercicio 1.</strong> Lee atentamente las oraciones e identificá los errores de concordancia. Corrígelos. <em>Obs.: No todas las oraciones contienen errores. Los errores pueden ser de género o de número.</em></div>
+    <div id="ej1-items"></div>
+    <div style="margin-top:1.5rem;display:flex;gap:.75rem;flex-wrap:wrap">
+      <button class="btn-p" style="background:#e65100" onclick="revealAll('ej1')">Ver todas las respuestas</button>
+      <button class="btn-g" onclick="hideAll('ej1')">Ocultar respuestas</button>
+    </div>
+  </div>
+
+  <!-- ===== EJ 2 ===== -->
+  <div id="ej2" class="ej-panel" style="display:none">
+    <div class="ctx" style="--ac:#e65100"><strong>Ejercicio 2.</strong> Identificá el núcleo del grupo nominal (sustantivo) y sus modificadores (determinantes, adjetivos, grupos preposicionales).</div>
+    <div class="def-box" style="--ac:#e65100;margin-bottom:1.5rem">
+      <div class="def-lbl">Ejemplo guía</div>
+      <p style="font-size:var(--tx-sm)"><span style="background:#fff3e0;padding:2px 6px;border-radius:4px;color:#e65100">la</span> <strong><u>lengua</u></strong> <span style="background:#e8f3f1;padding:2px 6px;border-radius:4px;color:var(--c1)">indígena</span> <span style="background:var(--c3bg);padding:2px 6px;border-radius:4px;color:var(--c3)">del país</span><br><small style="color:var(--muted)">det. · NÚCLEO (sust. f. sing.) · adjetivo · grupo preposicional</small></p>
+    </div>
+    <div id="ej2-items"></div>
+    <div style="margin-top:1.5rem;display:flex;gap:.75rem;flex-wrap:wrap">
+      <button class="btn-p" style="background:#e65100" onclick="revealAll('ej2')">Ver todas las respuestas</button>
+      <button class="btn-g" onclick="hideAll('ej2')">Ocultar respuestas</button>
+    </div>
+  </div>
+
+  <!-- ===== EJ 3 ===== -->
+  <div id="ej3" class="ej-panel" style="display:none">
+    <div class="ctx" style="--ac:#e65100"><strong>Ejercicio 3.</strong> Identificá el verbo y clasificá las oraciones según el tipo de sujeto: <strong>explícito (S.E.)</strong> o <strong>tácito/implícito (S.T.)</strong>.</div>
+    <div id="ej3-items"></div>
+    <div style="margin-top:1.5rem;display:flex;gap:.75rem;flex-wrap:wrap">
+      <button class="btn-p" style="background:#e65100" onclick="revealAll('ej3')">Ver todas las respuestas</button>
+      <button class="btn-g" onclick="hideAll('ej3')">Ocultar respuestas</button>
+    </div>
+  </div>
+
+  <!-- ===== EJ 4 ===== -->
+  <div id="ej4" class="ej-panel" style="display:none">
+    <div class="ctx" style="--ac:#e65100"><strong>Ejercicio 4.</strong> Clasificá cada oración impersonal según el tipo de impersonalidad que presenta.</div>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:.5rem;margin-bottom:1.5rem;font-size:var(--tx-xs);text-align:center">
+      <div style="background:var(--c1bg);color:var(--c1);padding:.5rem;border-radius:var(--r-md);font-weight:700">Verbo haber</div>
+      <div style="background:var(--c2bg);color:var(--c2);padding:.5rem;border-radius:var(--r-md);font-weight:700">Reflejas</div>
+      <div style="background:var(--c3bg);color:var(--c3);padding:.5rem;border-radius:var(--r-md);font-weight:700">Fenóm. atmosf.</div>
+      <div style="background:var(--c4bg);color:var(--c4);padding:.5rem;border-radius:var(--r-md);font-weight:700">Sujeto indefinido</div>
+      <div style="background:#fff3e0;color:#e65100;padding:.5rem;border-radius:var(--r-md);font-weight:700">Otras constr.</div>
+    </div>
+    <div id="ej4-items"></div>
+    <div style="margin-top:1.5rem;display:flex;gap:.75rem;flex-wrap:wrap">
+      <button class="btn-p" style="background:#e65100" onclick="revealAll('ej4')">Ver todas las respuestas</button>
+      <button class="btn-g" onclick="hideAll('ej4')">Ocultar respuestas</button>
+    </div>
+  </div>
+
+  <!-- ===== EJ 5 ===== -->
+  <div id="ej5" class="ej-panel" style="display:none">
+    <div class="ctx" style="--ac:#e65100"><strong>Ejercicio 5.</strong> Marcá con X si la oración tiene sujeto (bimembre) o si es impersonal (unimembre).</div>
+    <div id="ej5-items"></div>
+    <div style="margin-top:1.5rem;display:flex;gap:.75rem;flex-wrap:wrap">
+      <button class="btn-p" style="background:#e65100" onclick="revealAll('ej5')">Ver todas las respuestas</button>
+      <button class="btn-g" onclick="hideAll('ej5')">Ocultar respuestas</button>
+    </div>
+  </div>
+
+  <!-- ===== EJ 6 ===== -->
+  <div id="ej6" class="ej-panel" style="display:none">
+    <div class="ctx" style="--ac:#e65100"><strong>Ejercicio 6.</strong> Selección múltiple — una sola respuesta correcta por pregunta.</div>
+    <div id="ej6-items"></div>
+  </div>
+
+</div>
+</section>
+
+<style>
+.ej-tab{padding:.5rem 1.1rem;border-radius:var(--r-full);font-size:var(--tx-xs);font-weight:700;border:1.5px solid oklch(from var(--text) l c h/.15);color:var(--muted);transition:background var(--tr),color var(--tr),border-color var(--tr);cursor:pointer;background:none}
+.ej-tab:hover{background:var(--surface-off);color:var(--text)}
+.ej-tab.active{background:#e65100;color:#fff;border-color:#e65100}
+.ej-row{background:var(--surface2);border-radius:var(--r-lg);padding:1rem 1.25rem;margin-bottom:.75rem;border:1px solid oklch(from var(--text) l c h/.08);display:flex;flex-direction:column;gap:.5rem}
+.ej-sentence{font-family:var(--ff-d);font-style:italic;color:var(--text);font-size:var(--tx-sm);line-height:1.6}
+.ej-letter{font-size:var(--tx-xs);font-weight:700;color:#e65100;margin-bottom:.15rem}
+.ej-ans{font-size:var(--tx-xs);color:var(--muted);background:var(--surface-off);border-radius:var(--r-md);padding:.6rem .9rem;border-left:3px solid #e65100;display:none;line-height:1.7}
+.ej-ans.show{display:block}
+.ej-ans .ok{color:#1a7a4a;font-weight:700}
+.ej-ans .err{color:#c0392b;font-weight:700}
+.ej-ans .fix{color:#e65100;font-weight:700}
+.ej-toggle{background:none;border:1px solid oklch(from var(--text) l c h/.18);color:var(--muted);font-size:var(--tx-xs);padding:.25rem .75rem;border-radius:var(--r-full);cursor:pointer;align-self:flex-start;transition:background var(--tr),color var(--tr)}
+.ej-toggle:hover{background:var(--surface-off);color:var(--text)}
+/* multi-choice */
+.mc6-group{margin-bottom:2rem}
+.mc6-q{font-size:var(--tx-sm);font-weight:700;color:var(--text);margin-bottom:.75rem;line-height:1.5}
+.mc6-opts{display:flex;flex-direction:column;gap:.5rem}
+.mc6-opt{padding:.75rem 1rem;border-radius:var(--r-lg);border:2px solid oklch(from var(--text) l c h/.12);background:var(--surface);cursor:pointer;font-size:var(--tx-sm);color:var(--text);text-align:left;transition:border-color var(--tr),background var(--tr);font-weight:500;line-height:1.5}
+.mc6-opt:hover:not(:disabled){border-color:#e65100;background:#fff3e0}
+.mc6-opt.correct{border-color:#1a7a4a!important;background:#e8f5ee!important;color:#1a7a4a!important}
+.mc6-opt.wrong{border-color:#c0392b!important;background:#fdf0ee!important;color:#c0392b!important}
+.mc6-opt.reveal{border-color:#1a7a4a!important;background:#e8f5ee!important;color:#1a7a4a!important}
+.mc6-fb{display:none;font-size:var(--tx-xs);margin-top:.5rem;padding:.6rem .9rem;border-radius:var(--r-md);line-height:1.7}
+.mc6-fb.show{display:block}
+.mc6-fb.ok{background:#e8f5ee;border:1px solid #a8d5b8;color:#155a35}
+.mc6-fb.ko{background:#fdf0ee;border:1px solid #f0b8b0;color:#7a1a10}
+/* ej5 table */
+.ej5-table{width:100%;border-collapse:collapse;font-size:var(--tx-sm);margin-bottom:1rem}
+.ej5-table thead tr{background:#e65100;color:white}
+.ej5-table thead th{padding:.6rem .9rem;text-align:left;font-weight:700}
+.ej5-table tbody tr{border-bottom:1px solid oklch(from var(--text) l c h/.06);background:var(--surface2)}
+.ej5-table tbody tr:hover{background:var(--surface-off)}
+.ej5-table td{padding:.6rem .9rem;vertical-align:middle;color:var(--muted);font-size:var(--tx-xs)}
+.ej5-table td:first-child{color:var(--text);font-style:italic}
+.ej5-x{display:inline-block;width:22px;height:22px;border-radius:4px;border:2px solid oklch(from var(--text) l c h/.2);cursor:pointer;transition:background var(--tr),border-color var(--tr);position:relative}
+.ej5-x.sel-suj{background:#e8f5ee;border-color:#1a7a4a}
+.ej5-x.sel-suj::after{content:"✓";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#1a7a4a;font-weight:700;font-size:12px}
+.ej5-x.sel-imp{background:var(--c3bg);border-color:var(--c3)}
+.ej5-x.sel-imp::after{content:"✓";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:var(--c3);font-weight:700;font-size:12px}
+.ej5-x.wrong-mark{background:#fdf0ee!important;border-color:#c0392b!important}
+.ej5-x.wrong-mark::after{content:"✗"!important;color:#c0392b!important}
+.ej5-x.correct-reveal{background:#e8f5ee!important;border-color:#1a7a4a!important}
+.ej5-x.correct-reveal::after{content:"✓"!important;color:#1a7a4a!important}
+@media(max-width:600px){.ej-tab{font-size:10px;padding:.4rem .6rem}}
+</style>
+
+<script>
+// ────────────────────────────────────────────────
+// DATOS EJERCICIO 1 – Concordancia
+// ────────────────────────────────────────────────
+const ej1Data = [
+  {l:'a', sent:'… la negociación amistosa de un reordenamiento mundial de <span class="err">índole económico</span>, en favor del Tercer Mundo, y a <span class="err">expensa</span> de los altos niveles de vida de Occidente…',
+   ans:'<span class="err">2 errores:</span> 1) <span class="fix">"índole económica"</span> — <em>índole</em> es femenino, el adjetivo debe concordar en género. 2) <span class="fix">"a expensas"</span> — la locución preposicional es siempre plural.'},
+  {l:'b', sent:'La víctima, un jubilado, resultó <span class="err">aprisionado</span> contra la pared del inmueble.',
+   ans:'<span class="err">Error de género:</span> el núcleo del sujeto es <em>víctima</em> (femenino), por lo tanto el atributo debe concordar: <span class="fix">"resultó aprisionada"</span>.'},
+  {l:'c', sent:'Las auditorías que realizan firmas privadas no están amparadas por un execuátur.',
+   ans:'<span class="ok">Sin error.</span> <em>Execuátur</em> es palabra invariable en plural (no se dice "execuáturs"). El uso en singular es correcto en este contexto.'},
+  {l:'d', sent:'La confiscación de los camiones jordanos está destinada a la formación de <span class="err">convoys</span> que envíen las mercancías por carretera a Irak desde Aqaba.',
+   ans:'<span class="err">Error de número:</span> el plural de <em>convoy</em> es <span class="fix">"convoyes"</span>, no "convoys". Los sustantivos acabados en -oy forman el plural añadiendo -es.'},
+  {l:'e', sent:'… muchos compañeros habían pasado por los <span class="err">kibutces</span> en sus años de estudiantes.',
+   ans:'<span class="err">Error ortográfico en plural:</span> el plural de <em>kibutz</em> es <span class="fix">"kibuts"</span> o <span class="fix">"kibutz"</span> (invariable según la RAE), no "kibutces".'},
+  {l:'f', sent:'…los estados <em>miembro</em> no prohibirán, restringirán ni obstaculizarán el lanzamiento al mercado…',
+   ans:'<span class="ok">Correcto en su contexto.</span> "Estados miembro" (sin -s) es un uso válido en textos jurídicos y europeos donde <em>miembro</em> funciona como sustantivo en aposición, no como adjetivo.'},
+  {l:'g', sent:'…los estados <em>miembros</em> no prohibirán, restringirán ni obstaculizarán el lanzamiento al mercado…',
+   ans:'<span class="ok">También correcto.</span> La RAE acepta el plural <span class="fix">"estados miembros"</span> como la grafía más apropiada en español estándar.'},
+  {l:'h', sent:'Requisa en Tacumbú: <span class="err">máscaras antigases</span> y armas en otras 29 celdas allanadas.',
+   ans:'<span class="err">Error de número:</span> el plural de <em>antigas</em> es <span class="fix">"antigas"</span> (invariable) o <span class="fix">"máscaras antigas"</span>. Los compuestos prefijales con <em>anti-</em> no duplican la -s.'},
+  {l:'i', sent:'La concentración fue dispersada por agentes <em>antidisturbio</em>, llegados de Lisboa.',
+   ans:'<span class="ok">Sin error.</span> <em>Antidisturbio</em> funciona como adjetivo invariable en esta construcción (como en "policía antidisturbio", uso extendido y aceptado).'},
+  {l:'j', sent:'Los esfuerzos de las <span class="err">diplomacias norteamericanas</span> no han dado todavía resultados positivos.',
+   ans:'<span class="err">Error semántico-de número:</span> los EE.UU. tienen una sola diplomacia como institución. Lo correcto es <span class="fix">"la diplomacia norteamericana"</span> en singular.'},
+  {l:'k', sent:'Este país no ha quedado, tras el <span class="err">comicio</span>, dividido en dos: ha quedado bendecido por sus grandes mitades.',
+   ans:'<span class="err">Error de número:</span> las elecciones son un evento plural por naturaleza. La palabra correcta es <span class="fix">"comicios"</span> (plural), que es además el uso estándar en el español periodístico y político.'},
+  {l:'l', sent:'… estamos en el <span class="err">prolegómeno</span> de una renovada gestión para que el Congreso regularice la extradición…',
+   ans:'<span class="err">Error de número:</span> <em>prolegómeno</em> tiene plural inherente según la RAE. Lo correcto es <span class="fix">"los prolegómenos"</span>.'},
+  {l:'m', sent:'A continuación, un repaso de los <em>ultimátum</em> impuestos por Trump y de sus resultados.',
+   ans:'<span class="ok">Sin error.</span> <em>Ultimátum</em> es una voz latina invariable en plural; no se dice "ultimátums" ni "ultimata" en español estándar.'},
+];
+
+// ────────────────────────────────────────────────
+// DATOS EJERCICIO 2 – Grupos nominales
+// ────────────────────────────────────────────────
+const ej2Data = [
+  {l:'a', sent:'La disputa por el derecho',
+   ans:'DET: <em>La</em> · NÚCLEO: <strong>disputa</strong> (sust. f. sing.) · GP: <em>por el derecho</em>'},
+  {l:'b', sent:'La profundización del autoritarismo',
+   ans:'DET: <em>La</em> · NÚCLEO: <strong>profundización</strong> (sust. f. sing.) · GP: <em>del autoritarismo</em>'},
+  {l:'c', sent:'El escandaloso permiso a Hernán Rivas',
+   ans:'DET: <em>El</em> · ADJ: <em>escandaloso</em> · NÚCLEO: <strong>permiso</strong> (sust. m. sing.) · GP: <em>a Hernán Rivas</em>'},
+  {l:'d', sent:'Ese fortalecimiento de la agenda bilateral',
+   ans:'DET: <em>Ese</em> (demostrativo) · NÚCLEO: <strong>fortalecimiento</strong> (sust. m. sing.) · GP: <em>de la agenda bilateral</em>'},
+  {l:'e', sent:'Un uso estratégico del gas natural',
+   ans:'DET: <em>Un</em> (artículo indefinido) · NÚCLEO: <strong>uso</strong> (sust. m. sing.) · ADJ: <em>estratégico</em> · GP: <em>del gas natural</em>'},
+  {l:'f', sent:'El ansiado estudio de factibilidad industrial',
+   ans:'DET: <em>El</em> · ADJ: <em>ansiado</em> (antepuesto) · NÚCLEO: <strong>estudio</strong> (sust. m. sing.) · GP: <em>de factibilidad industrial</em>'},
+];
+
+// ────────────────────────────────────────────────
+// DATOS EJERCICIO 3 – Tipo de sujeto
+// ────────────────────────────────────────────────
+const ej3Data = [
+  {l:'a', sent:'La embajadora de Armenia apuesta por una mayor integración cultural y económica con Paraguay.',
+   ans:'V: <em>apuesta</em> (3.ª p. sing.) · <span class="ok">S. EXPLÍCITO</span>: <strong>"La embajadora de Armenia"</strong>'},
+  {l:'b', sent:'A los cinco meses de deliberación, ratificó a Fernando como consejero de la binacional.',
+   ans:'V: <em>ratificó</em> (3.ª p. sing.) · <span class="fix">S. TÁCITO</span>: <em>(él/ella)</em> — recuperable por la desinencia verbal.'},
+  {l:'c', sent:'Aspirantes a la candidatura temen fraude electoral.',
+   ans:'V: <em>temen</em> (3.ª p. pl.) · <span class="ok">S. EXPLÍCITO</span>: <strong>"Aspirantes a la candidatura"</strong>'},
+  {l:'d', sent:'Reforzó lazos con el Gobierno a pesar de la negativa colectiva.',
+   ans:'V: <em>reforzó</em> (3.ª p. sing.) · <span class="fix">S. TÁCITO</span>: <em>(él/ella)</em>'},
+  {l:'e', sent:'Hoy cumplimos 150 años de cooperación.',
+   ans:'V: <em>cumplimos</em> (1.ª p. pl.) · <span class="fix">S. TÁCITO</span>: <em>(nosotros)</em>'},
+  {l:'f', sent:'Promoviste el bienestar artístico, excelente.',
+   ans:'V: <em>promoviste</em> (2.ª p. sing.) · <span class="fix">S. TÁCITO</span>: <em>(tú/vos)</em>'},
+  {l:'g', sent:'Las ciudades del futuro no se improvisan.',
+   ans:'V: <em>improvisan</em> (3.ª p. pl.) · <span class="ok">S. EXPLÍCITO</span>: <strong>"Las ciudades del futuro"</strong>'},
+  {l:'h', sent:'Médicos impulsan proyecto de ley que obliga a la medicina prepaga cubrir cirugías mamarias.',
+   ans:'V: <em>impulsan</em> (3.ª p. pl.) · <span class="ok">S. EXPLÍCITO</span>: <strong>"Médicos"</strong>'},
+  {l:'i', sent:'Se incautaron cinco toneladas de droga dirigidas al interior del país.',
+   ans:'V: <em>incautaron</em> · <span class="fix">S. TÁCITO</span>: <em>(ellos — indefinido)</em> · ⚠ Algunos gramáticos la clasifican como impersonal con <em>se</em>.'},
+  {l:'j', sent:'Observen con atención lo que estoy por hacer.',
+   ans:'V: <em>observen</em> (imperativo, 3.ª p. pl. / ustedes) · <span class="fix">S. TÁCITO</span>: <em>(ustedes)</em>'},
+  {l:'k', sent:'Se financió un proyecto para la restauración del museo.',
+   ans:'V: <em>financió</em> · <span class="fix">S. TÁCITO</span>: <em>(sujeto indeterminado — impersonal refleja)</em>'},
+  {l:'l', sent:'Los proyectos fueron rechazados por el consejo.',
+   ans:'V: <em>fueron rechazados</em> (voz pasiva) · <span class="ok">S. EXPLÍCITO</span>: <strong>"Los proyectos"</strong> (sujeto paciente)'},
+  {l:'m', sent:'Mantengo mi posición como persona sin culpabilidad en este caso.',
+   ans:'V: <em>mantengo</em> (1.ª p. sing.) · <span class="fix">S. TÁCITO</span>: <em>(yo)</em>'},
+  {l:'n', sent:'La lluvia torrencial inmoviliza el tráfico en Asunción.',
+   ans:'V: <em>inmoviliza</em> (3.ª p. sing.) · <span class="ok">S. EXPLÍCITO</span>: <strong>"La lluvia torrencial"</strong>'},
+  {l:'o', sent:'Por primera vez en la historia, la ciudad amanece libre de basura en las calles.',
+   ans:'V: <em>amanece</em> (3.ª p. sing.) · <span class="ok">S. EXPLÍCITO</span>: <strong>"la ciudad"</strong> — aquí <em>amanecer</em> NO es impersonal porque tiene sujeto expreso.'},
+];
+
+// ────────────────────────────────────────────────
+// DATOS EJERCICIO 4 – Clasificación de impersonales
+// ────────────────────────────────────────────────
+const ej4Data = [
+  {l:'a', sent:'Avistan un yaguareté por primera vez en colonia de Amambay.',
+   ans:'V: <em>avistan</em> · Tipo: <span style="color:var(--c4);font-weight:700">Sujeto indefinido (3.ª p. pl.)</span> — informativo, sin agente explícito.'},
+  {l:'b', sent:'Ordenan la detención de un hombre por exhibicionismo.',
+   ans:'V: <em>ordenan</em> · Tipo: <span style="color:var(--c4);font-weight:700">Sujeto indefinido (3.ª p. pl.)</span> — informativo.'},
+  {l:'c', sent:'Se alista a los voluntarios para la búsqueda de supervivientes.',
+   ans:'V: <em>alista</em> · Tipo: <span style="color:var(--c2);font-weight:700">Impersonal refleja</span> (3.ª p. sing. + <em>se</em> + OD con <em>a</em>).'},
+  {l:'d', sent:'Se ordena a los implicados a permanecer en el país.',
+   ans:'V: <em>ordena</em> · Tipo: <span style="color:var(--c2);font-weight:700">Impersonal refleja</span>.'},
+  {l:'e', sent:'Llueve torrencialmente en Asunción.',
+   ans:'V: <em>llueve</em> · Tipo: <span style="color:var(--c3);font-weight:700">Fenómeno atmosférico</span> — verbo meteorológico, solo 3.ª p. sing.'},
+  {l:'f', sent:'Anochece rápidamente en esta ciudad.',
+   ans:'V: <em>anochece</em> · Tipo: <span style="color:var(--c3);font-weight:700">Fenómeno atmosférico</span> (tiempo atmosférico/ciclo natural).'},
+  {l:'g', sent:'No hubo explicaciones lógicas para el fallo emitido por el juez.',
+   ans:'V: <em>hubo</em> · Tipo: <span style="color:var(--c1);font-weight:700">Verbo haber existencial</span> — "explicaciones" es OD, no sujeto.'},
+  {l:'h', sent:'Habrá comicios extraordinarios en Ciudad del Este.',
+   ans:'V: <em>habrá</em> · Tipo: <span style="color:var(--c1);font-weight:700">Verbo haber existencial</span> — impersonal léxico.'},
+  {l:'i', sent:'Manifestaron su descontento con los resultados de las negociaciones.',
+   ans:'V: <em>manifestaron</em> · Tipo: <span style="color:var(--c4);font-weight:700">Sujeto indefinido (3.ª p. pl.)</span>.'},
+  {l:'j', sent:'Había protestas y disturbios en el centro de la ciudad.',
+   ans:'V: <em>había</em> · Tipo: <span style="color:var(--c1);font-weight:700">Verbo haber existencial</span> — "protestas" es OD.'},
+  {l:'k', sent:'Hace demasiado calor para salir a trotar.',
+   ans:'V: <em>hace</em> · Tipo: <span style="color:var(--c3);font-weight:700">Fenómeno atmosférico</span> (hacer climático).'},
+  {l:'l', sent:'Hace muchos años, este país aún era una colonia.',
+   ans:'V: <em>hace</em> · Tipo: <span style="color:#e65100;font-weight:700">Otras construcciones</span> — <em>hacer</em> temporal/cronológico (no climático).'},
+  {l:'m', sent:'Aquí huele a gato encerrado.',
+   ans:'V: <em>huele</em> · Tipo: <span style="color:#e65100;font-weight:700">Otras construcciones</span> — verbos de percepción sensorial usados impersonalmente.'},
+  {l:'n', sent:'Lamentablemente, no se respeta a los adultos mayores.',
+   ans:'V: <em>respeta</em> · Tipo: <span style="color:var(--c2);font-weight:700">Impersonal refleja</span> (<em>se</em> + verbo transitivo + OD con <em>a</em>).'},
+  {l:'o', sent:'En este país se bebe demasiado.',
+   ans:'V: <em>bebe</em> · Tipo: <span style="color:var(--c2);font-weight:700">Impersonal refleja</span> (<em>se</em> indeterminativo).'},
+  {l:'p', sent:'Se vive mejor en el campo que en las grandes ciudades.',
+   ans:'V: <em>vive</em> · Tipo: <span style="color:var(--c2);font-weight:700">Impersonal refleja</span> (<em>se</em> indeterminativo).'},
+  {l:'q', sent:'Se trabaja de lunes a viernes.',
+   ans:'V: <em>trabaja</em> · Tipo: <span style="color:var(--c2);font-weight:700">Impersonal refleja</span>.'},
+  {l:'r', sent:'Si tan solo hubiera la menor posibilidad de poner fin al conflicto.',
+   ans:'V: <em>hubiera</em> · Tipo: <span style="color:var(--c1);font-weight:700">Verbo haber existencial</span> (en subjuntivo).'},
+  {l:'s', sent:'Hace una hora que comenzó la función.',
+   ans:'V: <em>hace</em> · Tipo: <span style="color:#e65100;font-weight:700">Otras construcciones</span> — <em>hacer</em> temporal/cronológico.'},
+  {l:'t', sent:'¡Qué gusto me da de verte!',
+   ans:'V: <em>da</em> · Tipo: <span style="color:#e65100;font-weight:700">Otras construcciones</span> — construcción exclamativa con OI, sin sujeto léxico.'},
+  {l:'u', sent:'Así nos va en este país.',
+   ans:'V: <em>va</em> · Tipo: <span style="color:#e65100;font-weight:700">Otras construcciones</span> — <em>ir</em> impersonal con dativo.'},
+  {l:'v', sent:'Aquí dice que es obligatorio.',
+   ans:'V: <em>dice</em> · Tipo: <span style="color:#e65100;font-weight:700">Otras construcciones</span> — 3.ª p. sing. con referencia al texto/documento (impersonal léxico).'},
+];
+
+// ────────────────────────────────────────────────
+// DATOS EJERCICIO 5 – Con/Sin sujeto
+// ────────────────────────────────────────────────
+const ej5Data = [
+  {sent:'Arrestan a los presuntos culpables del secuestro', suj:false, note:'3.ª p. pl. indefinida — impersonal'},
+  {sent:'Se honra a los héroes de guerra', suj:false, note:'Refleja con OD — impersonal'},
+  {sent:'Allí se discutía casi de todo', suj:true, note:'Pasiva refleja: S = "casi de todo" (discutible; muchos lo clasifican impersonal)'},
+  {sent:'Hemos terminado de resolver estos problemas', suj:true, note:'S. tácito: nosotros'},
+  {sent:'Los senadores se han mantenido neutrales en la votación', suj:true, note:'S. explícito: "Los senadores"'},
+  {sent:'Se aprobó el estatuto por unanimidad', suj:false, note:'Impersonal refleja / pasiva refleja'},
+  {sent:'Estas fechas no se deben olvidar', suj:true, note:'S. explícito: "Estas fechas" (pasiva refleja con sujeto paciente)'},
+  {sent:'¡Hace un frío glaciar!', suj:false, note:'Hacer climático — impersonal'},
+  {sent:'Si uno quiere vivir tranquilo, no debe tener grandes ambiciones', suj:true, note:'S. explícito: "uno" (sujeto genérico)'},
+  {sent:'En este hospital se cura a los heridos de ambos bandos', suj:false, note:'Refleja con OD — impersonal'},
+  {sent:'En verano se duerme mal', suj:false, note:'Refleja indeterminada — impersonal'},
+  {sent:'Aquí no se habla de política', suj:false, note:'Refleja — impersonal'},
+  {sent:'Ha habido numerosos atentados contra la vida del presidente', suj:false, note:'Haber existencial — impersonal'},
+  {sent:'Hemos descubierto un patrón de comportamiento lamentable', suj:true, note:'S. tácito: nosotros'},
+  {sent:'Había policías antidisturbios posicionados en las esquinas', suj:false, note:'Haber existencial — impersonal'},
+  {sent:'Había terminado de desayunar apenas cuando llegó la noticia', suj:true, note:'S. tácito: él/ella (contexto)'},
+  {sent:'Se alquilan habitaciones a un precio razonable', suj:true, note:'Pasiva refleja: S. paciente = "habitaciones" (concuerda en pl.)'},
+  {sent:'Amanecí con una fuerte sensación de que algo saldría mal', suj:true, note:'S. tácito: yo — amanecer personal'},
+  {sent:'Amanecía con el cielo despejado, como desde hace años', suj:false, note:'Amanecer atmosférico — impersonal'},
+  {sent:'Se dice que habrá elecciones', suj:false, note:'Refleja indeterminada — impersonal'},
+];
+
+// ────────────────────────────────────────────────
+// DATOS EJERCICIO 6 – Múltiple opción
+// ────────────────────────────────────────────────
+const ej6Data = [
+  {q:'La oración <strong>simple</strong> (con un solo verbo conjugado) es:',
+   opts:['a. Creo que no nos han oído','b. No recuerdo quién me golpeó','c. Hoy no habrá clases de Castellano','d. Quiero que seamos buenos amigos','e. Los libros que me regalaste son geniales'],
+   correct:2,
+   ok:'✅ <strong>C. "Hoy no habrá clases de Castellano."</strong> Tiene un solo verbo conjugado (<em>habrá</em>). Las demás son oraciones compuestas o complejas.',
+   ko:'❌ La correcta es <strong>C</strong>. Las opciones A, B, D y E contienen dos verbos conjugados cada una, lo que las convierte en oraciones compuestas. La oración simple tiene un único verbo conjugado.'},
+  {q:'La oración <strong>impersonal o unimembre</strong> (sin sujeto) es:',
+   opts:['a. Se reciclan los papeles y los plásticos','b. Su voz tronaba con ímpetu en la habitación','c. Fuimos caminando hasta la basílica de Caacupé','d. Hubo muchas personas en el evento','e. Nos gustan las acerolas y las naranjas'],
+   correct:3,
+   ok:'✅ <strong>D. "Hubo muchas personas en el evento."</strong> El verbo <em>haber</em> existencial es siempre impersonal. "Muchas personas" es OD, no sujeto.',
+   ko:'❌ La correcta es <strong>D</strong>. <em>Haber</em> existencial es impersonal por definición. La opción A tiene sujeto paciente ("los papeles"), C y E tienen sujeto tácito, y B tiene sujeto explícito ("su voz").'},
+  {q:'Marcá la oración <strong>impersonal</strong>:',
+   opts:['a. Se busca jinete para ir a los Juegos Olímpicos.','b. Hay muchas personas esperando el colectivo.','c. Le llovieron los aplausos por su actuación.','d. Me dijeron mis abuelos que vendrás en Navidad.','e. Tienes dos opciones, solo debes escoger la correcta.'],
+   correct:1,
+   ok:'✅ <strong>B. "Hay muchas personas esperando el colectivo."</strong> <em>Haber</em> existencial, siempre impersonal. "Muchas personas" = OD.',
+   ko:'❌ La correcta es <strong>B</strong>. "Hay" es la forma del impersonal <em>haber</em>. La opción A tiene sujeto tácito implícito (se busca = pasiva refleja con sujeto), C tiene sujeto ("los aplausos"), D tiene sujeto explícito ("mis abuelos") y E tiene sujeto tácito ("tú").'},
+  {q:'El sujeto <strong>correctamente subrayado</strong> está en la oración:',
+   opts:['a. Aprendí a <u>aceptar mi realidad</u> y disfrutar cada día','b. <u>La vida</u> en el Pilcomayo es un completo misterio','c. En el escenario es fundamental <u>la adrenalina</u>','d. Todavía siento <u>dolor en los huesos</u>','e. <u>El aprendizaje</u> es un proceso en fases'],
+   correct:4,
+   ok:'✅ <strong>E. "El aprendizaje"</strong> es el sujeto de "es un proceso en fases". También sería correcta la opción B ("La vida en el Pilcomayo"). E es la respuesta canónica del ejercicio.',
+   ko:'❌ La correcta es <strong>E</strong>. "El aprendizaje" es el núcleo del sujeto de la oración. En A, "aceptar mi realidad" es OD. En C, "la adrenalina" es sujeto pospuesto pero no se subraya correctamente el núcleo. En D, "dolor" es OD.'},
+  {q:'La oración en que el verbo <em>haber</em> se encuentra <strong>correctamente utilizado</strong> es:',
+   opts:['a. Ha habido muchas opiniones sobre la película.','b. Hubieron conflictos entre las ciudades vecinas.','c. Han habido recomendaciones fraudulentas.','d. En la alacena habrán víveres para el invierno.','e. Hacen muchos años, vivía en el puerto un marinero.'],
+   correct:0,
+   ok:'✅ <strong>A. "Ha habido muchas opiniones."</strong> El verbo auxiliar <em>ha</em> + participio <em>habido</em> es la forma compuesta correcta del haber impersonal existencial.',
+   ko:'❌ La correcta es <strong>A</strong>. B ("hubieron"), C ("han habido") y D ("habrán") son incorrectas porque el <em>haber</em> existencial no concuerda en número con su OD. E es incorrecta porque <em>hacer</em> temporal también es impersonal y no va en plural ("hace muchos años").'},
+  {q:'El <strong>sujeto correctamente subrayado</strong> en la oración "A ella le gustan los cuentos de terror" es:',
+   opts:['a. <u>A ella</u> le gustan los cuentos de terror','b. A ella <u>le</u> gustan los cuentos de terror','c. A ella le <u>gustan</u> los cuentos de terror','d. A ella le gustan <u>los cuentos</u> de terror','e. A ella le gustan <u>los cuentos de terror</u>'],
+   correct:4,
+   ok:'✅ <strong>E. "los cuentos de terror"</strong> es el sujeto. El verbo <em>gustan</em> concuerda en plural con "los cuentos de terror". "A ella" es un complemento indirecto (CI), no el sujeto. El sujeto nunca va precedido de preposición.',
+   ko:'❌ La correcta es <strong>E</strong>. El sujeto es "los cuentos de terror" porque el verbo <em>gustan</em> concuerda con él (3.ª p. pl.). "A ella" es complemento indirecto. Regla clave: <strong>el sujeto jamás comienza con preposición.</strong>'},
+  {q:'El <strong>predicado</strong> que completa coherente y correctamente el sujeto propuesto es — <em>La libertad…</em>',
+   opts:['a. no se consiguen fácilmente','b. es competencia de todos','c. la obtendremos sin dilación','d. nos fue arrebatado injustamente','e. les parecían un sueño lejano'],
+   correct:1,
+   ok:'✅ <strong>B. "es competencia de todos"</strong> — verbo en 3.ª p. sing. y género femenino concordando con el sujeto femenino singular "la libertad".',
+   ko:'❌ La correcta es <strong>B</strong>. Las demás rompen la concordancia: A usa plural, C cambia de persona (nosotros), D usa género masculino ("arrebatado"), E usa plural. "Es competencia de todos" concuerda en género y número con "la libertad".'},
+  {q:'El <strong>predicado</strong> que completa coherente y correctamente el sujeto propuesto es — <em>Los documentos desaparecidos…</em>',
+   opts:['a. Los bomberos continuaban buscando','b. Pertenecían a unos bañistas despreocupados','c. Los encontramos bajo los almohadones del sofá','d. Fueron interceptados mientras cometían un crimen','e. Los ha estado investigando la policía'],
+   correct:4,
+   ok:'✅ <strong>E. "Los ha estado investigando la policía"</strong> — "los" retoma el sujeto "los documentos" correctamente y el verbo concuerda en 3.ª p. pl.',
+   ko:'❌ La correcta es <strong>E</strong>. A tiene su propio sujeto ("Los bomberos"), B tiene sujeto tácito de 3.ª p. pl. pero no aclara el referente, C cambia el referente, D ("fueron interceptados") refiere a personas no a documentos. Solo E mantiene coherencia referencial.'},
+  {q:'Marcá la oración con el <strong>predicado correcto</strong> para el sujeto propuesto — <em>Sus propuestas de gobierno…</em>',
+   opts:['a. Convenció a la mayoría','b. Han sido rechazados por el pleno','c. Las estudian los especialistas','d. No les agradaron a los pobladores','e. Se aplicó con exactitud en las zonas vulnerables'],
+   correct:3,
+   ok:'✅ <strong>D. "No les agradaron a los pobladores"</strong> — verbo en 3.ª p. pl. femenino concordando con "Sus propuestas de gobierno" (femenino plural).',
+   ko:'❌ La correcta es <strong>D</strong>. A usa singular ("convenció"), B usa masculino plural ("rechazados"), C tiene su propio sujeto interno ("los especialistas"), E usa singular. Solo D mantiene la concordancia de género femenino y número plural con "sus propuestas".'},
+];
+
+// ────────────────────────────────────────────────
+// RENDER HELPERS
+// ────────────────────────────────────────────────
+function makeRow(item, prefix){
+  return `<div class="ej-row">
+    <div class="ej-letter">${prefix}${item.l}.</div>
+    <div class="ej-sentence">${item.sent}</div>
+    <button class="ej-toggle" onclick="toggleAns(this)">Ver respuesta</button>
+    <div class="ej-ans">${item.ans}</div>
+  </div>`;
+}
+
+function toggleAns(btn){
+  const ans = btn.nextElementSibling;
+  const showing = ans.classList.contains('show');
+  ans.classList.toggle('show',!showing);
+  btn.textContent = showing ? 'Ver respuesta' : 'Ocultar';
+}
+function revealAll(id){
+  document.querySelectorAll('#'+id+' .ej-ans').forEach(a=>a.classList.add('show'));
+  document.querySelectorAll('#'+id+' .ej-toggle').forEach(b=>b.textContent='Ocultar');
+}
+function hideAll(id){
+  document.querySelectorAll('#'+id+' .ej-ans').forEach(a=>a.classList.remove('show'));
+  document.querySelectorAll('#'+id+' .ej-toggle').forEach(b=>b.textContent='Ver respuesta');
+}
+
+// RENDER EJ 1-4
+document.getElementById('ej1-items').innerHTML = ej1Data.map(i=>makeRow(i,'')).join('');
+document.getElementById('ej2-items').innerHTML = ej2Data.map(i=>makeRow(i,'')).join('');
+document.getElementById('ej3-items').innerHTML = ej3Data.map(i=>makeRow(i,'')).join('');
+document.getElementById('ej4-items').innerHTML = ej4Data.map(i=>makeRow(i,'')).join('');
+
+// RENDER EJ 5 – tabla interactiva
+(function(){
+  let html = '<table class="ej5-table"><thead><tr><th>Enunciado</th><th style="text-align:center;min-width:90px">Con sujeto ✔</th><th style="text-align:center;min-width:90px">Impersonal ✔</th><th id="ej5-msg" style="text-align:center;min-width:60px"></th></tr></thead><tbody>';
+  ej5Data.forEach((r,i)=>{
+    html+=`<tr data-i="${i}">
+      <td style="font-style:italic;color:var(--text)">${r.sent}</td>
+      <td style="text-align:center"><span class="ej5-x" data-row="${i}" data-col="suj" onclick="ej5pick(this)"></span></td>
+      <td style="text-align:center"><span class="ej5-x" data-row="${i}" data-col="imp" onclick="ej5pick(this)"></span></td>
+      <td id="ej5r${i}" style="text-align:center;font-size:var(--tx-xs)"></td>
+    </tr>`;
+  });
+  html+='</tbody></table>';
+  html+=`<div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-top:.75rem">
+    <button class="btn-p" style="background:#e65100" onclick="ej5reveal()">Ver respuestas</button>
+    <button class="btn-g" onclick="ej5reset()">Reiniciar</button>
+  </div>`;
+  document.getElementById('ej5-items').innerHTML=html;
+})();
+
+const ej5State = {};
+function ej5pick(el){
+  const row=el.dataset.row, col=el.dataset.col;
+  const other = document.querySelector(`.ej5-x[data-row="${row}"][data-col="${col==='suj'?'imp':'suj'}"]`);
+  if(el.classList.contains('sel-suj')||el.classList.contains('sel-imp')){el.className='ej5-x';ej5State[row]=null;return;}
+  el.className='ej5-x '+(col==='suj'?'sel-suj':'sel-imp');
+  other.className='ej5-x';
+  ej5State[row]=col;
+}
+function ej5reveal(){
+  ej5Data.forEach((r,i)=>{
+    const isSuj = !r.suj ? 'imp' : 'suj';
+    const sujEl=document.querySelector(`.ej5-x[data-row="${i}"][data-col="suj"]`);
+    const impEl=document.querySelector(`.ej5-x[data-row="${i}"][data-col="imp"]`);
+    sujEl.className='ej5-x'; impEl.className='ej5-x';
+    const correctEl = isSuj==='suj'?sujEl:impEl;
+    correctEl.classList.add('correct-reveal');
+    const td=document.getElementById('ej5r'+i);
+    td.innerHTML=`<span style="color:var(--muted);font-size:10px">${r.note}</span>`;
+  });
+}
+function ej5reset(){
+  document.querySelectorAll('.ej5-x').forEach(el=>{el.className='ej5-x'});
+  ej5Data.forEach((_,i)=>{document.getElementById('ej5r'+i).innerHTML='';});
+  Object.keys(ej5State).forEach(k=>delete ej5State[k]);
+}
+
+// RENDER EJ 6 – múltiple opción
+(function(){
+  let html='';
+  ej6Data.forEach((q,qi)=>{
+    html+=`<div class="mc6-group">
+      <div class="mc6-q">${qi+1}. ${q.q}</div>
+      <div class="mc6-opts">`;
+    q.opts.forEach((o,oi)=>{
+      html+=`<button class="mc6-opt" onclick="mc6pick(${qi},${oi},this)">${o}</button>`;
+    });
+    html+=`</div><div class="mc6-fb" id="mc6fb${qi}"></div></div>`;
+  });
+  document.getElementById('ej6-items').innerHTML=html;
+})();
+
+const mc6done={};
+function mc6pick(qi,oi,btn){
+  if(mc6done[qi]) return;
+  mc6done[qi]=true;
+  const q=ej6Data[qi];
+  const allBtns=btn.closest('.mc6-opts').querySelectorAll('.mc6-opt');
+  allBtns.forEach(b=>b.disabled=true);
+  const fb=document.getElementById('mc6fb'+qi);
+  if(oi===q.correct){
+    btn.classList.add('correct');
+    fb.className='mc6-fb show ok'; fb.innerHTML=q.ok;
+  } else {
+    btn.classList.add('wrong');
+    allBtns[q.correct].classList.add('reveal');
+    fb.className='mc6-fb show ko'; fb.innerHTML=q.ko;
+  }
+}
+
+// ────────────────────────────────────────────────
+// TABS
+// ────────────────────────────────────────────────
+document.querySelectorAll('.ej-tab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    document.querySelectorAll('.ej-tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.ej-panel').forEach(p=>p.style.display='none');
+    tab.classList.add('active');
+    document.getElementById(tab.dataset.tab).style.display='block';
+  });
+});
+</script>
+
+<!-- FOOTER -->
+<footer class="ftr">
+  <div class="ftr-in">
+    <div class="ftr-l">Gramática del Español</div>
+    <p>Cartillas universitarias para la cátedra de <em>Comunicación y Lengua Castellana</em>. Basadas en los aportes de Beaugrande & Dressler, Van Dijk, Werlich, Adam, Chomsky, Austin y Searle. Material de apoyo pedagógico — no reemplaza la bibliografía obligatoria de la asignatura.</p>
   </div>
 </footer>
 
-<!-- Back to top -->
-<button class="back-top" id="backTop" aria-label="Volver al inicio" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+<button class="btt" id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Volver al inicio">
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>
 </button>
 
 <script>
-// Dark mode toggle
+// ---- DARK MODE ----
 (function(){
-  const t = document.querySelector('[data-theme-toggle]');
-  const r = document.documentElement;
+  const btn = document.querySelector('[data-tt]');
+  const root = document.documentElement;
   let d = matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light';
-  r.setAttribute('data-theme', d);
-  const moonSVG = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
-  const sunSVG = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>';
-  if(t) {
-    t.innerHTML = d === 'dark' ? moonSVG : sunSVG;
-    t.addEventListener('click', () => {
-      d = d === 'dark' ? 'light' : 'dark';
-      r.setAttribute('data-theme', d);
-      t.innerHTML = d === 'dark' ? moonSVG : sunSVG;
-    });
+  root.setAttribute('data-theme', d);
+  const moon = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+  const sun = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>';
+  if(btn){ btn.innerHTML = d==='dark'?moon:sun; btn.addEventListener('click',()=>{ d=d==='dark'?'light':'dark'; root.setAttribute('data-theme',d); btn.innerHTML=d==='dark'?moon:sun; }); }
+})();
+
+// ---- ACTIVE NAV ----
+(function(){
+  const secs = document.querySelectorAll('section[id]');
+  const links = document.querySelectorAll('.nav-l a');
+  new IntersectionObserver(entries=>entries.forEach(e=>{ if(e.isIntersecting) links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id)); }),{rootMargin:'-40% 0px -55% 0px'}).observe;
+  secs.forEach(s=>{ new IntersectionObserver(entries=>entries.forEach(e=>{ if(e.isIntersecting) links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id)); }),{rootMargin:'-40% 0px -55% 0px'}).observe(s); });
+})();
+
+// ---- BACK TO TOP ----
+window.addEventListener('scroll',()=>document.getElementById('btt').classList.toggle('vis',scrollY>400));
+
+// ---- QUIZ ----
+const questions = [
+  {
+    type:'imp',
+    typeName:'Verbos Impersonales',
+    text:'"Llueve intensamente desde esta mañana."',
+    opts:['Es una oración bimembre con sujeto "la lluvia"','Es una oración unimembre con verbo impersonal meteorológico','Tiene sujeto tácito "el cielo"','Es una oración nominal'],
+    correct:1,
+    ok:'✅ ¡Correcto! <em>Llover</em> es un verbo impersonal meteorológico. No admite sujeto gramatical bajo ninguna circunstancia y solo se conjuga en 3.ª persona del singular. La oración es unimembre.',
+    ko:'❌ Incorrecto. <em>Llover</em> es un verbo impersonal meteorológico clásico. No tiene sujeto ni tácito ni expreso: es una oración <strong>unimembre</strong>. El cielo, la lluvia, etc. no pueden funcionar como sujeto real de este verbo.'
+  },
+  {
+    type:'imp',
+    typeName:'Verbos Impersonales',
+    text:'"Hay muchos estudiantes en el patio."',
+    opts:['Oración bimembre: sujeto = "muchos estudiantes"','Oración unimembre: verbo impersonal existencial con haber','Oración unimembre meteorológica','Oración bimembre con sujeto tácito'],
+    correct:1,
+    ok:'✅ ¡Correcto! El verbo <em>haber</em> existencial es impersonal. "Muchos estudiantes" es el <strong>objeto directo</strong>, no el sujeto. Por eso siempre se dice "habrá personas", nunca "habrán personas".',
+    ko:'❌ Incorrecto. Cuando <em>haber</em> indica existencia, es <strong>impersonal</strong>: no tiene sujeto. "Muchos estudiantes" cumple la función de <strong>objeto directo</strong>. Este es el motivo por el que es incorrecto decir "hubieron muchos problemas".'
+  },
+  {
+    type:'imp',
+    typeName:'Verbos Impersonales',
+    text:'"Hace frío esta noche."',
+    opts:['Oración bimembre con sujeto = "esta noche"','Oración unimembre con verbo impersonal hacer temporal','Oración unimembre con verbo meteorológico llover','Oración con sujeto tácito "yo"'],
+    correct:1,
+    ok:'✅ ¡Exacto! <em>Hacer</em> usado para describir el estado del tiempo o el clima es un verbo <strong>impersonal</strong>. La oración no tiene sujeto y es unimembre.',
+    ko:'❌ Incorrecto. <em>Hacer</em> en contextos climáticos (<em>hace frío, hace calor, hace viento</em>) funciona como verbo <strong>impersonal</strong>: no admite sujeto. "Esta noche" es un complemento circunstancial de tiempo, no el sujeto.'
+  },
+  {
+    type:'imp',
+    typeName:'Verbos Impersonales',
+    text:'"Se vive muy bien en Asunción."',
+    opts:['Oración reflexiva con sujeto implícito "uno"','Oración unimembre impersonal con "se" indeterminativo','Oración bimembre con sujeto = "Asunción"','Oración pasiva refleja con sujeto paciente'],
+    correct:1,
+    ok:'✅ ¡Muy bien! Esta es una impersonal con <em>se</em> indeterminativo: no hay un agente específico identificable. La oración expresa una situación general y anónima. Es unimembre.',
+    ko:'❌ Incorrecto. El <em>se</em> aquí es <strong>indeterminativo</strong>: borra al agente y convierte la oración en impersonal. No hay sujeto identificable — es una estrategia discursiva que diluye la responsabilidad o generaliza una situación. Oración unimembre.'
+  },
+  {
+    type:'imp',
+    typeName:'Verbos Impersonales',
+    text:'¿Cuál de estas oraciones contiene un uso INCORRECTO del verbo haber?',
+    opts:['"Hubo muchos errores en el examen."','"Habrá novedades mañana."','"Hubieron muchas personas en el acto."','"Hay suficientes razones para dudar."'],
+    correct:2,
+    ok:'✅ ¡Perfecto! "Hubieron" es incorrecto porque <em>haber</em> existencial es <strong>impersonal</strong> y no concuerda en número con el elemento que lo acompaña (que es OD, no sujeto). Lo correcto es "Hubo muchas personas en el acto."',
+    ko:'❌ Incorrecto. La oración incorrecta es la C: <strong>"Hubieron muchas personas"</strong>. El verbo <em>haber</em> existencial siempre va en singular porque es impersonal. "Muchas personas" es objeto directo, no sujeto. Lo correcto: "Hubo muchas personas en el acto."'
+  },
+  {
+    type:'act',
+    typeName:'Actitud del Hablante',
+    text:'"¡Ojalá apruebe el examen parcial!"',
+    opts:['Oración enunciativa afirmativa','Oración interrogativa directa','Oración desiderativa','Oración imperativa'],
+    correct:2,
+    ok:'✅ ¡Correcto! El conector <em>ojalá</em> es el marcador típico de las oraciones <strong>desiderativas</strong>, que expresan un deseo. El verbo en subjuntivo (<em>apruebe</em>) confirma la actitud deseativa del hablante.',
+    ko:'❌ Incorrecto. La oración es <strong>desiderativa</strong>: expresa un deseo del hablante. El marcador <em>ojalá</em> (del árabe <em>law sha Allah</em>) seguido de subjuntivo es la estructura prototípica de este tipo. No confundir con la imperativa, que da órdenes.'
+  },
+  {
+    type:'act',
+    typeName:'Actitud del Hablante',
+    text:'"Lee el capítulo antes de la clase del martes."',
+    opts:['Oración enunciativa','Oración imperativa o exhortativa','Oración exclamativa','Oración dubitativa'],
+    correct:1,
+    ok:'✅ ¡Correcto! El verbo en modo <strong>imperativo</strong> (<em>lee</em>) indica una orden o instrucción directa al receptor. Según la teoría de los actos de habla de Searle, es un <em>acto directivo</em>: busca que el oyente realice una acción.',
+    ko:'❌ Incorrecto. Esta es una oración <strong>imperativa</strong>: el hablante da una instrucción o manda al receptor a realizar una acción. El verbo en imperativo (<em>lee</em>) es la clave. Searle la clasifica como un acto de habla directivo.'
+  },
+  {
+    type:'act',
+    typeName:'Actitud del Hablante',
+    text:'"Quizás lleguen tarde a la reunión."',
+    opts:['Oración desiderativa','Oración dubitativa','Oración optativa','Oración enunciativa negativa'],
+    correct:1,
+    ok:'✅ ¡Excelente! <em>Quizás</em> seguido de subjuntivo (<em>lleguen</em>) es la marca canónica de la oración <strong>dubitativa</strong>: el hablante expresa duda o incertidumbre sobre el evento. Si llevara indicativo, la duda sería menor.',
+    ko:'❌ Incorrecto. La respuesta correcta es <strong>dubitativa</strong>. El adverbio <em>quizás</em> expresa duda o posibilidad, y el subjuntivo (<em>lleguen</em>) refuerza esa incertidumbre. La diferencia con la optativa es que en la dubitativa la incertidumbre es mayor y no hay deseo involucrado.'
+  },
+  {
+    type:'act',
+    typeName:'Actitud del Hablante',
+    text:'"¡Qué hermosa está la ciudad de noche!"',
+    opts:['Oración enunciativa afirmativa','Oración desiderativa','Oración exclamativa','Oración interrogativa parcial'],
+    correct:2,
+    ok:'✅ ¡Muy bien! Los signos ¡ !, el adverbio exclamativo <em>qué</em> y la entonación ascendente-descendente caracterizan la oración <strong>exclamativa</strong>. Expresa una emoción intensa (admiración en este caso).',
+    ko:'❌ Incorrecto. Es una oración <strong>exclamativa</strong>: los signos de exclamación, el uso de <em>qué</em> como adverbio exclamativo y la carga emotiva (admiración) son sus marcas formales. No confundir con la interrogativa parcial, que usa el mismo <em>qué</em> pero con función interrogativa.'
+  },
+  {
+    type:'act',
+    typeName:'Actitud del Hablante',
+    text:'"Puede que el proyecto sea aprobado la próxima semana."',
+    opts:['Oración dubitativa','Oración optativa o de posibilidad','Oración desiderativa','Oración enunciativa'],
+    correct:1,
+    ok:'✅ ¡Correcto! "Puede que" + subjuntivo es una estructura de <strong>posibilidad</strong>. Se trata de una oración <strong>optativa</strong>: el hablante percibe el evento como posible pero no seguro. A diferencia de la desiderativa, aquí no hay un deseo marcado, sino una estimación de probabilidad.',
+    ko:'❌ Incorrecto. La estructura <em>"puede que"</em> + subjuntivo indica <strong>posibilidad o probabilidad</strong>, característica de las oraciones <strong>optativas</strong>. La diferencia clave con la desiderativa es que aquí el hablante no expresa un deseo personal, sino que evalúa la probabilidad de que algo ocurra.'
   }
-})();
+];
 
-// Active nav link on scroll
-(function(){
-  const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.nav-links a');
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if(e.isIntersecting) {
-        navLinks.forEach(a => {
-          a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id);
-        });
-      }
-    });
-  }, { rootMargin: '-40% 0px -55% 0px' });
-  sections.forEach(s => obs.observe(s));
-})();
+let current = 0, score = 0, answered = false;
 
-// Back to top
-(function(){
-  const btn = document.getElementById('backTop');
-  window.addEventListener('scroll', () => {
-    btn.classList.toggle('visible', window.scrollY > 400);
-  });
-})();
+function startQuiz(){
+  current = 0; score = 0; answered = false;
+  document.getElementById('scoreCard').classList.remove('show');
+  document.getElementById('qNext').classList.remove('show');
+  renderQuestion();
+}
+
+function renderQuestion(){
+  const q = questions[current];
+  const total = questions.length;
+  document.getElementById('qBar').style.width = (current/total*100)+'%';
+  document.getElementById('qCounter').textContent = 'Pregunta '+(current+1)+' de '+total;
+  answered = false;
+  document.getElementById('qNext').classList.remove('show');
+
+  const typeClass = q.type === 'imp' ? 'qb-imp' : 'qb-act';
+  const html = `
+    <div class="q-card">
+      <div class="q-num">Pregunta ${current+1}</div>
+      <span class="q-type-badge ${typeClass}">${q.typeName}</span>
+      <div class="q-text">${q.text}</div>
+      <div class="opts">
+        ${q.opts.map((o,i)=>`<button class="opt" onclick="selectOpt(${i})" data-i="${i}">${String.fromCharCode(65+i)}. ${o}</button>`).join('')}
+      </div>
+      <div class="feedback" id="fb"></div>
+    </div>`;
+  document.getElementById('quizContainer').innerHTML = html;
+}
+
+function selectOpt(idx){
+  if(answered) return;
+  answered = true;
+  const q = questions[current];
+  const opts = document.querySelectorAll('.opt');
+  opts.forEach(o=>o.disabled=true);
+  const fb = document.getElementById('fb');
+  if(idx === q.correct){
+    opts[idx].classList.add('correct');
+    fb.className = 'feedback show ok';
+    fb.innerHTML = q.ok;
+    score++;
+  } else {
+    opts[idx].classList.add('wrong');
+    opts[q.correct].classList.add('reveal-correct');
+    fb.className = 'feedback show ko';
+    fb.innerHTML = q.ko;
+  }
+  const nxt = document.getElementById('qNext');
+  nxt.textContent = current < questions.length-1 ? 'Siguiente →' : 'Ver resultados 🎓';
+  nxt.classList.add('show');
+}
+
+document.getElementById('qNext').addEventListener('click', ()=>{
+  current++;
+  if(current < questions.length){
+    renderQuestion();
+  } else {
+    document.getElementById('quizContainer').innerHTML = '';
+    document.getElementById('qNext').classList.remove('show');
+    document.getElementById('qBar').style.width = '100%';
+    document.getElementById('qCounter').textContent = 'Quiz finalizado';
+    showScore();
+  }
+});
+
+function showScore(){
+  const total = questions.length;
+  const pct = Math.round(score/total*100);
+  let emoji, title, desc;
+  if(pct>=90){emoji='🏆';title='¡Excelente dominio!';desc='Dominás los verbos impersonales y la clasificación por actitud del hablante a la perfección. ¡Seguí así!';}
+  else if(pct>=70){emoji='👏';title='¡Muy bien!';desc='Tenés un buen manejo de los conceptos. Repasá las preguntas que fallaste para consolidar tu conocimiento.';}
+  else if(pct>=50){emoji='📖';title='Vas por buen camino';desc='Tenés la base, pero necesitás repasar algunos conceptos. Revisá las cartillas de verbos impersonales y actitud del hablante.';}
+  else{emoji='📚';title='Necesitás más práctica';desc='No te desanimés. Volvé a leer las cartillas detenidamente y luego intentá el quiz de nuevo. ¡El aprendizaje es un proceso!';}
+  document.getElementById('scoreEmoji').textContent = emoji;
+  document.getElementById('scoreNum').textContent = score+'/'+total+' ('+pct+'%)';
+  document.getElementById('scoreTitle').textContent = title;
+  document.getElementById('scoreDesc').textContent = desc;
+  document.getElementById('scoreCard').classList.add('show');
+}
+
+startQuiz();
 </script>
 </body>
 </html>
