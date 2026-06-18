@@ -62,8 +62,66 @@
     nav a.extra-link { color: #e67e22; }
     footer { text-align: center; padding: 24px; color: var(--muted); font-size: 0.85rem; border-top: 1px solid var(--border); }
   </style>
+
+<style id="nav-global">
+.nav-global {
+  background: #1e293b;
+  padding: 0 16px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  box-shadow: 0 2px 8px rgba(0,0,0,.25);
+}
+.nav-global a {
+  color: #94a3b8;
+  text-decoration: none;
+  font-size: .75rem;
+  font-weight: 600;
+  padding: 10px 9px;
+  border-bottom: 3px solid transparent;
+  transition: color .18s, border-color .18s;
+  white-space: nowrap;
+  font-family: "Segoe UI", system-ui, sans-serif;
+}
+.nav-global a:hover { color: #fff; border-bottom-color: #3b82f6; }
+.nav-global a.active { color: #fff; border-bottom-color: #7c3aed; }
+.nav-global .nav-home {
+  color: #fff;
+  font-size: .8rem;
+  font-weight: 800;
+  margin-right: 8px;
+  padding: 10px 12px;
+  border-bottom: 3px solid #7c3aed;
+}
+.nav-global .nav-sep {
+  color: #334155;
+  font-size: .9rem;
+  padding: 0 2px;
+  user-select: none;
+}
+</style>
+
 </head>
 <body>
+<nav class="nav-global">
+  <a href="final.html" class="nav-home">📚 Inicio</a>
+  <span class="nav-sep">|</span>
+  <a href="index.html">📗 Parcial 1</a>
+  <a href="parcial2.html">📘 Parcial 2</a>
+  <span class="nav-sep">|</span>
+  <a href="ejercicios.html">✏️ Ejercicios</a>
+  <a href="ejercicios2.html">✏️ Comp. I</a>
+  <a href="ejercicios3.html">✏️ Comp. II</a>
+  <a href="ejercicios4.html">✏️ Comp. III</a>
+  <a href="ejercicios5.html" class="active">✏️ Comp. IV</a>
+  <span class="nav-sep">|</span>
+  <a href="analisistextos.html">📖 Análisis</a>
+  <a href="progresion_tematica_nominal.html">🧠 Progresión</a>
+</nav>
 <header>
   <h1>✏️ Ejercicios Complementarios IV</h1>
   <p>105 ejercicios interactivos · 5 por tema (19 temas) + 10 extra sobre los cuatro «porqués»</p>
