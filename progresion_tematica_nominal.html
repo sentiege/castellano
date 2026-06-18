@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Progresión temática nominal</title>
+  <style>
+    :root {
+      --primary:#2563eb; --accent:#7c3aed; --ok:#059669; --bad:#dc2626;
+      --bg:#f8fafc; --card:#ffffff; --text:#1e293b; --muted:#64748b; --border:#e2e8f0;
+      --okbg:#d1fae5; --badbg:#fee2e2; --light:#dbeafe;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+    header{background:linear-gradient(135deg,#2563eb 0%,#7c3aed 100%);color:#fff;padding:46px 24px 34px;text-align:center}
+    header h1{font-size:2rem;font-weight:900;margin-bottom:8px}
+    header p{max-width:760px;margin:0 auto 16px;opacity:.9}
+    .btn{display:inline-block;background:#fff;color:var(--primary);font-weight:700;padding:10px 22px;border-radius:999px;text-decoration:none}
+    .container{max-width:980px;margin:0 auto;padding:36px 20px 70px}
+    .note{background:#fff7ed;border:1px solid #fdba74;color:#9a3412;border-radius:12px;padding:16px 18px;margin-bottom:24px}
+    .progress-wrap{background:var(--border);height:10px;border-radius:999px;margin-bottom:6px}
+    .progress-bar{background:linear-gradient(90deg,var(--primary),var(--accent));height:10px;border-radius:999px;width:0%;transition:width .3s}
+    .progress-label{text-align:right;color:var(--muted);font-size:.82rem;margin-bottom:26px}
+    .text-card{background:var(--card);border:1px solid var(--border);border-radius:18px;box-shadow:0 2px 10px rgba(0,0,0,.05);margin-bottom:34px;overflow:hidden}
+    .text-header{background:linear-gradient(90deg,var(--primary),var(--accent));color:#fff;padding:16px 22px;display:flex;gap:14px;align-items:center}
+    .text-num{font-size:1.8rem;font-weight:900;opacity:.8}
+    .text-header h2{font-size:1.08rem;font-weight:800}
+    .text-header p{font-size:.82rem;opacity:.85}
+    .text-body{padding:22px 22px 0}
+    .para{margin-bottom:14px}
+    .tag{display:inline-block;background:var(--light);color:var(--primary);font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;padding:3px 10px;border-radius:999px;margin-bottom:6px}
+    .para-text{background:#f8fafc;border-left:4px solid #cbd5e1;border-radius:10px;padding:12px 14px;font-size:.96rem}
+    .questions{padding:20px 22px 24px;display:flex;flex-direction:column;gap:16px}
+    .q{background:#f8fafc;border:1.5px solid var(--border);border-radius:12px;padding:15px 16px}
+    .q h3{font-size:.78rem;color:var(--primary);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+    .q p{font-weight:600;font-size:.95rem;margin-bottom:10px}
+    .opts{display:flex;flex-direction:column;gap:8px}
+    .opt{background:#fff;border:2px solid var(--border);border-radius:10px;padding:10px 13px;text-align:left;font:inherit;cursor:pointer;transition:.18s}
+    .opt:hover:not(:disabled){border-color:var(--primary);background:#eff6ff}
+    .opt.correct{border-color:var(--ok)!important;background:var(--okbg)!important;color:#065f46;font-weight:700}
+    .opt.wrong{border-color:var(--bad)!important;background:var(--badbg)!important;color:var(--bad)}
+    .opt:disabled{cursor:default}
+    .fb{display:none;margin-top:8px;padding:8px 12px;border-radius:8px;font-size:.87rem;font-weight:600}
+    .fb.show{display:block}.fb.ok{background:var(--okbg);color:#065f46}.fb.fail{background:var(--badbg);color:var(--bad)}
+    .score{display:none;background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;border-radius:18px;padding:30px;text-align:center;margin-top:26px}
+    .score .n{font-size:3.4rem;font-weight:900}
+    .reset{margin-top:16px;background:#fff;color:var(--primary);border:none;border-radius:999px;padding:10px 28px;font:inherit;font-weight:700;cursor:pointer}
+    footer{text-align:center;padding:24px;color:var(--muted);font-size:.85rem;border-top:1px solid var(--border)}
+    footer a{color:var(--primary);text-decoration:none}
+  </style>
+</head>
+<body>
+<header>
+  <h1>🧠 Progresión temática nominal</h1>
+  <p>5 textos · 7 párrafos por texto · por cada párrafo, elegí la idea central expresada como frase nominal con sustantivos abstractos, sin verbos conjugados.</p>
+  <a class="btn" href="final.html">← Volver al inicio</a>
+</header>
+<div class="container">
+  <div class="note"><strong>Consigna:</strong> En cada párrafo, seleccioná la formulación que mejor represente la <strong>idea central</strong> con estructura nominal. Al final de cada texto, elegí la <strong>idea central global</strong>.</div>
+  <div class="progress-wrap"><div class="progress-bar" id="bar"></div></div>
+  <div class="progress-label" id="label">0 / 40 respondidos</div>
+
+  <!-- TEXTO 1 -->
+  <div class="text-card">
+    <div class="text-header"><div class="text-num">01</div><div><h2>La biblioteca pública</h2><p>7 párrafos · 8 preguntas</p></div></div>
+    <div class="text-body">
+      <div class="para"><div class="tag">Párrafo 1</div><div class="para-text">La biblioteca pública ocupa un lugar central en la vida cultural de muchas ciudades. No solo conserva libros, sino también diarios, revistas, mapas y archivos que permiten reconstruir la memoria de una comunidad.</div></div>
+      <div class="para"><div class="tag">Párrafo 2</div><div class="para-text">En sus salas conviven lectores de edades y trayectorias muy distintas. Estudiantes, jubilados, investigadores y niños encuentran allí un espacio silencioso de estudio, consulta y descubrimiento.</div></div>
+      <div class="para"><div class="tag">Párrafo 3</div><div class="para-text">La biblioteca moderna ya no se limita al préstamo de libros impresos. Muchas incorporan computadoras, hemerotecas digitales, talleres de lectura y actividades de formación para acercar el conocimiento a más personas.</div></div>
+      <div class="para"><div class="tag">Párrafo 4</div><div class="para-text">Ese proceso de renovación tecnológica amplía las posibilidades de acceso. Gracias a la digitalización, materiales antes difíciles de consultar pueden llegar a usuarios de barrios lejanos o con limitaciones de movilidad.</div></div>
+      <div class="para"><div class="tag">Párrafo 5</div><div class="para-text">Sin embargo, muchas bibliotecas enfrentan problemas presupuestarios serios. La falta de mantenimiento, personal y actualización de colecciones debilita su capacidad de servicio.</div></div>
+      <div class="para"><div class="tag">Párrafo 6</div><div class="para-text">A pesar de esas dificultades, la biblioteca sigue siendo un espacio de democratización cultural. Su carácter gratuito permite el acceso al conocimiento incluso a quienes no pueden costear libros ni servicios privados.</div></div>
+      <div class="para"><div class="tag">Párrafo 7</div><div class="para-text">Por eso, defender la biblioteca pública implica defender una idea de ciudadanía. Allí se cruzan la memoria, la educación y la igualdad de oportunidades.</div></div>
+    </div>
+    <div class="questions">
+      <div class="q"><h3>Párrafo 1</h3><p>¿Cuál es la idea central nominal del párrafo 1?</p><div class="opts">
+        <button class="opt" onclick="check(this,'t1p1',true)">Centralidad cultural y preservación de la memoria comunitaria</button>
+        <button class="opt" onclick="check(this,'t1p1',false)">Lectura silenciosa de libros variados en edificios antiguos</button>
+        <button class="opt" onclick="check(this,'t1p1',false)">Descripción de mapas y diarios en archivos municipales</button>
+        <button class="opt" onclick="check(this,'t1p1',false)">Construcción edilicia de espacios urbanos tradicionales</button>
+      </div><div class="fb" id="fb-t1p1"></div></div>
+      <div class="q"><h3>Párrafo 2</h3><p>¿Cuál es la idea central nominal del párrafo 2?</p><div class="opts">
+        <button class="opt" onclick="check(this,'t1p2',false)">Silencio obligatorio en salas de estudio prolongado</button>
+        <button class="opt" onclick="check(this,'t1p2',true)">Convivencia intergeneracional y diversidad de usuarios</button>
+        <button class="opt" onclick="check(this,'t1p2',false)">Preferencia estudiantil por mesas de consulta</button>
+        <button class="opt" onclick="check(this,'t1p2',false)">Organización interna de lectores e investigadores</button>
+      </div><div class="fb" id="fb-t1p2"></div></div>
+      <div class="q"><h3>Párrafo 3</h3><p>¿Cuál es la idea central nominal del párrafo 3?</p><div class="opts">
+        <button class="opt" onclick="check(this,'t1p3',false)">Préstamo tradicional de novelas y enciclopedias</button>
+        <button class="opt" onclick="check(this,'t1p3',false)">Aumento informático de computadoras institucionales</button>
+        <button class="opt" onclick="check(this,'t1p3',true)">Ampliación funcional y diversificación de servicios bibliotecarios</button>
+        <button class="opt" onclick="check(this,'t1p3',false)">Capacitación técnica de bibliotecarios digitales</button>
+      </div><div class="fb" id="fb-t1p3"></div></div>
+      <div class="q"><h3>Párrafo 4</h3><p>¿Cuál es la idea central nominal del párrafo 4?</p><div class="opts">
+        <button class="opt" onclick="check(this,'t1p4',false)">Lejanía barrial y dificultades de transporte</button>
+        <button class="opt" onclick="check(this,'t1p4',false)">Consulta presencial de materiales escasos</button>
+        <button class="opt" onclick="check(this,'t1p4',true)">Expansión del acceso mediante digitalización</button>
+        <button class="opt" onclick="check(this,'t1p4',false)">Modernización arquitectónica de edificios públicos</button>
+      </div><div class="fb" id="fb-t1p4"></div></div>
+      <div class="q"><h3>Párrafo 5</h3><p>¿Cuál es la idea central nominal del párrafo 5?</p><div class="opts">
+        <button class="opt" onclick="check(this,'t1p5',false)">Necesidad de lectores en zonas periféricas</button>
+        <button class="opt" onclick="check(this,'t1p5',true)">Precariedad presupuestaria y debilitamiento institucional</button>
+        <button class="opt" onclick="check(this,'t1p5',false)">Ausencia total de colecciones impresas</button>
+        <button class="opt" onclick="check(this,'t1p5',false)">Abandono edilicio de archivos nacionales</button>
+      </div><div class="fb" id="fb-t1p5"></div></div>
+      <div class="q"><h3>Párrafo 6</h3><p>¿Cuál es la idea central nominal del párrafo 6?</p><div class="opts">
+        <button class="opt" onclick="check(this,'t1p6',false)">Compra individual de libros escolares</button>
+        <button class="opt" onclick="check(this,'t1p6',false)">Falta de servicios privados especializados</button>
+        <button class="opt" onclick="check(this,'t1p6',true)">Democratización cultural y gratuidad del acceso</button>
+        <button class="opt" onclick="check(this,'t1p6',false)">Continuidad administrativa de instituciones locales</button>
+      </div><div class="fb" id="fb-t1p6"></div></div>
+      <div class="q"><h3>Párrafo 7</h3><p>¿Cuál es la idea central nominal del párrafo 7?</p><div class="opts">
+        <button class="opt" onclick="check(this,'t1p7',false)">Defensa jurídica de edificios estatales</button>
+        <button class="opt" onclick="check(this,'t1p7',false)">Interés ciudadano por actividades recreativas</button>
+        <button class="opt" onclick="check(this,'t1p7',true)">Vinculación entre biblioteca, ciudadanía e igualdad de oportunidades</button>
+        <button class="opt" onclick="check(this,'t1p7',false)">Memoria escolar de lectores juveniles</button>
+      </div><div class="fb" id="fb-t1p7"></div></div>
+      <div class="q"><h3>Idea central global</h3><p>¿Cuál resume mejor el texto completo?</p><div class="opts">
+        <button class="opt" onclick="check(this,'t1g',false)">Descripción del mobiliario y del silencio en salas de lectura</button>
+        <button class="opt" onclick="check(this,'t1g',true)">Valor cultural, función democrática y desafíos contemporáneos de la biblioteca pública</button>
+        <button class="opt" onclick="check(this,'t1g',false)">Transformación exclusiva de archivos impresos en soportes digitales</button>
+        <button class="opt" onclick="check(this,'t1g',false)">Problemas salariales del personal bibliotecario urbano</button>
+      </div><div class="fb" id="fb-t1g"></div></div>
+    </div>
+  </div>
+
+  <!-- TEXTO 2 -->
+  <div class="text-card">
+    <div class="text-header"><div class="text-num">02</div><div><h2>El transporte urbano</h2><p>7 párrafos · 8 preguntas</p></div></div>
+    <div class="text-body">
+      <div class="para"><div class="tag">Párrafo 1</div><div class="para-text">El transporte urbano es una pieza esencial de la vida cotidiana en las grandes ciudades. De su funcionamiento dependen la puntualidad laboral, el acceso a la educación y la conexión entre barrios muy distantes.</div></div>
+      <div class="para"><div class="tag">Párrafo 2</div><div class="para-text">Cuando el sistema es deficiente, el tiempo perdido en traslados se multiplica. Esa demora afecta especialmente a los sectores populares, que suelen vivir más lejos de los centros de empleo y estudio.</div></div>
+      <div class="para"><div class="tag">Párrafo 3</div><div class="para-text">El problema no es solo temporal, sino también económico. Los gastos acumulados en pasajes representan una carga importante para familias de ingresos limitados.</div></div>
+      <div class="para"><div class="tag">Párrafo 4</div><div class="para-text">A esto se suma una dimensión ambiental cada vez más visible. La dependencia excesiva de vehículos particulares incrementa la contaminación y agrava la congestión vial.</div></div>
+      <div class="para"><div class="tag">Párrafo 5</div><div class="para-text">Frente a esa situación, muchas ciudades impulsan ciclovías, corredores exclusivos y sistemas integrados de movilidad. Esas políticas buscan reducir tiempos, costos y emisiones.</div></div>
+      <div class="para"><div class="tag">Párrafo 6</div><div class="para-text">Sin embargo, las mejoras de infraestructura no siempre alcanzan por sí solas. La planificación deficiente, la falta de mantenimiento y la desigual distribución territorial pueden neutralizar avances importantes.</div></div>
+      <div class="para"><div class="tag">Párrafo 7</div><div class="para-text">Por eso, pensar el transporte urbano implica pensar un modelo de ciudad. En esa discusión aparecen cuestiones de equidad, sostenibilidad y calidad de vida.</div></div>
+    </div>
+    <div class="questions">
+      <div class="q"><h3>Párrafo 1</h3><p>¿Cuál es la idea central nominal del párrafo 1?</p><div class="opts">
+        <button class="opt" onclick="check(this,'t2p1',true)">Carácter esencial del transporte urbano en la vida cotidiana</button>
+        <button class="opt" onclick="check(this,'t2p1',false)">Lejanía barrial de escuelas y oficinas</button>
+        <button class="opt" onclick="check(this,'t2p1',false)">Puntualidad laboral en avenidas principales</button>
+        <button class="opt" onclick="check(this,'t2p1',false)">Descripción del tránsito en centros comerciales</button>
+      </div><div class="fb" id="fb-t2p1"></div></div>
+      <div class="q"><h3>Párrafo 2</h3><p>¿Cuál es la idea central nominal del párrafo 2?</p><div class="opts">
+        <button class="opt" onclick="check(this,'t2p2',false)">Ubicación residencial de trabajadores y estudiantes</button>
+        <button class="opt" onclick="check(this,'t2p2',false)">Aumento general del tránsito vespertino</button>
+        <button class="opt" onclick="check(this,'t2p2',true)">Perjuicio temporal y desigualdad social de los traslados deficientes</button>
+        <button class="opt" onclick="check(this,'t2p2',false)">Cercanía laboral de sectores acomodados</button>
+      </div><div class="fb" id="fb-t2p2"></div></div>
+      <div class="q"><h3>Párrafo 3</h3><p>¿Cuál es la idea central nominal del párrafo 3?</p><div class="opts">
+        <button class="opt" onclick="check(this,'t2p3',true)">Carga económica del costo de movilidad</button>
+        <button class="opt" onclick="check(this,'t2p3',false)">Suba ocasional del valor de los pasajes</button>
+        <button class="opt" onclick="check(this,'t2p3',false)">Ingreso limitado de familias urbanas</button>
+        <button class="opt" onclick="check(this,'t2p3',false)">Ahorro doméstico en zonas periféricas</button>
+      </div><div class="fb" id="fb-t2p3"></div></div>
+      <div class="q"><h3>Párrafo 4</h3><p>¿Cuál es la idea central nominal del párrafo 4?</p><div class="opts">
+        <button class="opt" onclick="check(this,'t2p4',false)">Dependencia tecnológica de automóviles modernos</button>
+        <button class="opt" onclick="check(this,'t2p4',true)">Dimensión ambiental de la movilidad urbana</button>
+        <button class="opt" onclick="check(this,'t2p4',false)">Congestión exclusiva de rutas nacionales</button>
+        <button class="opt" onclick="check(this,'t2p4',false)">Contaminación sonora de motocicletas pequeñas</button>
+      </div><div class="fb" id="fb-t2p4"></div></div>
+      <div class="q"><h3>Párrafo 5</h3><p>¿Cuál es la idea central nominal del párrafo 5?</p><div class="opts">
+        <button class="opt" onclick="check(this,'t2p5',false)">Instalación aislada de ciclovías recreativas</button>
+        <button class="opt" onclick="check(this,'t2p5',true)">Implementación de políticas de movilidad sostenible</button>
+        <button class="opt" onclick="check(this,'t2p5',false)">Reducción casual de emisiones vehiculares</button>
+        <button class="opt" onclick="check(this,'t2p5',false)">Construcción comercial de corredores urbanos</button>
+      </div><div class="fb" id="fb-t2p5"></div></div>
+      <div class="q"><h3>Párrafo 6</h3><p>¿Cuál es la idea central nominal del párrafo 6?</p><div class="opts">
+        <button class="opt" onclick="check(this,'t2p6',false)">Importancia absoluta de la infraestructura nueva</button>
+        <button class="opt" onclick="check(this,'t2p6',false)">Distribución ideal de obras territoriales</button>
+        <button class="opt" onclick="check(this,'t2p6',true)">Limitaciones de las mejoras materiales sin planificación adecuada</button>
+        <button class="opt" onclick="check(this,'t2p6',false)">Mantenimiento suficiente de líneas urbanas</button>
+      </div><div class="fb" id="fb-t2p6"></div></div>
+      <div class="q"><h3>Párrafo 7</h3><p>¿Cuál es la idea central nominal del párrafo 7?</p><div class="opts">
+        <button class="opt" onclick="check(this,'t2p7',false)">Discusión técnica sobre combustibles alternativos</button>
+        <button class="opt" onclick="check(this,'t2p7',true)">Relación entre transporte, modelo de ciudad y calidad de vida</button>
+        <button class="opt" onclick="check(this,'t2p7',false)">Preferencia social por recorridos cortos</button>
+        <button class="opt" onclick="check(this,'t2p7',false)">Equidad exclusiva de barrios céntricos</button>
+      </div><div class="fb" id="fb-t2p7"></div></div>
+      <div class="q"><h3>Idea central global</h3><p>¿Cuál resume mejor el texto completo?</p><div class="opts">
+        <button class="opt" onclick="check(this,'t2g',false)">Descripción de avenidas, bicicletas y pasajes urbanos</button>
+        <button class="opt" onclick="check(this,'t2g',true)">Impacto social, económico y ambiental del transporte urbano en la organización de la ciudad</button>
+        <button class="opt" onclick="check(this,'t2g',false)">Defensa exclusiva del uso de ciclovías metropolitanas</button>
+        <button class="opt" onclick="check(this,'t2g',false)">Crítica aislada a la congestión de automóviles particulares</button>
+      </div><div class="fb" id="fb-t2g"></div></div>
+    </div>
+  </div>
+
+  <!-- TEXTO 3 -->
+  <div class="text-card">
+    <div class="text-header"><div class="text-num">03</div><div><h2>La inteligencia artificial en la educación</h2><p>7 párrafos · 8 preguntas</p></div></div>
+    <div class="text-body">
+      <div class="para"><div class="tag">Párrafo 1</div><div class="para-text">La inteligencia artificial comenzó a ocupar un lugar visible en el ámbito educativo. Plataformas de aprendizaje, asistentes virtuales y sistemas de evaluación automatizada ya forman parte de la experiencia de muchos estudiantes.</div></div>
+      <div class="para"><div class="tag">Párrafo 2</div><div class="para-text">Uno de sus aportes más señalados es la personalización. A partir del seguimiento del rendimiento individual, algunos programas ajustan ejercicios, tiempos y niveles de dificultad según las necesidades de cada alumno.</div></div>
+      <div class="para"><div class="tag">Párrafo 3</div><div class="para-text">Ese potencial, sin embargo, no elimina el papel del docente. La interpretación pedagógica, el acompañamiento emocional y la construcción de sentido continúan dependiendo de vínculos humanos difíciles de automatizar.</div></div>
+      <div class="para"><div class="tag">Párrafo 4</div><div class="para-text">Además, el uso de estas herramientas plantea interrogantes éticos importantes. La recolección masiva de datos estudiantiles abre debates sobre privacidad, vigilancia y consentimiento.</div></div>
+      <div class="para"><div class="tag">Párrafo 5</div><div class="para-text">Tampoco todas las instituciones acceden del mismo modo a estas tecnologías. La brecha digital entre escuelas privadas y públicas, o entre zonas urbanas y rurales, condiciona fuertemente sus posibilidades de implementación.</div></div>
+      <div class="para"><div class="tag">Párrafo 6</div><div class="para-text">Por eso, la discusión no debería centrarse solo en la novedad técnica. También importa la formación docente, la planificación curricular y el sentido pedagógico con que se incorporan estas herramientas.</div></div>
+      <div class="para"><div class="tag">Párrafo 7</div><div class="para-text">En definitiva, la inteligencia artificial puede enriquecer procesos de enseñanza y aprendizaje, pero no como reemplazo automático de la escuela. Su valor depende del marco humano, institucional y ético en que se la utilice.</div></div>
+    </div>
+    <div class="questions">
+      <div class="q"><h3>Párrafo 1</h3><p>¿Cuál es la idea central nominal del párrafo 1?</p><div class="opts">
+        <button class="opt" onclick="check(this,'t3p1',true)">Presencia creciente de la inteligencia artificial en el ámbito educativo</button>
+        <button class="opt" onclick="check(this,'t3p1',false)">Descripción técnica de plataformas y asistentes virtuales</button>
+        <button class="opt" onclick="check(this,'t3p1',false)">Automatización completa de la experiencia escolar</button>
+        <button class="opt" onclick="check(this,'t3p1',false)">Evaluación digital exclusiva de estudiantes universitarios</button>
+      </div><div class="fb" id="fb-t3p1"></div></div>
+      <div class="q"><h3>Párrafo 2</h3><p>¿Cuál es la idea central nominal del párrafo 2?</p><div class="opts">
+        <button class="opt" onclick="check(this,'t3p2',true)">Personalización del aprendizaje mediante seguimiento del rendimiento</button>
+        <button class="opt" onclick="check(this,'t3p2',false)">Rapidez computacional de ejercicios escolares</button>
+        <button class="opt" onclick="check(this,'t3p2',false)">Dificultad académica de alumnos con bajo desempeño</button>
+        <button class="opt" onclick="check(this,'t3p2',false)">Organización administrativa de niveles curriculares</button>
+      </div><div class="fb" id="fb-t3p2"></div></div>
+      <div class="q"><h3>Párrafo 3</h3><p>¿Cuál es la idea central nominal del párrafo 3?</p><div class="opts">
+        <button class="opt" onclick="check(this,'t3p3',false)">Sustitución total del profesorado por algoritmos</button>
+        <button class="opt" onclick="check(this,'t3p3',true)">Persistencia del papel humano del docente</button>
+        <button class="opt" onclick="check(this,'t3p3',false)">Acompañamiento emocional de estudiantes digitales</button>
+        <button class="opt" onclick="check(this,'t3p3',false)">Interpretación automática de contenidos abstractos</button>
+      </div><div class="fb" id="fb-t3p3"></div></div>
+      <div class="q"><h3>Párrafo 4</h3><p>¿Cuál es la idea central nominal del párrafo 4?</p><div class="opts">
+        <button class="opt" onclick="check(this,'t3p4',false)">Acumulación estadística de resultados escolares</button>
+        <button class="opt" onclick="check(this,'t3p4',false)">Control institucional de tareas domiciliarias</button>
+        <button class="opt" onclick="check(this,'t3p4',true)">Interrogantes éticos sobre datos, privacidad y vigilancia</button>
+        <button class="opt" onclick="check(this,'t3p4',false)">Consentimiento exclusivo de familias urbanas</button>
+      </div><div class="fb" id="fb-t3p4"></div></div>
+      <div class="q"><h3>Párrafo 5</h3><p>¿Cuál es la idea central nominal del párrafo 5?</p><div class="opts">
+        <button class="opt" onclick="check(this,'t3p5',false)">Superioridad tecnológica de escuelas privadas</button>
+        <button class="opt" onclick="check(this,'t3p5',true)">Desigualdad de acceso y brecha digital educativa</button>
+        <button class="opt" onclick="check(this,'t3p5',false)">Ruralidad exclusiva de instituciones públicas</button>
+        <button class="opt" onclick="check(this,'t3p5',false)">Inversión informática de universidades internacionales</button>
+      </div><div class="fb" id="fb-t3p5"></div></div>
+      <div class="q"><h3>Párrafo 6</h3><p>¿Cuál es la idea central nominal del párrafo 6?</p><div class="opts">
+        <button class="opt" onclick="check(this,'t3p6',false)">Novedad técnica de herramientas digitales recientes</button>
+        <button class="opt" onclick="check(this,'t3p6',true)">Necesidad de formación docente y sentido pedagógico</button>
+        <button class="opt" onclick="check(this,'t3p6',false)">Planificación exclusiva de materias científicas</button>
+        <button class="opt" onclick="check(this,'t3p6',false)">Discusión curricular sin participación institucional</button>
+      </div><div class="fb" id="fb-t3p6"></div></div>
+      <div class="q"><h3>Párrafo 7</h3><p>¿Cuál es la idea central nominal del párrafo 7?</p><div class="opts">
+        <button class="opt" onclick="check(this,'t3p7',false)">Reemplazo inevitable de la escuela tradicional</button>
+        <button class="opt" onclick="check(this,'t3p7',false)">Automatización completa del aprendizaje escolar</button>
+        <button class="opt" onclick="check(this,'t3p7',true)">Valor condicionado de la inteligencia artificial en marcos humanos y éticos</button>
+        <button class="opt" onclick="check(this,'t3p7',false)">Eficiencia superior de programas de evaluación</button>
+      </div><div class="fb" id="fb-t3p7"></div></div>
+      <div class="q"><h3>Idea central global</h3><p>¿Cuál resume mejor el texto completo?</p><div class="opts">
+        <button class="opt" onclick="check(this,'t3g',true)">Potencial educativo, límites humanos y desafíos éticos de la inteligencia artificial</button>
+        <button class="opt" onclick="check(this,'t3g',false)">Superioridad técnica de plataformas digitales sobre docentes</button>
+        <button class="opt" onclick="check(this,'t3g',false)">Descripción de software escolar para clases virtuales</button>
+        <button class="opt" onclick="check(this,'t3g',false)">Privacidad exclusiva de estudiantes en escuelas privadas</button>
+      </div><div class="fb" id="fb-t3g"></div></div>
+    </div>
+  </div>
+
+  <!-- TEXTO 4 -->
+  <div class="text-card">
+    <div class="text-header"><div class="text-num">04</div><div><h2>La deforestación</h2><p>7 párrafos · 8 preguntas</p></div></div>
+    <div class="text-body">
+      <div class="para"><div class="tag">Párrafo 1</div><div class="para-text">La deforestación es uno de los procesos ambientales más graves del presente. En distintas regiones del mundo, la eliminación masiva de bosques modifica paisajes y rompe equilibrios ecológicos construidos durante siglos.</div></div>
+      <div class="para"><div class="tag">Párrafo 2</div><div class="para-text">Entre sus causas principales aparecen la expansión agropecuaria, la tala ilegal y ciertos proyectos extractivos. Detrás de esas prácticas suelen intervenir intereses económicos de gran escala.</div></div>
+      <div class="para"><div class="tag">Párrafo 3</div><div class="para-text">La pérdida de bosques afecta directamente a la biodiversidad. Muchas especies quedan sin hábitat y disminuyen sus posibilidades de supervivencia hasta llegar, en algunos casos, a la extinción.</div></div>
+      <div class="para"><div class="tag">Párrafo 4</div><div class="para-text">También se alteran los ciclos del agua y del carbono. Los bosques cumplen funciones claves en la regulación climática, la protección de suelos y la conservación de fuentes hídricas.</div></div>
+      <div class="para"><div class="tag">Párrafo 5</div><div class="para-text">Las consecuencias no son solo naturales. Comunidades indígenas y campesinas ven amenazadas sus formas de vida, su alimentación y sus vínculos culturales con el territorio.</div></div>
+      <div class="para"><div class="tag">Párrafo 6</div><div class="para-text">Frente a este problema, distintos países impulsan leyes de protección, planes de reforestación y mecanismos de control. Sin embargo, la eficacia de esas medidas depende de recursos, voluntad política y vigilancia real.</div></div>
+      <div class="para"><div class="tag">Párrafo 7</div><div class="para-text">Detener la deforestación exige, en última instancia, revisar modelos de producción y consumo. La discusión ambiental se conecta así con decisiones económicas, sociales y éticas de gran alcance.</div></div>
+    </div>
+    <div class="questions">
+      <div class="q"><h3>Párrafo 1</h3><p>¿Cuál es la idea central nominal del párrafo 1?</p><div class="opts">
+        <button class="opt" onclick="check(this,'t4p1',true)">Gravedad ambiental de la deforestación</button>
+        <button class="opt" onclick="check(this,'t4p1',false)">Antigüedad histórica de paisajes rurales</button>
+        <button class="opt" onclick="check(this,'t4p1',false)">Descripción de bosques tropicales específicos</button>
+        <button class="opt" onclick="check(this,'t4p1',false)">Cambio estacional de regiones forestales</button>
+      </div><div class="fb" id="fb-t4p1"></div></div>
+      <div class="q"><h3>Párrafo 2</h3><p>¿Cuál es la idea central nominal del párrafo 2?</p><div class="opts">
+        <button class="opt" onclick="check(this,'t4p2',false)">Actividad agrícola tradicional de pequeña escala</button>
+        <button class="opt" onclick="check(this,'t4p2',true)">Causas económicas y productivas de la deforestación</button>
+        <button class="opt" onclick="check(this,'t4p2',false)">Ilegalidad exclusiva de la tala maderera</button>
+        <button class="opt" onclick="check(this,'t4p2',false)">Expansión urbana de zonas montañosas</button>
+      </div><div class="fb" id="fb-t4p2"></div></div>
+      <div class="q"><h3>Párrafo 3</h3><p>¿Cuál es la idea central nominal del párrafo 3?</p><div class="opts">
+        <button class="opt" onclick="check(this,'t4p3',false)">Extinción inmediata de todas las especies</button>
+        <button class="opt" onclick="check(this,'t4p3',false)">Hábitat exclusivo de animales selváticos</button>
+        <button class="opt" onclick="check(this,'t4p3',true)">Impacto de la deforestación sobre la biodiversidad</button>
+        <button class="opt" onclick="check(this,'t4p3',false)">Supervivencia natural de especies domésticas</button>
+      </div><div class="fb" id="fb-t4p3"></div></div>
+      <div class="q"><h3>Párrafo 4</h3><p>¿Cuál es la idea central nominal del párrafo 4?</p><div class="opts">
+        <button class="opt" onclick="check(this,'t4p4',true)">Alteración de ciclos ecológicos y funciones regulatorias de los bosques</button>
+        <button class="opt" onclick="check(this,'t4p4',false)">Conservación aislada de ríos y montañas</button>
+        <button class="opt" onclick="check(this,'t4p4',false)">Protección climática de ciudades costeras</button>
+        <button class="opt" onclick="check(this,'t4p4',false)">Producción natural de carbono forestal</button>
+      </div><div class="fb" id="fb-t4p4"></div></div>
+      <div class="q"><h3>Párrafo 5</h3><p>¿Cuál es la idea central nominal del párrafo 5?</p><div class="opts">
+        <button class="opt" onclick="check(this,'t4p5',false)">Alimentación tradicional de pueblos antiguos</button>
+        <button class="opt" onclick="check(this,'t4p5',true)">Consecuencias sociales y culturales para comunidades locales</button>
+        <button class="opt" onclick="check(this,'t4p5',false)">Migración voluntaria de campesinos urbanos</button>
+        <button class="opt" onclick="check(this,'t4p5',false)">Territorialidad exclusiva de grupos indígenas</button>
+      </div><div class="fb" id="fb-t4p5"></div></div>
+      <div class="q"><h3>Párrafo 6</h3><p>¿Cuál es la idea central nominal del párrafo 6?</p><div class="opts">
+        <button class="opt" onclick="check(this,'t4p6',false)">Fracaso absoluto de leyes ambientales</button>
+        <button class="opt" onclick="check(this,'t4p6',true)">Respuesta estatal y condiciones de eficacia de las medidas de protección</button>
+        <button class="opt" onclick="check(this,'t4p6',false)">Reforestación automática de bosques destruidos</button>
+        <button class="opt" onclick="check(this,'t4p6',false)">Vigilancia exclusiva de guardias rurales</button>
+      </div><div class="fb" id="fb-t4p6"></div></div>
+      <div class="q"><h3>Párrafo 7</h3><p>¿Cuál es la idea central nominal del párrafo 7?</p><div class="opts">
+        <button class="opt" onclick="check(this,'t4p7',false)">Discusión moral sobre árboles antiguos</button>
+        <button class="opt" onclick="check(this,'t4p7',false)">Revisión exclusiva de hábitos domésticos</button>
+        <button class="opt" onclick="check(this,'t4p7',true)">Necesidad de revisión de modelos productivos y de consumo</button>
+        <button class="opt" onclick="check(this,'t4p7',false)">Sustitución inmediata de proyectos extractivos</button>
+      </div><div class="fb" id="fb-t4p7"></div></div>
+      <div class="q"><h3>Idea central global</h3><p>¿Cuál resume mejor el texto completo?</p><div class="opts">
+        <button class="opt" onclick="check(this,'t4g',false)">Descripción natural de árboles, lluvias y animales silvestres</button>
+        <button class="opt" onclick="check(this,'t4g',true)">Causas, consecuencias y exigencias de respuesta frente a la deforestación</button>
+        <button class="opt" onclick="check(this,'t4g',false)">Crítica exclusiva a la tala ilegal en regiones tropicales</button>
+        <button class="opt" onclick="check(this,'t4g',false)">Regulación climática de bosques y fuentes hídricas</button>
+      </div><div class="fb" id="fb-t4g"></div></div>
+    </div>
+  </div>
+
+  <!-- TEXTO 5 -->
+  <div class="text-card">
+    <div class="text-header"><div class="text-num">05</div><div><h2>La lectura literaria</h2><p>7 párrafos · 8 preguntas</p></div></div>
+    <div class="text-body">
+      <div class="para"><div class="tag">Párrafo 1</div><div class="para-text">La lectura literaria ocupa un lugar singular entre las prácticas culturales. A diferencia de otras formas de consumo rápido de información, exige tiempo, atención y disposición imaginativa.</div></div>
+      <div class="para"><div class="tag">Párrafo 2</div><div class="para-text">En ese proceso, el lector no recibe pasivamente un mensaje cerrado. Cada novela, cuento o poema demanda interpretaciones, asociaciones y reconstrucciones personales.</div></div>
+      <div class="para"><div class="tag">Párrafo 3</div><div class="para-text">La literatura, además, amplía la experiencia humana. A través de personajes, voces y conflictos, acerca mundos históricos, sociales y emocionales que el lector quizá nunca viva de manera directa.</div></div>
+      <div class="para"><div class="tag">Párrafo 4</div><div class="para-text">Ese contacto con otras perspectivas fortalece la empatía y la reflexión. La lectura de ficciones permite comprender mejor tensiones morales, dilemas colectivos y zonas ambiguas de la conducta humana.</div></div>
+      <div class="para"><div class="tag">Párrafo 5</div><div class="para-text">Sin embargo, la lectura literaria enfrenta hoy obstáculos visibles. La aceleración de los ritmos cotidianos y la fragmentación de la atención dificultan la permanencia prolongada en un texto complejo.</div></div>
+      <div class="para"><div class="tag">Párrafo 6</div><div class="para-text">Por eso, la formación de lectores no depende solo de la escuela. También influyen las bibliotecas, las políticas culturales, los mediadores de lectura y los entornos familiares.</div></div>
+      <div class="para"><div class="tag">Párrafo 7</div><div class="para-text">Defender la lectura literaria implica, en última instancia, defender una forma de sensibilidad. En ella se entrecruzan imaginación, pensamiento crítico y memoria cultural.</div></div>
+    </div>
+    <div class="questions">
+      <div class="q"><h3>Párrafo 1</h3><p>¿Cuál es la idea central nominal del párrafo 1?</p><div class="opts">
+        <button class="opt" onclick="check(this,'t5p1',true)">Singularidad cultural y exigencia atencional de la lectura literaria</button>
+        <button class="opt" onclick="check(this,'t5p1',false)">Rapidez informativa de textos periodísticos</button>
+        <button class="opt" onclick="check(this,'t5p1',false)">Consumo juvenil de historias breves</button>
+        <button class="opt" onclick="check(this,'t5p1',false)">Duración extensa de novelas clásicas</button>
+      </div><div class="fb" id="fb-t5p1"></div></div>
+      <div class="q"><h3>Párrafo 2</h3><p>¿Cuál es la idea central nominal del párrafo 2?</p><div class="opts">
+        <button class="opt" onclick="check(this,'t5p2',false)">Mensaje cerrado de novelas contemporáneas</button>
+        <button class="opt" onclick="check(this,'t5p2',true)">Participación interpretativa del lector</button>
+        <button class="opt" onclick="check(this,'t5p2',false)">Reconstrucción biográfica de autores famosos</button>
+        <button class="opt" onclick="check(this,'t5p2',false)">Asociación escolar de poemas y cuentos</button>
+      </div><div class="fb" id="fb-t5p2"></div></div>
+      <div class="q"><h3>Párrafo 3</h3><p>¿Cuál es la idea central nominal del párrafo 3?</p><div class="opts">
+        <button class="opt" onclick="check(this,'t5p3',true)">Ampliación de la experiencia humana mediante la literatura</button>
+        <button class="opt" onclick="check(this,'t5p3',false)">Descripción de personajes y conflictos novelescos</button>
+        <button class="opt" onclick="check(this,'t5p3',false)">Preferencia lectora por mundos imaginarios</button>
+        <button class="opt" onclick="check(this,'t5p3',false)">Distancia emocional de lectores inexpertos</button>
+      </div><div class="fb" id="fb-t5p3"></div></div>
+      <div class="q"><h3>Párrafo 4</h3><p>¿Cuál es la idea central nominal del párrafo 4?</p><div class="opts">
+        <button class="opt" onclick="check(this,'t5p4',false)">Confusión moral de conductas ambiguas</button>
+        <button class="opt" onclick="check(this,'t5p4',false)">Reflexión filosófica exclusiva de textos clásicos</button>
+        <button class="opt" onclick="check(this,'t5p4',true)">Fortalecimiento de la empatía y la reflexión ética</button>
+        <button class="opt" onclick="check(this,'t5p4',false)">Comprensión inmediata de dilemas sociales</button>
+      </div><div class="fb" id="fb-t5p4"></div></div>
+      <div class="q"><h3>Párrafo 5</h3><p>¿Cuál es la idea central nominal del párrafo 5?</p><div class="opts">
+        <button class="opt" onclick="check(this,'t5p5',false)">Complejidad exclusiva de novelas extensas</button>
+        <button class="opt" onclick="check(this,'t5p5',true)">Obstáculos contemporáneos para la lectura sostenida</button>
+        <button class="opt" onclick="check(this,'t5p5',false)">Aceleración tecnológica de bibliotecas escolares</button>
+        <button class="opt" onclick="check(this,'t5p5',false)">Fragmentación estilística de poemas modernos</button>
+      </div><div class="fb" id="fb-t5p5"></div></div>
+      <div class="q"><h3>Párrafo 6</h3><p>¿Cuál es la idea central nominal del párrafo 6?</p><div class="opts">
+        <button class="opt" onclick="check(this,'t5p6',false)">Responsabilidad exclusiva de la escuela</button>
+        <button class="opt" onclick="check(this,'t5p6',false)">Influencia familiar sobre hábitos escolares</button>
+        <button class="opt" onclick="check(this,'t5p6',true)">Carácter social e institucional de la formación de lectores</button>
+        <button class="opt" onclick="check(this,'t5p6',false)">Políticas culturales de editoriales privadas</button>
+      </div><div class="fb" id="fb-t5p6"></div></div>
+      <div class="q"><h3>Párrafo 7</h3><p>¿Cuál es la idea central nominal del párrafo 7?</p><div class="opts">
+        <button class="opt" onclick="check(this,'t5p7',false)">Defensa editorial de géneros narrativos clásicos</button>
+        <button class="opt" onclick="check(this,'t5p7',true)">Vinculación entre lectura literaria, sensibilidad y pensamiento crítico</button>
+        <button class="opt" onclick="check(this,'t5p7',false)">Memoria escolar de lecturas obligatorias</button>
+        <button class="opt" onclick="check(this,'t5p7',false)">Imaginación infantil de mundos fantásticos</button>
+      </div><div class="fb" id="fb-t5p7"></div></div>
+      <div class="q"><h3>Idea central global</h3><p>¿Cuál resume mejor el texto completo?</p><div class="opts">
+        <button class="opt" onclick="check(this,'t5g',false)">Descripción de novelas, poemas y cuentos escolares</button>
+        <button class="opt" onclick="check(this,'t5g',false)">Crítica a la velocidad de las redes sociales actuales</button>
+        <button class="opt" onclick="check(this,'t5g',true)">Valor formativo, cultural y crítico de la lectura literaria frente a desafíos contemporáneos</button>
+        <button class="opt" onclick="check(this,'t5g',false)">Importancia exclusiva de bibliotecas y políticas culturales</button>
+      </div><div class="fb" id="fb-t5g"></div></div>
+    </div>
+  </div>
+
+  <div class="score" id="score"><h3>🏆 Resultado final</h3><div class="n" id="scoreNum">0/40</div><p id="scoreMsg"></p><button class="reset" onclick="location.reload()">Reiniciar</button></div>
+</div>
+<footer>
+  Progresión temática nominal · <a href="final.html">Inicio</a>
+</footer>
+<script>
+const TOTAL=40; let answered=0, correct=0;
+function update(){
+  document.getElementById('bar').style.width=(answered/TOTAL*100)+'%';
+  document.getElementById('label').textContent=answered+' / '+TOTAL+' respondidos';
+  if(answered===TOTAL){
+    const s=document.getElementById('score'); s.style.display='block';
+    document.getElementById('scoreNum').textContent=correct+'/'+TOTAL;
+    const p=Math.round(correct/TOTAL*100);
+    document.getElementById('scoreMsg').textContent = p>=90?'Excelente manejo de ideas centrales nominales.':p>=75?'Muy bien. Conviene revisar algunos distractores.':p>=55?'Buen avance. Falta afinar la abstracción nominal.':'Conviene releer cada párrafo y buscar la formulación más abstracta.';
+    s.scrollIntoView({behavior:'smooth'});
+  }
+}
+function check(btn,id,isCorrect){
+  const q=btn.closest('.q');
+  const opts=q.querySelectorAll('.opt');
+  opts.forEach(o=>o.disabled=true);
+  const fb=document.getElementById('fb-'+id);
+  if(isCorrect){btn.classList.add('correct');fb.textContent='✅ Correcto';fb.className='fb show ok';correct++;}
+  else{btn.classList.add('wrong');opts.forEach(o=>{if((o.getAttribute('onclick')||'').includes(',true)'))o.classList.add('correct');});fb.textContent='❌ Incorrecto. La respuesta correcta quedó marcada.';fb.className='fb show fail';}
+  answered++; update();
+}
+</script>
+</body>
+</html>
