@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Análisis de Textos – Lengua Española</title>
+  <style>
+    :root {
+      --primary: #1d4ed8; --primary-dark: #1e40af; --primary-light: #dbeafe;
+      --accent: #7c3aed; --bg: #f8fafc; --card: #ffffff;
+      --text: #1e293b; --muted: #64748b; --border: #e2e8f0;
+      --success: #059669; --success-light: #d1fae5;
+      --error: #dc2626; --error-light: #fee2e2;
+      --warn: #d97706; --warn-light: #fef3c7;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "Segoe UI", system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; }
+    header { background: linear-gradient(135deg, #1d4ed8 0%, #7c3aed 100%); color: white; padding: 44px 24px 32px; text-align: center; }
+    header h1 { font-size: 2rem; font-weight: 800; margin-bottom: 8px; }
+    header p { font-size: 1rem; opacity: .88; max-width: 600px; margin: 0 auto 20px; }
+    .btn-nav { display: inline-block; background: white; color: var(--primary); font-weight: 700; padding: 9px 22px; border-radius: 50px; text-decoration: none; font-size: .9rem; box-shadow: 0 4px 12px rgba(0,0,0,.15); margin: 0 4px; }
+    .container { max-width: 900px; margin: 0 auto; padding: 40px 20px 70px; }
+    .progress-bar-wrap { background: var(--border); border-radius: 50px; height: 10px; margin: 0 0 6px; }
+    .progress-bar { background: linear-gradient(90deg, var(--primary), var(--accent)); height: 10px; border-radius: 50px; width: 0%; transition: width .4s; }
+    .progress-label { font-size: .82rem; color: var(--muted); text-align: right; margin-bottom: 32px; }
+    /* TEXT CARD */
+    .text-card { background: var(--card); border-radius: 18px; border: 1px solid var(--border); box-shadow: 0 3px 12px rgba(0,0,0,.06); margin-bottom: 36px; overflow: hidden; }
+    .text-header { background: linear-gradient(90deg, var(--primary), var(--accent)); color: white; padding: 16px 24px; display: flex; align-items: center; gap: 12px; }
+    .text-num { font-size: 1.5rem; font-weight: 900; opacity: .85; }
+    .text-header h2 { font-size: 1.05rem; font-weight: 700; }
+    .text-body { background: #f0f7ff; border-left: 4px solid var(--primary); margin: 24px 24px 0; border-radius: 10px; padding: 18px 20px; font-size: .97rem; line-height: 1.85; color: #1e293b; }
+    .text-body p { margin-bottom: 10px; }
+    .text-body p:last-child { margin-bottom: 0; }
+    /* TASKS */
+    .tasks { padding: 20px 24px 24px; display: flex; flex-direction: column; gap: 20px; }
+    .task { background: var(--bg); border: 1.5px solid var(--border); border-radius: 12px; padding: 16px 18px; }
+    .task-label { font-size: .78rem; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+    .task-label.t1 { color: #1d4ed8; }
+    .task-label.t2 { color: #7c3aed; }
+    .task-label.t3 { color: #dc2626; }
+    .task-label.t4 { color: #d97706; }
+    .task-question { font-weight: 600; font-size: .95rem; margin-bottom: 12px; }
+    .options { display: flex; flex-direction: column; gap: 8px; }
+    .option-btn { background: white; border: 2px solid var(--border); border-radius: 10px; padding: 10px 15px; cursor: pointer; text-align: left; font-size: .92rem; font-family: inherit; transition: border-color .2s, background .2s; width: 100%; }
+    .option-btn:hover:not(:disabled) { border-color: var(--primary); background: var(--primary-light); }
+    .option-btn.correct { border-color: var(--success) !important; background: var(--success-light) !important; color: #065f46; font-weight: 700; }
+    .option-btn.wrong { border-color: var(--error) !important; background: var(--error-light) !important; color: var(--error); }
+    .option-btn:disabled { cursor: default; }
+    .feedback { margin-top: 9px; font-size: .87rem; font-weight: 600; padding: 8px 13px; border-radius: 8px; display: none; }
+    .feedback.show { display: block; }
+    .feedback.ok { background: var(--success-light); color: #065f46; }
+    .feedback.fail { background: var(--error-light); color: var(--error); }
+    /* SCORE */
+    .score-box { background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; border-radius: 18px; padding: 32px; text-align: center; margin-top: 24px; }
+    .score-box h3 { font-size: 1.4rem; margin-bottom: 8px; }
+    .score-num { font-size: 3.5rem; font-weight: 900; }
+    .score-box p { opacity: .9; margin-top: 8px; font-size: 1rem; }
+    .reset-btn { margin-top: 18px; background: white; color: var(--primary); border: none; border-radius: 50px; padding: 10px 30px; font-weight: 700; cursor: pointer; font-family: inherit; font-size: .95rem; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>📖 Análisis de Textos</h1>
+  <p>5 textos completos · 4 tareas por texto · 20 ejercicios en total<br>Identificá progresión temática, idea central, oración intrusa y oración redundante</p>
+  <a href="ejercicios_complementarios_4.html" class="btn-nav">← Complementarios IV</a>
+  <a href="index.html" class="btn-nav">Temario</a>
+</header>
+
+<div class="container">
+  <div class="progress-bar-wrap"><div class="progress-bar" id="prog"></div></div>
+  <p class="progress-label" id="prog-label">0 / 20 respondidos</p>
+
+  <!-- ═══════════════ TEXTO 1 ═══════════════ -->
+  <div class="text-card">
+    <div class="text-header">
+      <span class="text-num">01</span>
+      <h2>El agua dulce en el planeta</h2>
+    </div>
+    <div class="text-body">
+      <p>El agua dulce es uno de los recursos más preciados y escasos del planeta. Aunque el agua cubre el 71% de la superficie terrestre, apenas el 3% es dulce, y la mayor parte de ese porcentaje se encuentra congelada en glaciares y casquetes polares.</p>
+      <p>El agua dulce se distribuye de manera muy desigual: algunas regiones sufren sequías crónicas mientras otras enfrentan inundaciones periódicas. Los seres humanos dependemos del agua dulce para beber, cultivar alimentos y desarrollar actividades industriales.</p>
+      <p>La contaminación de ríos y acuíferos agrava aún más la escasez. Cada año, millones de personas en el mundo no tienen acceso a agua potable segura, lo que provoca enfermedades y muerte, especialmente en niños menores de cinco años.</p>
+    </div>
+    <div class="tasks">
+
+      <div class="task">
+        <div class="task-label t1">🔵 Tarea 1 — Progresión temática</div>
+        <div class="task-question">¿Qué tipo de progresión temática predomina en este texto?</div>
+        <div class="options">
+          <button class="option-btn" onclick="check(this,'t1_1',false)">Progresión lineal (el rema de cada oración pasa a ser el tema de la siguiente)</button>
+          <button class="option-btn" onclick="check(this,'t1_1',true)">Tema constante (el agua dulce es el punto de partida de todos los párrafos)</button>
+          <button class="option-btn" onclick="check(this,'t1_1',false)">Temas derivados (cada párrafo desarrolla un subtema distinto e independiente)</button>
+        </div>
+        <div class="feedback" id="fb-t1_1"></div>
+      </div>
+
+      <div class="task">
+        <div class="task-label t2">🟣 Tarea 2 — Idea central</div>
+        <div class="task-question">¿Cuál de estas opciones resume mejor la idea central del texto?</div>
+        <div class="options">
+          <button class="option-btn" onclick="check(this,'t1_2',false)">El 71% de la superficie terrestre está cubierta de agua</button>
+          <button class="option-btn" onclick="check(this,'t1_2',false)">La contaminación es el único problema del agua en el mundo</button>
+          <button class="option-btn" onclick="check(this,'t1_2',true)">El agua dulce es un recurso escaso, distribuido desigualmente y amenazado por la contaminación</button>
+          <button class="option-btn" onclick="check(this,'t1_2',false)">Los glaciares contienen la mayor reserva de agua del planeta</button>
+        </div>
+        <div class="feedback" id="fb-t1_2"></div>
+      </div>
+
+      <div class="task">
+        <div class="task-label t3">🔴 Tarea 3 — Oración intrusa</div>
+        <div class="task-question">¿Cuál de estas oraciones NO pertenece temáticamente a este texto?</div>
+        <div class="options">
+          <button class="option-btn" onclick="check(this,'t1_3',false)">«La desertificación reduce año a año las reservas de agua subterránea.»</button>
+          <button class="option-btn" onclick="check(this,'t1_3',false)">«El uso eficiente del agua en la agricultura puede reducir el desperdicio.»</button>
+          <button class="option-btn" onclick="check(this,'t1_3',true)">«El fútbol es el deporte más practicado en América Latina y genera millones en ingresos.»</button>
+          <button class="option-btn" onclick="check(this,'t1_3',false)">«Los glaciares actúan como reservorios naturales que alimentan ríos en épocas de sequía.»</button>
+        </div>
+        <div class="feedback" id="fb-t1_3"></div>
+      </div>
+
+      <div class="task">
+        <div class="task-label t4">🟡 Tarea 4 — Oración redundante</div>
+        <div class="task-question">¿Cuál de estas oraciones es redundante (repite información ya implícita)?</div>
+        <div class="options">
+          <button class="option-btn" onclick="check(this,'t1_4',false)">«El agua es fundamental para la vida de los seres vivos.»</button>
+          <button class="option-btn" onclick="check(this,'t1_4',true)">«La sequía es un período de escasez donde falta el agua y hay poca lluvia.»</button>
+          <button class="option-btn" onclick="check(this,'t1_4',false)">«Los países en desarrollo son los más afectados por la falta de agua potable.»</button>
+          <button class="option-btn" onclick="check(this,'t1_4',false)">«El riego por goteo es una técnica que minimiza el uso del agua en cultivos.»</button>
+        </div>
+        <div class="feedback" id="fb-t1_4"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════ TEXTO 2 ═══════════════ -->
+  <div class="text-card">
+    <div class="text-header">
+      <span class="text-num">02</span>
+      <h2>La inteligencia artificial y el trabajo</h2>
+    </div>
+    <div class="text-body">
+      <p>La inteligencia artificial está transformando profundamente el mercado laboral. Muchas tareas repetitivas que antes realizaban los humanos ahora son ejecutadas por algoritmos y robots con mayor velocidad y precisión.</p>
+      <p>La inteligencia artificial elimina ciertos empleos, especialmente los más automatizables. Sin embargo, al mismo tiempo genera nuevas profesiones vinculadas al desarrollo, mantenimiento y supervisión de sistemas inteligentes.</p>
+      <p>La inteligencia artificial plantea además grandes desafíos éticos y sociales: ¿quién controla los algoritmos? ¿Cómo se redistribuyen los beneficios económicos? La respuesta a estas preguntas determinará si la IA amplía o reduce las desigualdades existentes.</p>
+    </div>
+    <div class="tasks">
+
+      <div class="task">
+        <div class="task-label t1">🔵 Tarea 1 — Progresión temática</div>
+        <div class="task-question">¿Qué tipo de progresión temática predomina en este texto?</div>
+        <div class="options">
+          <button class="option-btn" onclick="check(this,'t2_1',true)">Tema constante (la IA es el tema de arranque en cada párrafo)</button>
+          <button class="option-btn" onclick="check(this,'t2_1',false)">Progresión lineal (el rema de cada párrafo se convierte en el siguiente tema)</button>
+          <button class="option-btn" onclick="check(this,'t2_1',false)">Temas derivados (cada párrafo es independiente del anterior)</button>
+        </div>
+        <div class="feedback" id="fb-t2_1"></div>
+      </div>
+
+      <div class="task">
+        <div class="task-label t2">🟣 Tarea 2 — Idea central</div>
+        <div class="task-question">¿Cuál opción resume mejor la idea central del texto?</div>
+        <div class="options">
+          <button class="option-btn" onclick="check(this,'t2_2',false)">La IA solo destruye empleos y no genera ningún beneficio</button>
+          <button class="option-btn" onclick="check(this,'t2_2',true)">La IA transforma el mercado laboral con impactos positivos y negativos, y plantea desafíos éticos importantes</button>
+          <button class="option-btn" onclick="check(this,'t2_2',false)">Los robots son más eficientes que los humanos en todas las tareas</button>
+          <button class="option-btn" onclick="check(this,'t2_2',false)">La ética es el único problema real que genera la inteligencia artificial</button>
+        </div>
+        <div class="feedback" id="fb-t2_2"></div>
+      </div>
+
+      <div class="task">
+        <div class="task-label t3">🔴 Tarea 3 — Oración intrusa</div>
+        <div class="task-question">¿Cuál de estas oraciones NO pertenece temáticamente a este texto?</div>
+        <div class="options">
+          <button class="option-btn" onclick="check(this,'t2_3',false)">«Los algoritmos de aprendizaje automático mejoran con cada conjunto de datos que procesan.»</button>
+          <button class="option-btn" onclick="check(this,'t2_3',true)">«La yerba mate se cultiva principalmente en Paraguay, Argentina y Brasil, y es parte de la identidad cultural regional.»</button>
+          <button class="option-btn" onclick="check(this,'t2_3',false)">«La automatización afecta más a trabajadores con menor nivel educativo.»</button>
+          <button class="option-btn" onclick="check(this,'t2_3',false)">«Nuevas profesiones como «prompt engineer» o «data scientist» emergen con el avance de la IA.»</button>
+        </div>
+        <div class="feedback" id="fb-t2_3"></div>
+      </div>
+
+      <div class="task">
+        <div class="task-label t4">🟡 Tarea 4 — Oración redundante</div>
+        <div class="task-question">¿Cuál de estas oraciones es redundante?</div>
+        <div class="options">
+          <button class="option-btn" onclick="check(this,'t2_4',false)">«Los empleos del futuro requerirán habilidades que hoy aún no existen.»</button>
+          <button class="option-btn" onclick="check(this,'t2_4',false)">«La regulación de la IA varía significativamente entre países y regiones.»</button>
+          <button class="option-btn" onclick="check(this,'t2_4',true)">«El robot autómata realiza tareas de forma automática sin intervención humana.»</button>
+          <button class="option-btn" onclick="check(this,'t2_4',false)">«La brecha digital agrava las desigualdades en el acceso a la IA.»</button>
+        </div>
+        <div class="feedback" id="fb-t2_4"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════ TEXTO 3 ═══════════════ -->
+  <div class="text-card">
+    <div class="text-header">
+      <span class="text-num">03</span>
+      <h2>Las selvas tropicales del mundo</h2>
+    </div>
+    <div class="text-body">
+      <p>Las selvas tropicales cubren apenas el 6% de la superficie terrestre, pero albergan más de la mitad de todas las especies animales y vegetales del planeta. Son los ecosistemas más biodiversos que existen.</p>
+      <p>La Amazonia, el Congo y las selvas del Sudeste Asiático son los tres grandes bloques de selva tropical que quedan en el mundo. Cada uno de estos sistemas tiene características propias: la Amazonia se destaca por su volumen hídrico, el Congo por su densidad forestal, y el Sudeste Asiático por su riqueza en especies endémicas.</p>
+      <p>La deforestación avanza a un ritmo alarmante en todas estas regiones. Cada minuto se pierden áreas equivalentes a varios campos de fútbol de selva tropical, con consecuencias irreversibles para el clima global y la biodiversidad.</p>
+    </div>
+    <div class="tasks">
+
+      <div class="task">
+        <div class="task-label t1">🔵 Tarea 1 — Progresión temática</div>
+        <div class="task-question">¿Qué tipo de progresión temática predomina en este texto?</div>
+        <div class="options">
+          <button class="option-btn" onclick="check(this,'t3_1',false)">Tema constante (las selvas son siempre el tema de arranque)</button>
+          <button class="option-btn" onclick="check(this,'t3_1',false)">Progresión lineal (el rema de un párrafo se convierte en tema del siguiente)</button>
+          <button class="option-btn" onclick="check(this,'t3_1',true)">Temas derivados (el gran tema «selvas tropicales» se divide en subtemas: biodiversidad, las tres grandes selvas, deforestación)</button>
+        </div>
+        <div class="feedback" id="fb-t3_1"></div>
+      </div>
+
+      <div class="task">
+        <div class="task-label t2">🟣 Tarea 2 — Idea central</div>
+        <div class="task-question">¿Cuál opción resume mejor la idea central del texto?</div>
+        <div class="options">
+          <button class="option-btn" onclick="check(this,'t3_2',false)">La Amazonia es la selva más importante del mundo</button>
+          <button class="option-btn" onclick="check(this,'t3_2',false)">Las selvas tropicales se encuentran solo en América del Sur</button>
+          <button class="option-btn" onclick="check(this,'t3_2',false)">La deforestación es el único problema ambiental del planeta</button>
+          <button class="option-btn" onclick="check(this,'t3_2',true)">Las selvas tropicales son los ecosistemas más biodiversos del planeta y están seriamente amenazados por la deforestación</button>
+        </div>
+        <div class="feedback" id="fb-t3_2"></div>
+      </div>
+
+      <div class="task">
+        <div class="task-label t3">🔴 Tarea 3 — Oración intrusa</div>
+        <div class="task-question">¿Cuál de estas oraciones NO pertenece temáticamente a este texto?</div>
+        <div class="options">
+          <button class="option-btn" onclick="check(this,'t3_3',false)">«La tala ilegal es una de las principales causas de pérdida forestal en la Amazonia.»</button>
+          <button class="option-btn" onclick="check(this,'t3_3',true)">«La gastronomía italiana es reconocida mundialmente por sus pastas, pizzas y aceite de oliva.»</button>
+          <button class="option-btn" onclick="check(this,'t3_3',false)">«Muchas plantas medicinales utilizadas en farmacología provienen de las selvas tropicales.»</button>
+          <button class="option-btn" onclick="check(this,'t3_3',false)">«Las comunidades indígenas son guardianas ancestrales de la biodiversidad selvática.»</button>
+        </div>
+        <div class="feedback" id="fb-t3_3"></div>
+      </div>
+
+      <div class="task">
+        <div class="task-label t4">🟡 Tarea 4 — Oración redundante</div>
+        <div class="task-question">¿Cuál de estas oraciones es redundante?</div>
+        <div class="options">
+          <button class="option-btn" onclick="check(this,'t3_4',true)">«La especie endémica exclusiva solo se encuentra en ese lugar y en ningún otro sitio.»</button>
+          <button class="option-btn" onclick="check(this,'t3_4',false)">«La pérdida de biodiversidad afecta el equilibrio de los ecosistemas globales.»</button>
+          <button class="option-btn" onclick="check(this,'t3_4',false)">«El cambio climático acelera la degradación de los bosques tropicales húmedos.»</button>
+          <button class="option-btn" onclick="check(this,'t3_4',false)">«Las selvas regulan el ciclo del agua a escala continental.»</button>
+        </div>
+        <div class="feedback" id="fb-t3_4"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════ TEXTO 4 ═══════════════ -->
+  <div class="text-card">
+    <div class="text-header">
+      <span class="text-num">04</span>
+      <h2>Historia de la escritura humana</h2>
+    </div>
+    <div class="text-body">
+      <p>La escritura surgió hace aproximadamente 5.000 años en Mesopotamia, con los sumerios. Estos desarrollaron la escritura cuneiforme: un sistema de marcas en tablillas de arcilla que servía principalmente para registrar transacciones comerciales.</p>
+      <p>La escritura cuneiforme fue adoptada y adaptada por pueblos vecinos. Sus signos evolucionaron con el tiempo y se volvieron más abstractos, pasando de pictogramas realistas a marcas estilizadas que representaban sonidos y conceptos.</p>
+      <p>Los signos estilizados influyeron en el alfabeto fenicio, que a su vez fue la base del griego y del latino. El alfabeto latino es hoy el sistema de escritura más utilizado en el mundo, empleado por más de dos tercios de la humanidad.</p>
+    </div>
+    <div class="tasks">
+
+      <div class="task">
+        <div class="task-label t1">🔵 Tarea 1 — Progresión temática</div>
+        <div class="task-question">¿Qué tipo de progresión temática predomina en este texto?</div>
+        <div class="options">
+          <button class="option-btn" onclick="check(this,'t4_1',true)">Progresión lineal (el rema de cada párrafo —cuneiforme → signos → alfabeto— pasa a ser el tema del siguiente)</button>
+          <button class="option-btn" onclick="check(this,'t4_1',false)">Tema constante (la escritura es el tema de arranque en cada párrafo)</button>
+          <button class="option-btn" onclick="check(this,'t4_1',false)">Temas derivados (un gran tema se divide en subtemas independientes)</button>
+        </div>
+        <div class="feedback" id="fb-t4_1"></div>
+      </div>
+
+      <div class="task">
+        <div class="task-label t2">🟣 Tarea 2 — Idea central</div>
+        <div class="task-question">¿Cuál opción resume mejor la idea central del texto?</div>
+        <div class="options">
+          <button class="option-btn" onclick="check(this,'t4_2',false)">Los sumerios fueron la civilización más importante de la historia</button>
+          <button class="option-btn" onclick="check(this,'t4_2',true)">La escritura surgió en Mesopotamia y evolucionó linealmente hasta convertirse en el alfabeto que usamos hoy</button>
+          <button class="option-btn" onclick="check(this,'t4_2',false)">El alfabeto latino es superior a todos los sistemas de escritura anteriores</button>
+          <button class="option-btn" onclick="check(this,'t4_2',false)">Los fenicios fueron los verdaderos inventores de la escritura moderna</button>
+        </div>
+        <div class="feedback" id="fb-t4_2"></div>
+      </div>
+
+      <div class="task">
+        <div class="task-label t3">🔴 Tarea 3 — Oración intrusa</div>
+        <div class="task-question">¿Cuál de estas oraciones NO pertenece temáticamente a este texto?</div>
+        <div class="options">
+          <button class="option-btn" onclick="check(this,'t4_3',false)">«Los jeroglíficos egipcios coexistieron con la escritura cuneiforme en el mundo antiguo.»</button>
+          <button class="option-btn" onclick="check(this,'t4_3',false)">«El papiro fue el soporte de escritura más usado en el Mediterráneo antiguo.»</button>
+          <button class="option-btn" onclick="check(this,'t4_3',true)">«La energía solar fotovoltaica se está convirtiendo en la fuente renovable más económica del mundo.»</button>
+          <button class="option-btn" onclick="check(this,'t4_3',false)">«La imprenta de Gutenberg revolucionó la difusión de la escritura en el siglo XV.»</button>
+        </div>
+        <div class="feedback" id="fb-t4_3"></div>
+      </div>
+
+      <div class="task">
+        <div class="task-label t4">🟡 Tarea 4 — Oración redundante</div>
+        <div class="task-question">¿Cuál de estas oraciones es redundante?</div>
+        <div class="options">
+          <button class="option-btn" onclick="check(this,'t4_4',false)">«La escritura permitió conservar el conocimiento humano a través del tiempo.»</button>
+          <button class="option-btn" onclick="check(this,'t4_4',true)">«El pictograma es un dibujo pictórico que representa visualmente un objeto mediante una imagen gráfica.»</button>
+          <button class="option-btn" onclick="check(this,'t4_4',false)">«El alfabeto griego añadió vocales al sistema consonántico fenicio.»</button>
+          <button class="option-btn" onclick="check(this,'t4_4',false)">«Los sistemas de escritura silábicos como el japonés kana son distintos de los alfabéticos.»</button>
+        </div>
+        <div class="feedback" id="fb-t4_4"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════ TEXTO 5 ═══════════════ -->
+  <div class="text-card">
+    <div class="text-header">
+      <span class="text-num">05</span>
+      <h2>El ejercicio físico y la salud mental</h2>
+    </div>
+    <div class="text-body">
+      <p>El ejercicio físico regular tiene beneficios comprobados sobre la salud mental. Diversas investigaciones demuestran que practicar actividad física libera endorfinas, dopamina y serotonina, neurotransmisores asociados al bienestar y la reducción del estrés.</p>
+      <p>El ejercicio físico mejora además la calidad del sueño. Las personas que se ejercitan regularmente reportan menos insomnio, mayor facilidad para conciliar el sueño y ciclos de descanso más reparadores que quienes llevan una vida sedentaria.</p>
+      <p>El ejercicio físico también actúa como factor preventivo ante la depresión y la ansiedad. En algunos casos de depresión leve a moderada, la actividad física muestra resultados comparables a los de ciertos tratamientos farmacológicos, sin los efectos secundarios asociados.</p>
+    </div>
+    <div class="tasks">
+
+      <div class="task">
+        <div class="task-label t1">🔵 Tarea 1 — Progresión temática</div>
+        <div class="task-question">¿Qué tipo de progresión temática predomina en este texto?</div>
+        <div class="options">
+          <button class="option-btn" onclick="check(this,'t5_1',true)">Tema constante (el ejercicio físico es el punto de partida de los tres párrafos)</button>
+          <button class="option-btn" onclick="check(this,'t5_1',false)">Progresión lineal (el rema de cada párrafo se convierte en tema del siguiente)</button>
+          <button class="option-btn" onclick="check(this,'t5_1',false)">Temas derivados (un gran tema se divide en subtemas independientes sin relación entre sí)</button>
+        </div>
+        <div class="feedback" id="fb-t5_1"></div>
+      </div>
+
+      <div class="task">
+        <div class="task-label t2">🟣 Tarea 2 — Idea central</div>
+        <div class="task-question">¿Cuál opción resume mejor la idea central del texto?</div>
+        <div class="options">
+          <button class="option-btn" onclick="check(this,'t5_2',false)">El ejercicio físico mejora exclusivamente la calidad del sueño</button>
+          <button class="option-btn" onclick="check(this,'t5_2',false)">Los medicamentos para la depresión son menos efectivos que el deporte</button>
+          <button class="option-btn" onclick="check(this,'t5_2',true)">El ejercicio físico regular tiene múltiples beneficios sobre la salud mental: reduce el estrés, mejora el sueño y previene la depresión</button>
+          <button class="option-btn" onclick="check(this,'t5_2',false)">Las endorfinas son los únicos neurotransmisores que afectan el bienestar mental</button>
+        </div>
+        <div class="feedback" id="fb-t5_2"></div>
+      </div>
+
+      <div class="task">
+        <div class="task-label t3">🔴 Tarea 3 — Oración intrusa</div>
+        <div class="task-question">¿Cuál de estas oraciones NO pertenece temáticamente a este texto?</div>
+        <div class="options">
+          <button class="option-btn" onclick="check(this,'t5_3',false)">«La meditación y el mindfulness complementan los beneficios del ejercicio sobre la mente.»</button>
+          <button class="option-btn" onclick="check(this,'t5_3',true)">«La Revolución Industrial transformó los modos de producción en Europa durante el siglo XIX.»</button>
+          <button class="option-btn" onclick="check(this,'t5_3',false)">«Treinta minutos de caminata diaria pueden reducir significativamente los niveles de ansiedad.»</button>
+          <button class="option-btn" onclick="check(this,'t5_3',false)">«El sedentarismo se asocia con mayor riesgo de enfermedades cardiovasculares y mentales.»</button>
+        </div>
+        <div class="feedback" id="fb-t5_3"></div>
+      </div>
+
+      <div class="task">
+        <div class="task-label t4">🟡 Tarea 4 — Oración redundante</div>
+        <div class="task-question">¿Cuál de estas oraciones es redundante?</div>
+        <div class="options">
+          <button class="option-btn" onclick="check(this,'t5_4',false)">«La natación es considerada uno de los ejercicios más completos para el cuerpo y la mente.»</button>
+          <button class="option-btn" onclick="check(this,'t5_4',false)">«Los adolescentes que practican deportes reportan menor nivel de estrés escolar.»</button>
+          <button class="option-btn" onclick="check(this,'t5_4',true)">«El insomnio es un trastorno del sueño en el que la persona no puede dormir ni conciliar el sueño.»</button>
+          <button class="option-btn" onclick="check(this,'t5_4',false)">«La actividad física al aire libre añade el beneficio de la exposición solar y la vitamina D.»</button>
+        </div>
+        <div class="feedback" id="fb-t5_4"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SCORE -->
+  <div class="score-box" id="score-box" style="display:none">
+    <h3>&#127942; Resultado Final</h3>
+    <div class="score-num" id="score-display">0/20</div>
+    <p id="score-msg"></p>
+    <button class="reset-btn" onclick="location.reload()">&#128260; Reiniciar</button>
+  </div>
+</div>
+
+<footer style="text-align:center;padding:24px;color:#64748b;font-size:.85rem;border-top:1px solid #e2e8f0;">
+  &#128214; Análisis de Textos &middot;
+  <a href="ejercicios_complementarios_4.html" style="color:#1d4ed8">&larr; Complementarios IV</a> &middot;
+  <a href="ejercicios_complementarios_3.html" style="color:#1d4ed8">Complementarios III</a> &middot;
+  <a href="ejercicios_complementarios_2.html" style="color:#1d4ed8">Complementarios II</a> &middot;
+  <a href="ejercicios_complementarios.html" style="color:#1d4ed8">Complementarios I</a> &middot;
+  <a href="ejercicios.html" style="color:#1d4ed8">Ejercicios base</a> &middot;
+  <a href="index.html" style="color:#1d4ed8">Temario</a>
+</footer>
+
+<script>
+const TOTAL=20;let answered=0,correct=0;
+function updateProgress(){
+  document.getElementById('prog').style.width=(answered/TOTAL*100)+'%';
+  document.getElementById('prog-label').textContent=answered+' / '+TOTAL+' respondidos';
+  if(answered>=TOTAL)showScore();
+}
+function check(btn,qId,isCorrect){
+  const q=document.getElementById(qId);
+  // find parent .task
+  const task=btn.closest('.task');
+  const btns=task.querySelectorAll('.option-btn');
+  btns.forEach(b=>b.disabled=true);
+  const fb=document.getElementById('fb-'+qId);
+  if(isCorrect){
+    btn.classList.add('correct');
+    fb.textContent='✅ ¡Correcto!';
+    fb.className='feedback show ok';
+    correct++;
+  } else {
+    btn.classList.add('wrong');
+    btns.forEach(b=>{
+      if(b.getAttribute('onclick')&&b.getAttribute('onclick').includes(',true'))b.classList.add('correct');
+    });
+    fb.textContent='❌ Incorrecto. La respuesta correcta está marcada en verde.';
+    fb.className='feedback show fail';
+  }
+  answered++;updateProgress();
+}
+function showScore(){
+  const box=document.getElementById('score-box');
+  box.style.display='block';
+  document.getElementById('score-display').textContent=correct+'/'+TOTAL;
+  const pct=Math.round(correct/TOTAL*100);
+  document.getElementById('score-msg').textContent=
+    pct>=90?'🌟 ¡Excelente! Dominás el análisis textual.':
+    pct>=75?'👍 ¡Muy bien! Repasá los errores.':
+    pct>=55?'📖 Aprobado. Volvé a leer los textos con atención.':
+    '💪 Seguí practicando. Releé cada texto antes de responder.';
+  box.scrollIntoView({behavior:'smooth'});
+}
+</script>
+</body>
+</html>
