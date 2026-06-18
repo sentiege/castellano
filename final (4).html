@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lengua Española – Inicio</title>
+  <style>
+    :root {
+      --primary: #2563eb; --primary-dark: #1d4ed8; --primary-light: #dbeafe;
+      --accent: #7c3aed; --accent-light: #ede9fe;
+      --green: #059669; --green-light: #d1fae5;
+      --orange: #d97706; --orange-light: #fef3c7;
+      --red: #dc2626; --red-light: #fee2e2;
+      --cyan: #0891b2; --cyan-light: #cffafe;
+      --bg: #f8fafc; --card: #ffffff; --text: #1e293b; --muted: #64748b; --border: #e2e8f0;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "Segoe UI", system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+
+    header {
+      background: linear-gradient(135deg, #1d4ed8 0%, #7c3aed 100%);
+      color: white; padding: 60px 24px 48px; text-align: center;
+    }
+    header .emoji { font-size: 3.5rem; margin-bottom: 12px; display: block; }
+    header h1 { font-size: 2.4rem; font-weight: 900; margin-bottom: 10px; letter-spacing: -.5px; }
+    header p { font-size: 1.05rem; opacity: .88; max-width: 560px; margin: 0 auto; }
+
+    .container { max-width: 960px; margin: 0 auto; padding: 48px 20px 70px; }
+
+    .section-title {
+      font-size: .72rem; font-weight: 800; text-transform: uppercase;
+      letter-spacing: .1em; color: var(--muted); margin: 40px 0 16px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 16px; }
+
+    .card {
+      background: var(--card); border: 1.5px solid var(--border); border-radius: 14px;
+      padding: 20px 22px; text-decoration: none; color: var(--text);
+      display: flex; flex-direction: column; gap: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.05);
+      transition: transform .18s, box-shadow .18s, border-color .18s;
+    }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,.1); border-color: var(--primary); }
+
+    .card-icon { font-size: 1.6rem; }
+    .card-title { font-size: 1rem; font-weight: 700; color: var(--primary-dark); }
+    .card-desc { font-size: .85rem; color: var(--muted); line-height: 1.5; }
+    .card-badge {
+      display: inline-block; font-size: .72rem; font-weight: 700;
+      padding: 3px 10px; border-radius: 50px; margin-top: 4px; width: fit-content;
+    }
+    .badge-blue   { background: var(--primary-light); color: var(--primary-dark); }
+    .badge-purple { background: var(--accent-light);  color: var(--accent); }
+    .badge-green  { background: var(--green-light);   color: var(--green); }
+    .badge-orange { background: var(--orange-light);  color: var(--orange); }
+    .badge-red    { background: var(--red-light);     color: var(--red); }
+    .badge-cyan   { background: var(--cyan-light);    color: var(--cyan); }
+
+    .card.highlight { border-color: var(--accent); background: linear-gradient(135deg, #faf5ff, #ede9fe22); }
+    .card.highlight .card-title { color: var(--accent); }
+    .card.new { border-color: var(--cyan); background: linear-gradient(135deg, #ecfeff, #cffafe22); }
+    .card.new .card-title { color: var(--cyan); }
+
+    .stats {
+      display: flex; flex-wrap: wrap; gap: 14px;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; padding: 22px 24px; margin-bottom: 10px;
+    }
+    .stat { flex: 1; min-width: 120px; text-align: center; }
+    .stat-num { font-size: 2rem; font-weight: 900; color: var(--primary); }
+    .stat-label { font-size: .8rem; color: var(--muted); font-weight: 600; margin-top: 2px; }
+
+    footer {
+      text-align: center; padding: 28px 20px;
+      color: var(--muted); font-size: .85rem;
+      border-top: 1px solid var(--border);
+    }
+    footer a { color: var(--primary); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+<header>
+  <span class="emoji">📚</span>
+  <h1>Lengua Española</h1>
+  <p>Todos tus materiales de estudio, repasos y ejercicios en un solo lugar</p>
+</header>
+
+<div class="container">
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat"><div class="stat-num">2</div><div class="stat-label">Materiales de repaso</div></div>
+    <div class="stat"><div class="stat-num">4</div><div class="stat-label">Tandas de ejercicios</div></div>
+    <div class="stat"><div class="stat-num">440+</div><div class="stat-label">Ejercicios en total</div></div>
+    <div class="stat"><div class="stat-num">5</div><div class="stat-label">Textos de análisis</div></div>
+  </div>
+
+  <!-- REPASO -->
+  <div class="section-title">📋 Materiales de repaso</div>
+  <div class="grid">
+
+    <a class="card" href="index.html">
+      <span class="card-icon">📗</span>
+      <div class="card-title">Repaso – Primer Parcial</div>
+      <div class="card-desc">Todos los temas del primer parcial organizados y explicados para repasar</div>
+      <span class="card-badge badge-blue">Parcial 1</span>
+    </a>
+
+    <a class="card" href="parcial2.html">
+      <span class="card-icon">📘</span>
+      <div class="card-title">Repaso – Segundo Parcial</div>
+      <div class="card-desc">Todos los temas del segundo parcial organizados y explicados para repasar</div>
+      <span class="card-badge badge-green">Parcial 2</span>
+    </a>
+
+  </div>
+
+  <!-- EJERCICIOS -->
+  <div class="section-title">✏️ Ejercitario</div>
+  <div class="grid">
+
+    <a class="card" href="ejercicios.html">
+      <span class="card-icon">📝</span>
+      <div class="card-title">Ejercicios base</div>
+      <div class="card-desc">Primera tanda · ejercicios organizados por tema para comenzar a practicar</div>
+      <span class="card-badge badge-blue">~95 ejercicios</span>
+    </a>
+
+    <a class="card" href="ejercicios2.html">
+      <span class="card-icon">✏️</span>
+      <div class="card-title">Complementarios I</div>
+      <div class="card-desc">Segunda tanda · nuevos enunciados para cada uno de los 19 temas</div>
+      <span class="card-badge badge-purple">~95 ejercicios</span>
+    </a>
+
+    <a class="card" href="ejercicios3.html">
+      <span class="card-icon">✏️</span>
+      <div class="card-title">Complementarios II</div>
+      <div class="card-desc">Tercera tanda · variantes y contextos distintos por cada tema</div>
+      <span class="card-badge badge-purple">~95 ejercicios</span>
+    </a>
+
+    <a class="card" href="ejercicios4.html">
+      <span class="card-icon">✏️</span>
+      <div class="card-title">Complementarios III</div>
+      <div class="card-desc">Cuarta tanda · incluye sección especial de los cuatro «porqués»</div>
+      <span class="card-badge badge-purple">105 ejercicios ⭐</span>
+    </a>
+
+    <a class="card highlight" href="ejercicios5.html">
+      <span class="card-icon">✏️</span>
+      <div class="card-title">Complementarios IV</div>
+      <div class="card-desc">Quinta tanda · funciones del lenguaje, superlativo, predicado nominal y más «porqués»</div>
+      <span class="card-badge badge-purple">105 ejercicios ⭐</span>
+    </a>
+
+  </div>
+
+  <!-- ANÁLISIS -->
+  <div class="section-title">📖 Análisis de textos</div>
+  <div class="grid">
+
+    <a class="card new" href="analisistextos.html">
+      <span class="card-icon">📖</span>
+      <div class="card-title">Análisis de textos</div>
+      <div class="card-desc">5 textos completos · identificá progresión temática, idea central, oración intrusa y oración redundante por cada texto</div>
+      <span class="card-badge badge-cyan">20 ejercicios · Formato nuevo</span>
+    </a>
+
+  </div>
+
+  <!-- TEMAS -->
+  <div class="section-title">🎯 Temas cubiertos en el ejercitario</div>
+  <div class="grid">
+
+    <div class="card" style="cursor:default;">
+      <span class="card-icon">🗣️</span>
+      <div class="card-title">Comunicación</div>
+      <div class="card-desc">Esquema de Jakobson · funciones del lenguaje · barreras de la comunicación</div>
+      <span class="card-badge badge-blue">Temas 1–2</span>
+    </div>
+
+    <div class="card" style="cursor:default;">
+      <span class="card-icon">📄</span>
+      <div class="card-title">Comprensión textual</div>
+      <div class="card-desc">Idea central del párrafo y del texto · resumen y síntesis · ordenamiento de párrafos</div>
+      <span class="card-badge badge-green">Temas 3–4–8–9</span>
+    </div>
+
+    <div class="card" style="cursor:default;">
+      <span class="card-icon">🔗</span>
+      <div class="card-title">Cohesión y coherencia</div>
+      <div class="card-desc">Progresión temática (tema/rema) · isotopía · redundancias e irrelevantes</div>
+      <span class="card-badge badge-green">Temas 5–6–7</span>
+    </div>
+
+    <div class="card" style="cursor:default;">
+      <span class="card-icon">🔤</span>
+      <div class="card-title">Morfología y léxico</div>
+      <div class="card-desc">Género y número · grupo nominal · sustantivación · homógrafas/homófonas · superlativo</div>
+      <span class="card-badge badge-orange">Temas 10–11–12–13–19</span>
+    </div>
+
+    <div class="card" style="cursor:default;">
+      <span class="card-icon">🏗️</span>
+      <div class="card-title">Sintaxis oracional</div>
+      <div class="card-desc">Oración bimembre/unimembre · predicado verbal y nominal · impersonales · simple y compuesta</div>
+      <span class="card-badge badge-red">Temas 15–16–17–18</span>
+    </div>
+
+    <div class="card" style="cursor:default;">
+      <span class="card-icon">🤝</span>
+      <div class="card-title">Uso social del lenguaje</div>
+      <div class="card-desc">Formas de tratamiento (vos, usted, tú) · voseo rioplatense · los 4 «porqués»</div>
+      <span class="card-badge badge-cyan">Tema 14 · Sección ⭐</span>
+    </div>
+
+  </div>
+
+</div>
+
+<footer>
+  Lengua Española &nbsp;|&nbsp;
+  <a href="https://github.com/sentiege/castellano" target="_blank">📁 Ver repositorio en GitHub</a>
+</footer>
+
+</body>
+</html>
