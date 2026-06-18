@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ejercicios Complementarios IV – Lengua Española</title>
+  <style>
+    :root {
+      --primary: #0891b2; --primary-dark: #0e7490; --primary-light: #cffafe;
+      --accent: #7c3aed; --bg: #f0f9ff; --card: #ffffff;
+      --text: #1e293b; --muted: #64748b; --border: #e2e8f0;
+      --success: #059669; --success-light: #d1fae5; --error: #dc2626; --error-light: #fee2e2;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "Segoe UI", system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+    header { background: linear-gradient(135deg, #0891b2 0%, #7c3aed 100%); color: white; padding: 40px 24px 28px; text-align: center; }
+    header h1 { font-size: 2rem; font-weight: 800; margin-bottom: 8px; }
+    header p { font-size: 1rem; opacity: 0.88; max-width: 580px; margin: 0 auto 18px; }
+    .btn { display: inline-block; background: white; color: var(--primary); font-weight: 700; padding: 10px 24px; border-radius: 50px; text-decoration: none; box-shadow: 0 4px 12px rgba(0,0,0,.15); }
+    .container { max-width: 860px; margin: 0 auto; padding: 40px 20px 60px; }
+    .section { background: var(--card); border-radius: 16px; padding: 28px 30px; margin-bottom: 28px; border: 1px solid var(--border); box-shadow: 0 2px 8px rgba(0,0,0,.05); }
+    .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+    .section-num { background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; font-weight: 800; font-size: 0.95rem; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .section-num.extra { background: linear-gradient(135deg, #e67e22, #e74c3c); }
+    .section h2 { font-size: 1.15rem; font-weight: 700; color: var(--primary-dark); }
+    .cheatsheet { background: #fffbeb; border: 2px solid #f59e0b; border-radius: 10px; padding: 14px 18px; margin-bottom: 20px; font-size: 0.9rem; }
+    .cheatsheet strong { display: block; margin-bottom: 6px; color: #92400e; }
+    .cheatsheet ul { padding-left: 1.2rem; }
+    .cheatsheet li { margin-bottom: 4px; }
+    .question { margin-bottom: 22px; padding-bottom: 18px; border-bottom: 1px solid var(--border); }
+    .question:last-of-type { border-bottom: none; }
+    .question p { font-weight: 600; margin-bottom: 10px; font-size: 0.97rem; }
+    .options { display: flex; flex-direction: column; gap: 8px; }
+    .option-btn { background: var(--bg); border: 2px solid var(--border); border-radius: 10px; padding: 10px 16px; cursor: pointer; text-align: left; font-size: 0.93rem; font-family: inherit; transition: border-color .2s, background .2s; width: 100%; }
+    .option-btn:hover:not(:disabled) { border-color: var(--primary); background: var(--primary-light); }
+    .option-btn.correct { border-color: var(--success) !important; background: var(--success-light) !important; color: #065f46; font-weight: 600; }
+    .option-btn.wrong { border-color: var(--error) !important; background: var(--error-light) !important; color: var(--error); font-weight: 600; }
+    .option-btn:disabled { cursor: default; }
+    .feedback { margin-top: 8px; font-size: 0.88rem; font-weight: 600; padding: 8px 12px; border-radius: 8px; display: none; }
+    .feedback.show { display: block; }
+    .feedback.ok { background: var(--success-light); color: #065f46; }
+    .feedback.fail { background: var(--error-light); color: var(--error); }
+    .fill-blank { margin-bottom: 22px; padding-bottom: 18px; border-bottom: 1px solid var(--border); }
+    .fill-blank:last-of-type { border-bottom: none; }
+    .fill-blank p { font-weight: 600; margin-bottom: 8px; font-size: 0.97rem; }
+    .blank-input { border: 2px solid var(--border); border-radius: 8px; padding: 8px 14px; font-size: 0.95rem; font-family: inherit; width: 100%; max-width: 400px; outline: none; transition: border-color .2s; }
+    .blank-input:focus { border-color: var(--primary); }
+    .blank-input.correct { border-color: var(--success); background: var(--success-light); }
+    .blank-input.wrong { border-color: var(--error); background: var(--error-light); }
+    .check-btn { margin-top: 8px; background: var(--primary); color: white; border: none; border-radius: 8px; padding: 8px 20px; font-size: 0.9rem; font-weight: 700; cursor: pointer; font-family: inherit; transition: background .2s; }
+    .check-btn:hover { background: var(--primary-dark); }
+    .progress-bar-wrap { background: var(--border); border-radius: 50px; height: 10px; margin: 18px 0 6px; }
+    .progress-bar { background: linear-gradient(90deg, var(--primary), var(--accent)); height: 10px; border-radius: 50px; width: 0%; transition: width .4s; }
+    .progress-label { font-size: 0.82rem; color: var(--muted); text-align: right; }
+    .score-box { background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; border-radius: 16px; padding: 28px; text-align: center; margin-top: 30px; }
+    .score-box h3 { font-size: 1.4rem; margin-bottom: 6px; }
+    .score-box .score-num { font-size: 3rem; font-weight: 800; }
+    .reset-btn { margin-top: 16px; background: white; color: var(--primary); border: none; border-radius: 50px; padding: 10px 28px; font-weight: 700; cursor: pointer; font-family: inherit; font-size: 0.95rem; }
+    nav { background: white; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; padding: 0 16px; display: flex; flex-wrap: wrap; gap: 2px; justify-content: center; }
+    nav a { text-decoration: none; color: var(--muted); font-size: 0.76rem; font-weight: 600; padding: 8px 7px; border-bottom: 3px solid transparent; transition: color .2s, border-color .2s; }
+    nav a:hover { color: var(--primary); border-bottom-color: var(--primary); }
+    nav a.extra-link { color: #e67e22; }
+    footer { text-align: center; padding: 24px; color: var(--muted); font-size: 0.85rem; border-top: 1px solid var(--border); }
+  </style>
+</head>
+<body>
+<header>
+  <h1>✏️ Ejercicios Complementarios IV</h1>
+  <p>105 ejercicios interactivos · 5 por tema (19 temas) + 10 extra sobre los cuatro «porqués»</p>
+  <a href="ejercicios_complementarios_3.html" class="btn">← Complementarios III</a>
+</header>
+<nav>
+  <a href="#s1">1. Jakobson</a><a href="#s2">2. Barreras</a><a href="#s3">3. Idea párrafo</a>
+  <a href="#s4">4. Idea texto</a><a href="#s5">5. Tema-Rema</a><a href="#s6">6. Isotopía</a>
+  <a href="#s7">7. Redundancia</a><a href="#s8">8. Resumen</a><a href="#s9">9. Párrafos</a>
+  <a href="#s10">10. Género/Nro</a><a href="#s11">11. Gr. Nominal</a><a href="#s12">12. Sustantivac.</a>
+  <a href="#s13">13. Homógrafas</a><a href="#s14">14. Tratamiento</a><a href="#s15">15. Bimembre</a>
+  <a href="#s16">16. Predicado</a><a href="#s17">17. Impersonales</a><a href="#s18">18. Simple/Comp.</a>
+  <a href="#s19">19. Superlativo</a>
+  <a href="#s20" class="extra-link">&#11088; 20. Los 4 porqués</a>
+</nav>
+<div class="container">
+  <div class="progress-bar-wrap"><div class="progress-bar" id="prog"></div></div>
+  <p class="progress-label" id="prog-label">0 / 105 respondidos</p>
+<div class="section" id="s1">
+<div class="section-header"><div class="section-num ">1</div><h2>Elementos de la comunicación (Jakobson)</h2></div>
+<div class="question" id="q1_1">
+<p>1. La función del lenguaje que se centra en el receptor e intenta influir en su conducta se llama:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q1_1',false)">Emotiva</button>
+<button class="option-btn" onclick="check(this,'q1_1',false)">Referencial</button>
+<button class="option-btn" onclick="check(this,'q1_1',true)">Conativa / Apelativa</button>
+<button class="option-btn" onclick="check(this,'q1_1',false)">Metalingüística</button>
+</div>
+<div class="feedback" id="fb-q1_1"></div>
+</div><div class="question" id="q1_2">
+<p>2. «¡Qué frío hace hoy!» es un ejemplo de función:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q1_2',false)">Referencial</button>
+<button class="option-btn" onclick="check(this,'q1_2',true)">Emotiva (expresa el estado del hablante)</button>
+<button class="option-btn" onclick="check(this,'q1_2',false)">Conativa</button>
+<button class="option-btn" onclick="check(this,'q1_2',false)">Poética</button>
+</div>
+<div class="feedback" id="fb-q1_2"></div>
+</div><div class="question" id="q1_3">
+<p>3. «¿Aló? ¿Me escuchás?» durante una llamada verifica el:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q1_3',false)">Código</button>
+<button class="option-btn" onclick="check(this,'q1_3',false)">Contexto</button>
+<button class="option-btn" onclick="check(this,'q1_3',true)">Canal</button>
+<button class="option-btn" onclick="check(this,'q1_3',false)">Receptor</button>
+</div>
+<div class="feedback" id="fb-q1_3"></div>
+</div><div class="question" id="q1_4">
+<p>4. «La Tierra tiene un satélite natural: la Luna» es un ejemplo de función:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q1_4',false)">Emotiva</button>
+<button class="option-btn" onclick="check(this,'q1_4',false)">Conativa</button>
+<button class="option-btn" onclick="check(this,'q1_4',false)">Poética</button>
+<button class="option-btn" onclick="check(this,'q1_4',true)">Referencial o denotativa</button>
+</div>
+<div class="feedback" id="fb-q1_4"></div>
+</div><div class="fill-blank">
+<p>5. La función ___ del lenguaje se centra en el mensaje mismo y presta atención a la forma estética del enunciado.</p>
+<input class="blank-input" type="text" id="f1_5" placeholder="Escribe aqui..."/>
+<br/><button class="check-btn" onclick="checkFill('f1_5','poética','fb-f1_5')">Verificar</button>
+<div class="feedback" id="fb-f1_5"></div>
+</div></div>
+<div class="section" id="s2">
+<div class="section-header"><div class="section-num ">2</div><h2>Barreras de la comunicación</h2></div>
+<div class="question" id="q2_1">
+<p>6. El micrófono se cortó durante una conferencia y los oyentes no escucharon al orador. Barrera:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q2_1',false)">Semántica</button>
+<button class="option-btn" onclick="check(this,'q2_1',false)">Psicológica</button>
+<button class="option-btn" onclick="check(this,'q2_1',true)">Física</button>
+<button class="option-btn" onclick="check(this,'q2_1',false)">Cultural</button>
+</div>
+<div class="feedback" id="fb-q2_1"></div>
+</div><div class="question" id="q2_2">
+<p>7. Un joven usa jerga adolescente con un abuelo que no entiende ningún término. Barrera:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q2_2',false)">Física</button>
+<button class="option-btn" onclick="check(this,'q2_2',false)">Fisiológica</button>
+<button class="option-btn" onclick="check(this,'q2_2',false)">Cultural</button>
+<button class="option-btn" onclick="check(this,'q2_2',true)">Semántica</button>
+</div>
+<div class="feedback" id="fb-q2_2"></div>
+</div><div class="question" id="q2_3">
+<p>8. Una persona con prejuicios hacia cierto grupo no escucha sus argumentos. Barrera:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q2_3',false)">Física</button>
+<button class="option-btn" onclick="check(this,'q2_3',false)">Semántica</button>
+<button class="option-btn" onclick="check(this,'q2_3',true)">Psicológica</button>
+<button class="option-btn" onclick="check(this,'q2_3',false)">Fisiológica</button>
+</div>
+<div class="feedback" id="fb-q2_3"></div>
+</div><div class="question" id="q2_4">
+<p>9. ¿Cuál de estas SÍ es una estrategia eficaz para superar barreras físicas?</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q2_4',false)">Usar palabras más cortas</button>
+<button class="option-btn" onclick="check(this,'q2_4',false)">Hablar más lento</button>
+<button class="option-btn" onclick="check(this,'q2_4',true)">Mejorar la calidad del canal (micrófono, conexión)</button>
+<button class="option-btn" onclick="check(this,'q2_4',false)">Simplificar el vocabulario</button>
+</div>
+<div class="feedback" id="fb-q2_4"></div>
+</div><div class="fill-blank">
+<p>10. Las barreras que tienen que ver con limitaciones del propio cuerpo del emisor o receptor (sordera, mudez, vista) se llaman barreras ___.</p>
+<input class="blank-input" type="text" id="f2_5" placeholder="Escribe aqui..."/>
+<br/><button class="check-btn" onclick="checkFillMulti('f2_5',["fisiológicas", "fisiologicas", "fisiológica", "fisiologica"],'fb-f2_5')">Verificar</button>
+<div class="feedback" id="fb-f2_5"></div>
+</div></div>
+<div class="section" id="s3">
+<div class="section-header"><div class="section-num ">3</div><h2>Idea central del párrafo</h2></div>
+<div class="question" id="q3_1">
+<p>11. «<em>Los volcanes son montañas con aberturas por donde salen gases, cenizas y lava. Pueden destruir ciudades enteras. Son una de las fuerzas más poderosas de la naturaleza.</em>» Idea central:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q3_1',false)">Los volcanes son montañas con nieve</button>
+<button class="option-btn" onclick="check(this,'q3_1',false)">Los volcanes solo emiten gases</button>
+<button class="option-btn" onclick="check(this,'q3_1',true)">Los volcanes son fenómenos naturales de gran poder destructivo</button>
+<button class="option-btn" onclick="check(this,'q3_1',false)">La lava es el elemento más importante de los volcanes</button>
+</div>
+<div class="feedback" id="fb-q3_1"></div>
+</div><div class="question" id="q3_2">
+<p>12. La oración que expresa la idea central de un párrafo recibe el nombre de:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q3_2',false)">Oración copulativa</button>
+<button class="option-btn" onclick="check(this,'q3_2',false)">Oración subordinada</button>
+<button class="option-btn" onclick="check(this,'q3_2',true)">Oración temática o tópica</button>
+<button class="option-btn" onclick="check(this,'q3_2',false)">Oración compuesta</button>
+</div>
+<div class="feedback" id="fb-q3_2"></div>
+</div><div class="question" id="q3_3">
+<p>13. ¿Qué diferencia a la idea central de las ideas secundarias?</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q3_3',false)">Las ideas secundarias son más largas</button>
+<button class="option-btn" onclick="check(this,'q3_3',false)">La idea central está siempre en la última oración</button>
+<button class="option-btn" onclick="check(this,'q3_3',true)">La idea central resume el tema; las secundarias la apoyan con detalles</button>
+<button class="option-btn" onclick="check(this,'q3_3',false)">Las ideas secundarias no tienen verbos</button>
+</div>
+<div class="feedback" id="fb-q3_3"></div>
+</div><div class="question" id="q3_4">
+<p>14. Si la idea central aparece tanto al inicio como al final del párrafo, la estructura se llama:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q3_4',false)">Inductiva</button>
+<button class="option-btn" onclick="check(this,'q3_4',false)">Deductiva</button>
+<button class="option-btn" onclick="check(this,'q3_4',true)">Encuadrada o en sandwich</button>
+<button class="option-btn" onclick="check(this,'q3_4',false)">Paralela</button>
+</div>
+<div class="feedback" id="fb-q3_4"></div>
+</div><div class="fill-blank">
+<p>15. Una oración breve que resume la idea más importante de un párrafo se llama oración ___.</p>
+<input class="blank-input" type="text" id="f3_5" placeholder="Escribe aqui..."/>
+<br/><button class="check-btn" onclick="checkFillMulti('f3_5',["temática", "topica", "tópica", "temática o tópica"],'fb-f3_5')">Verificar</button>
+<div class="feedback" id="fb-f3_5"></div>
+</div></div>
+<div class="section" id="s4">
+<div class="section-header"><div class="section-num ">4</div><h2>Idea central del texto completo</h2></div>
+<div class="question" id="q4_1">
+<p>16. Un texto trata sobre la historia del chocolate, sus variedades y beneficios para la salud. La idea central global es:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q4_1',false)">El cacao se cultiva en África</button>
+<button class="option-btn" onclick="check(this,'q4_1',false)">El chocolate con leche es el más popular</button>
+<button class="option-btn" onclick="check(this,'q4_1',true)">El chocolate es un alimento con historia rica y múltiples beneficios</button>
+<button class="option-btn" onclick="check(this,'q4_1',false)">El chocolate amargo es mejor que el dulce</button>
+</div>
+<div class="feedback" id="fb-q4_1"></div>
+</div><div class="question" id="q4_2">
+<p>17. La idea central de un texto argumentativo se llama:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q4_2',false)">Isotopía</button>
+<button class="option-btn" onclick="check(this,'q4_2',false)">Rema</button>
+<button class="option-btn" onclick="check(this,'q4_2',true)">Tesis</button>
+<button class="option-btn" onclick="check(this,'q4_2',false)">Canal</button>
+</div>
+<div class="feedback" id="fb-q4_2"></div>
+</div><div class="question" id="q4_3">
+<p>18. ¿Cuál de estas afirmaciones sobre la idea central del texto es CORRECTA?</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q4_3',false)">Siempre está en el último párrafo</button>
+<button class="option-btn" onclick="check(this,'q4_3',false)">Solo puede encontrarse en textos expositivos</button>
+<button class="option-btn" onclick="check(this,'q4_3',true)">Puede estar explícita o implícita en el texto</button>
+<button class="option-btn" onclick="check(this,'q4_3',false)">Es siempre la primera oración del primer párrafo</button>
+</div>
+<div class="feedback" id="fb-q4_3"></div>
+</div><div class="question" id="q4_4">
+<p>19. Para verificar si tu idea central es correcta, el mejor método es:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q4_4',false)">Contar la cantidad de veces que aparece en el texto</button>
+<button class="option-btn" onclick="check(this,'q4_4',true)">Comparar con el título y verificar que todos los párrafos la respaldan</button>
+<button class="option-btn" onclick="check(this,'q4_4',false)">Usar solo las oraciones del primer párrafo</button>
+<button class="option-btn" onclick="check(this,'q4_4',false)">Buscar la oración más larga del texto</button>
+</div>
+<div class="feedback" id="fb-q4_4"></div>
+</div><div class="fill-blank">
+<p>20. La idea central de un texto se formula generalmente como una oración ___ (completa, con sujeto y predicado).</p>
+<input class="blank-input" type="text" id="f4_5" placeholder="Escribe aqui..."/>
+<br/><button class="check-btn" onclick="checkFillMulti('f4_5',["completa", "bimembre"],'fb-f4_5')">Verificar</button>
+<div class="feedback" id="fb-f4_5"></div>
+</div></div>
+<div class="section" id="s5">
+<div class="section-header"><div class="section-num ">5</div><h2>Progresión temática (Tema y Rema)</h2></div>
+<div class="question" id="q5_1">
+<p>21. En «<em>La luna [T] refleja la luz del sol [R]</em>», el TEMA es:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q5_1',false)">refleja</button>
+<button class="option-btn" onclick="check(this,'q5_1',false)">la luz del sol</button>
+<button class="option-btn" onclick="check(this,'q5_1',true)">La luna</button>
+<button class="option-btn" onclick="check(this,'q5_1',false)">del sol</button>
+</div>
+<div class="feedback" id="fb-q5_1"></div>
+</div><div class="question" id="q5_2">
+<p>22. En progresión LINEAL, el rema de cada oración:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q5_2',false)">Se repite igual en la siguiente</button>
+<button class="option-btn" onclick="check(this,'q5_2',true)">Se convierte en el tema de la oración siguiente</button>
+<button class="option-btn" onclick="check(this,'q5_2',false)">Desaparece y no influye en lo que sigue</button>
+<button class="option-btn" onclick="check(this,'q5_2',false)">Es siempre el sujeto gramatical</button>
+</div>
+<div class="feedback" id="fb-q5_2"></div>
+</div><div class="question" id="q5_3">
+<p>23. «<em>El río Paraná nace en Brasil. El río Paraná atraviesa Paraguay. El río Paraná desemboca en el Río de la Plata.</em>» Progresión:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q5_3',false)">Lineal</button>
+<button class="option-btn" onclick="check(this,'q5_3',false)">Temas derivados</button>
+<button class="option-btn" onclick="check(this,'q5_3',true)">Tema constante</button>
+</div>
+<div class="feedback" id="fb-q5_3"></div>
+</div><div class="question" id="q5_4">
+<p>24. ¿Cuál tipo de progresión es más adecuada para textos descriptivos de un solo objeto o personaje?</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q5_4',false)">Lineal</button>
+<button class="option-btn" onclick="check(this,'q5_4',true)">Tema constante</button>
+<button class="option-btn" onclick="check(this,'q5_4',false)">Temas derivados</button>
+<button class="option-btn" onclick="check(this,'q5_4',false)">Ninguna de las anteriores</button>
+</div>
+<div class="feedback" id="fb-q5_4"></div>
+</div><div class="fill-blank">
+<p>25. La información que ya conoce el lector y sirve de punto de partida para la oración se llama ___.</p>
+<input class="blank-input" type="text" id="f5_5" placeholder="Escribe aqui..."/>
+<br/><button class="check-btn" onclick="checkFillMulti('f5_5',["tema", "tema textual"],'fb-f5_5')">Verificar</button>
+<div class="feedback" id="fb-f5_5"></div>
+</div></div>
+<div class="section" id="s6">
+<div class="section-header"><div class="section-num ">6</div><h2>Isotopía y coherencia textual</h2></div>
+<div class="question" id="q6_1">
+<p>26. «<em>melodía, acorde, partitura, director, ensayo, sinfonía</em>». Isotopía del campo semántico de:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q6_1',false)">El teatro</button>
+<button class="option-btn" onclick="check(this,'q6_1',false)">Las artes visuales</button>
+<button class="option-btn" onclick="check(this,'q6_1',true)">La música</button>
+<button class="option-btn" onclick="check(this,'q6_1',false)">La danza</button>
+</div>
+<div class="feedback" id="fb-q6_1"></div>
+</div><div class="question" id="q6_2">
+<p>27. Un texto pierde coherencia cuando:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q6_2',false)">Usa conectores discursivos</button>
+<button class="option-btn" onclick="check(this,'q6_2',true)">Sus párrafos tratan temas distintos sin relación entre sí</button>
+<button class="option-btn" onclick="check(this,'q6_2',false)">Tiene progresión temática lineal</button>
+<button class="option-btn" onclick="check(this,'q6_2',false)">Usa vocabulario técnico de un campo semántico</button>
+</div>
+<div class="feedback" id="fb-q6_2"></div>
+</div><div class="question" id="q6_3">
+<p>28. ¿Cuál de estas listas tiene isotopía del campo semántico de la gastronomía?</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q6_3',false)">estadio, árbitro, gol, penal, hincha</button>
+<button class="option-btn" onclick="check(this,'q6_3',true)">receta, ingredientes, horno, chef, sartén, sabor</button>
+<button class="option-btn" onclick="check(this,'q6_3',false)">verso, estrofa, rima, poema, soneto</button>
+<button class="option-btn" onclick="check(this,'q6_3',false)">galaxia, planeta, estrella, órbita, cometa</button>
+</div>
+<div class="feedback" id="fb-q6_3"></div>
+</div><div class="question" id="q6_4">
+<p>29. La coherencia local se refiere a:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q6_4',false)">La unidad global de todo el texto</button>
+<button class="option-btn" onclick="check(this,'q6_4',true)">La relación lógica entre oraciones dentro de un mismo párrafo</button>
+<button class="option-btn" onclick="check(this,'q6_4',false)">La progresión temática entre párrafos</button>
+<button class="option-btn" onclick="check(this,'q6_4',false)">El uso correcto de la ortografía</button>
+</div>
+<div class="feedback" id="fb-q6_4"></div>
+</div><div class="fill-blank">
+<p>30. La propiedad textual que asegura que los enunciados se conecten de forma lógica y sin contradicciones se llama ___.</p>
+<input class="blank-input" type="text" id="f6_5" placeholder="Escribe aqui..."/>
+<br/><button class="check-btn" onclick="checkFillMulti('f6_5',["coherencia", "coherencia textual"],'fb-f6_5')">Verificar</button>
+<div class="feedback" id="fb-f6_5"></div>
+</div></div>
+<div class="section" id="s7">
+<div class="section-header"><div class="section-num ">7</div><h2>Oraciones redundantes e irrelevantes</h2></div>
+<div class="question" id="q7_1">
+<p>31. ¿Cuál de estas oraciones es redundante?</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q7_1',false)">El avión despegó con retraso.</button>
+<button class="option-btn" onclick="check(this,'q7_1',false)">La reunión terminó puntualmente a las tres.</button>
+<button class="option-btn" onclick="check(this,'q7_1',true)">Entró y pasó adentro sin saludar.</button>
+<button class="option-btn" onclick="check(this,'q7_1',false)">La decisión fue aprobada por mayoría.</button>
+</div>
+<div class="feedback" id="fb-q7_1"></div>
+</div><div class="question" id="q7_2">
+<p>32. En un texto sobre la historia de la escritura, ¿cuál oración es irrelevante?</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q7_2',false)">Los sumerios desarrollaron la escritura cuneiforme hace 5000 años.</button>
+<button class="option-btn" onclick="check(this,'q7_2',false)">El alfabeto fenicio influyó en el griego y el latino.</button>
+<button class="option-btn" onclick="check(this,'q7_2',true)">La pizza margarita lleva tomate, mozzarella y albahaca.</button>
+<button class="option-btn" onclick="check(this,'q7_2',false)">Los jeroglíficos egipcios eran un sistema de escritura pictográfica.</button>
+</div>
+<div class="feedback" id="fb-q7_2"></div>
+</div><div class="question" id="q7_3">
+<p>33. «<em>Se vio obligado a forzar la puerta a la fuerza.</em>» La redundancia es:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q7_3',false)">«se vio obligado» ya implica necesidad</button>
+<button class="option-btn" onclick="check(this,'q7_3',false)">«la puerta» es un complemento innecesario</button>
+<button class="option-btn" onclick="check(this,'q7_3',true)">«a la fuerza» ya está implícito en «forzar»</button>
+<button class="option-btn" onclick="check(this,'q7_3',false)">No hay redundancia en esta oración</button>
+</div>
+<div class="feedback" id="fb-q7_3"></div>
+</div><div class="question" id="q7_4">
+<p>34. Para identificar una oración redundante, la mejor estrategia es preguntarse:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q7_4',false)">¿Esta oración tiene errores ortográficos?</button>
+<button class="option-btn" onclick="check(this,'q7_4',false)">¿Hay alguna oración más corta que diga lo mismo?</button>
+<button class="option-btn" onclick="check(this,'q7_4',true)">¿La información que agrega esta oración ya estaba dicha antes?</button>
+<button class="option-btn" onclick="check(this,'q7_4',false)">¿Esta oración tiene un verbo copulativo?</button>
+</div>
+<div class="feedback" id="fb-q7_4"></div>
+</div><div class="fill-blank">
+<p>35. «<em>Salió al exterior afuera del edificio.</em>» La palabra redundante es ___ porque «salir al exterior» ya implica ese concepto.</p>
+<input class="blank-input" type="text" id="f7_5" placeholder="Escribe aqui..."/>
+<br/><button class="check-btn" onclick="checkFill('f7_5','afuera','fb-f7_5')">Verificar</button>
+<div class="feedback" id="fb-f7_5"></div>
+</div></div>
+<div class="section" id="s8">
+<div class="section-header"><div class="section-num ">8</div><h2>Resumen y síntesis</h2></div>
+<div class="question" id="q8_1">
+<p>36. La síntesis, a diferencia del resumen:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q8_1',false)">Copia frases textuales del autor</button>
+<button class="option-btn" onclick="check(this,'q8_1',false)">Mantiene el orden exacto del texto original</button>
+<button class="option-btn" onclick="check(this,'q8_1',true)">Reorganiza e integra las ideas con palabras propias del autor de la síntesis</button>
+<button class="option-btn" onclick="check(this,'q8_1',false)">Solo funciona para textos de menos de una página</button>
+</div>
+<div class="feedback" id="fb-q8_1"></div>
+</div><div class="question" id="q8_2">
+<p>37. Al resumir, NO se deben incluir:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q8_2',false)">Las ideas principales del texto</button>
+<button class="option-btn" onclick="check(this,'q8_2',false)">Los argumentos centrales del autor</button>
+<button class="option-btn" onclick="check(this,'q8_2',true)">Datos, ejemplos decorativos y detalles secundarios</button>
+<button class="option-btn" onclick="check(this,'q8_2',false)">Las conclusiones del texto original</button>
+</div>
+<div class="feedback" id="fb-q8_2"></div>
+</div><div class="question" id="q8_3">
+<p>38. Un resumen de calidad se reconoce porque:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q8_3',false)">Es exactamente la mitad del texto original</button>
+<button class="option-btn" onclick="check(this,'q8_3',false)">Copia el primer y último párrafo del texto</button>
+<button class="option-btn" onclick="check(this,'q8_3',true)">Refleja fielmente las ideas principales sin agregar interpretación propia</button>
+<button class="option-btn" onclick="check(this,'q8_3',false)">Usa las mismas palabras del texto original</button>
+</div>
+<div class="feedback" id="fb-q8_3"></div>
+</div><div class="question" id="q8_4">
+<p>39. ¿Cuál es la diferencia principal entre parafrasear y copiar textualmente?</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q8_4',false)">No hay ninguna diferencia</button>
+<button class="option-btn" onclick="check(this,'q8_4',true)">Parafrasear implica reformular con palabras propias; copiar reproduce el texto exacto</button>
+<button class="option-btn" onclick="check(this,'q8_4',false)">Parafrasear solo aplica a textos literarios</button>
+<button class="option-btn" onclick="check(this,'q8_4',false)">Copiar textualmente siempre requiere citar la fuente pero parafrasear no</button>
+</div>
+<div class="feedback" id="fb-q8_4"></div>
+</div><div class="fill-blank">
+<p>40. El texto que reduce otro texto a sus ideas más importantes, manteniendo su estructura lógica, se llama ___.</p>
+<input class="blank-input" type="text" id="f8_5" placeholder="Escribe aqui..."/>
+<br/><button class="check-btn" onclick="checkFillMulti('f8_5',["resumen", "síntesis", "síntesis o resumen"],'fb-f8_5')">Verificar</button>
+<div class="feedback" id="fb-f8_5"></div>
+</div></div>
+<div class="section" id="s9">
+<div class="section-header"><div class="section-num ">9</div><h2>Ordenamiento de párrafos</h2></div>
+<div class="question" id="q9_1">
+<p>41. «<em>Hoy en día, las energías renovables son la alternativa más viable para enfrentar el cambio climático.</em>» ¿Qué tipo de párrafo es?</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q9_1',false)">De cierre</button>
+<button class="option-btn" onclick="check(this,'q9_1',false)">De desarrollo</button>
+<button class="option-btn" onclick="check(this,'q9_1',true)">Introductorio (presenta el tema y la postura)</button>
+<button class="option-btn" onclick="check(this,'q9_1',false)">Ninguno de los anteriores</button>
+</div>
+<div class="feedback" id="fb-q9_1"></div>
+</div><div class="question" id="q9_2">
+<p>42. «<em>Ahora bien, no todas las fuentes renovables son igual de eficientes en todos los países.</em>» Este párrafo es de:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q9_2',false)">Introducción</button>
+<button class="option-btn" onclick="check(this,'q9_2',false)">Cierre</button>
+<button class="option-btn" onclick="check(this,'q9_2',true)">Desarrollo (matiza lo dicho antes)</button>
+<button class="option-btn" onclick="check(this,'q9_2',false)">Ninguno</button>
+</div>
+<div class="feedback" id="fb-q9_2"></div>
+</div><div class="question" id="q9_3">
+<p>43. ¿Cuál conector indica que el párrafo AGREGA un argumento nuevo del mismo tipo?</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q9_3',false)">Sin embargo</button>
+<button class="option-btn" onclick="check(this,'q9_3',false)">En definitiva</button>
+<button class="option-btn" onclick="check(this,'q9_3',true)">Además / Asimismo</button>
+<button class="option-btn" onclick="check(this,'q9_3',false)">Aunque</button>
+</div>
+<div class="feedback" id="fb-q9_3"></div>
+</div><div class="question" id="q9_4">
+<p>44. El párrafo de cierre de un texto argumentativo generalmente:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q9_4',false)">Introduce el tema por primera vez</button>
+<button class="option-btn" onclick="check(this,'q9_4',false)">Da nuevos ejemplos y datos</button>
+<button class="option-btn" onclick="check(this,'q9_4',true)">Retoma la tesis y la confirma con las conclusiones</button>
+<button class="option-btn" onclick="check(this,'q9_4',false)">Hace preguntas al lector sin responderlas</button>
+</div>
+<div class="feedback" id="fb-q9_4"></div>
+</div><div class="fill-blank">
+<p>45. Los conectores «<em>pero, sin embargo, no obstante</em>» son conectores de ___.</p>
+<input class="blank-input" type="text" id="f9_5" placeholder="Escribe aqui..."/>
+<br/><button class="check-btn" onclick="checkFillMulti('f9_5',["contraste", "adversativa", "oposición", "adversativos", "contraste u oposición"],'fb-f9_5')">Verificar</button>
+<div class="feedback" id="fb-f9_5"></div>
+</div></div>
+<div class="section" id="s10">
+<div class="section-header"><div class="section-num ">10</div><h2>Género, número y flexión</h2></div>
+<div class="question" id="q10_1">
+<p>46. ¿Cuál de estos sustantivos es femenino aunque termina en -o?</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q10_1',false)">libro</button>
+<button class="option-btn" onclick="check(this,'q10_1',true)">mano</button>
+<button class="option-btn" onclick="check(this,'q10_1',false)">perro</button>
+<button class="option-btn" onclick="check(this,'q10_1',false)">abuelo</button>
+</div>
+<div class="feedback" id="fb-q10_1"></div>
+</div><div class="question" id="q10_2">
+<p>47. El plural de «<em>lunes</em>» es:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q10_2',false)">luneses</button>
+<button class="option-btn" onclick="check(this,'q10_2',false)">luneses</button>
+<button class="option-btn" onclick="check(this,'q10_2',true)">lunes (invariable)</button>
+<button class="option-btn" onclick="check(this,'q10_2',false)">lunis</button>
+</div>
+<div class="feedback" id="fb-q10_2"></div>
+</div><div class="question" id="q10_3">
+<p>48. «<em>el/la estudiante</em>» es un sustantivo de género:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q10_3',false)">Epiceno</button>
+<button class="option-btn" onclick="check(this,'q10_3',false)">Ambiguo</button>
+<button class="option-btn" onclick="check(this,'q10_3',true)">Común (la forma es igual para ambos géneros)</button>
+<button class="option-btn" onclick="check(this,'q10_3',false)">Variable</button>
+</div>
+<div class="feedback" id="fb-q10_3"></div>
+</div><div class="question" id="q10_4">
+<p>49. ¿Cuál es el femenino de «<em>alcalde</em>»?</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q10_4',true)">alcaldesa</button>
+<button class="option-btn" onclick="check(this,'q10_4',false)">alcaldina</button>
+<button class="option-btn" onclick="check(this,'q10_4',false)">alcadesa</button>
+<button class="option-btn" onclick="check(this,'q10_4',false)">alcaldía</button>
+</div>
+<div class="feedback" id="fb-q10_4"></div>
+</div><div class="fill-blank">
+<p>50. El plural de «<em>martes</em>» es ___.</p>
+<input class="blank-input" type="text" id="f10_5" placeholder="Escribe aqui..."/>
+<br/><button class="check-btn" onclick="checkFill('f10_5','martes','fb-f10_5')">Verificar</button>
+<div class="feedback" id="fb-f10_5"></div>
+</div></div>
+<div class="section" id="s11">
+<div class="section-header"><div class="section-num ">11</div><h2>El grupo nominal</h2></div>
+<div class="question" id="q11_1">
+<p>51. En «<em>muchas propuestas económicas innovadoras</em>», el núcleo es:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q11_1',false)">muchas</button>
+<button class="option-btn" onclick="check(this,'q11_1',true)">propuestas</button>
+<button class="option-btn" onclick="check(this,'q11_1',false)">económicas</button>
+<button class="option-btn" onclick="check(this,'q11_1',false)">innovadoras</button>
+</div>
+<div class="feedback" id="fb-q11_1"></div>
+</div><div class="question" id="q11_2">
+<p>52. Los adjetivos que preceden al núcleo (antepuestos) se llaman:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q11_2',false)">Complementos del nombre</button>
+<button class="option-btn" onclick="check(this,'q11_2',true)">Epítetos</button>
+<button class="option-btn" onclick="check(this,'q11_2',false)">Aposiciones</button>
+<button class="option-btn" onclick="check(this,'q11_2',false)">Determinantes indefinidos</button>
+</div>
+<div class="feedback" id="fb-q11_2"></div>
+</div><div class="question" id="q11_3">
+<p>53. En «<em>el problema de contaminación del río</em>», «de contaminación del río» es:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q11_3',false)">El núcleo</button>
+<button class="option-btn" onclick="check(this,'q11_3',false)">Un adjetivo calificativo</button>
+<button class="option-btn" onclick="check(this,'q11_3',true)">Un complemento del nombre preposicional</button>
+<button class="option-btn" onclick="check(this,'q11_3',false)">El determinante</button>
+</div>
+<div class="feedback" id="fb-q11_3"></div>
+</div><div class="question" id="q11_4">
+<p>54. «<em>Esta misma oportunidad única</em>». ¿Cuántos elementos modifica el núcleo «oportunidad»?</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q11_4',false)">Uno</button>
+<button class="option-btn" onclick="check(this,'q11_4',false)">Dos</button>
+<button class="option-btn" onclick="check(this,'q11_4',true)">Tres (esta, misma, única)</button>
+<button class="option-btn" onclick="check(this,'q11_4',false)">Ninguno</button>
+</div>
+<div class="feedback" id="fb-q11_4"></div>
+</div><div class="fill-blank">
+<p>55. En «<em>esa hermosa ciudad colonial</em>», el demostrativo «esa» funciona como ___ del grupo nominal.</p>
+<input class="blank-input" type="text" id="f11_5" placeholder="Escribe aqui..."/>
+<br/><button class="check-btn" onclick="checkFillMulti('f11_5',["determinante", "determinante demostrativo"],'fb-f11_5')">Verificar</button>
+<div class="feedback" id="fb-f11_5"></div>
+</div></div>
+<div class="section" id="s12">
+<div class="section-header"><div class="section-num ">12</div><h2>Sustantivación</h2></div>
+<div class="question" id="q12_1">
+<p>56. «<em>El <strong>correr</strong> a diario mejora el estado físico.</em>» «Correr» funciona como:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q12_1',false)">Verbo principal</button>
+<button class="option-btn" onclick="check(this,'q12_1',false)">Adverbio de modo</button>
+<button class="option-btn" onclick="check(this,'q12_1',true)">Sustantivo (infinitivo sustantivado, sujeto de la oración)</button>
+<button class="option-btn" onclick="check(this,'q12_1',false)">Adjetivo</button>
+</div>
+<div class="feedback" id="fb-q12_1"></div>
+</div><div class="question" id="q12_2">
+<p>57. «<em>Lo <strong>bello</strong> no siempre es verdadero.</em>» «Bello» es un adjetivo sustantivado mediante:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q12_2',false)">El sufijo -ción</button>
+<button class="option-btn" onclick="check(this,'q12_2',true)">El artículo neutro «lo»</button>
+<button class="option-btn" onclick="check(this,'q12_2',false)">El artículo «el»</button>
+<button class="option-btn" onclick="check(this,'q12_2',false)">La preposición «de»</button>
+</div>
+<div class="feedback" id="fb-q12_2"></div>
+</div><div class="question" id="q12_3">
+<p>58. «<em>Los <strong>jóvenes</strong> de hoy tienen muchos desafíos.</em>» «Jóvenes» es originalmente un:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q12_3',false)">Verbo</button>
+<button class="option-btn" onclick="check(this,'q12_3',false)">Adverbio</button>
+<button class="option-btn" onclick="check(this,'q12_3',false)">Sustantivo propio</button>
+<button class="option-btn" onclick="check(this,'q12_3',true)">Adjetivo sustantivado</button>
+</div>
+<div class="feedback" id="fb-q12_3"></div>
+</div><div class="question" id="q12_4">
+<p>59. En «<em>El <strong>sí</strong> del presidente fue inesperado</em>», «sí» es originalmente una:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q12_4',false)">Conjunción sustantivada</button>
+<button class="option-btn" onclick="check(this,'q12_4',true)">Adverbio de afirmación sustantivado</button>
+<button class="option-btn" onclick="check(this,'q12_4',false)">Interjección sustantivada</button>
+<button class="option-btn" onclick="check(this,'q12_4',false)">Preposición sustantivada</button>
+</div>
+<div class="feedback" id="fb-q12_4"></div>
+</div><div class="fill-blank">
+<p>60. El proceso gramatical por el cual una palabra de otra clase (adjetivo, verbo, adverbio) pasa a funcionar como sustantivo se llama ___.</p>
+<input class="blank-input" type="text" id="f12_5" placeholder="Escribe aqui..."/>
+<br/><button class="check-btn" onclick="checkFillMulti('f12_5',["sustantivación", "sustantivacion"],'fb-f12_5')">Verificar</button>
+<div class="feedback" id="fb-f12_5"></div>
+</div></div>
+<div class="section" id="s13">
+<div class="section-header"><div class="section-num ">13</div><h2>Palabras homógrafas y homófonas</h2></div>
+<div class="question" id="q13_1">
+<p>61. «<em>llama</em>» (animal andino) y «<em>llama</em>» (verbo llamar, 3.ª persona) son:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q13_1',false)">Homófonas</button>
+<button class="option-btn" onclick="check(this,'q13_1',true)">Homógrafas (misma escritura, distinto significado)</button>
+<button class="option-btn" onclick="check(this,'q13_1',false)">Sinónimas</button>
+<button class="option-btn" onclick="check(this,'q13_1',false)">Parónimas</button>
+</div>
+<div class="feedback" id="fb-q13_1"></div>
+</div><div class="question" id="q13_2">
+<p>62. «<em>hola</em>» (saludo) y «<em>ola</em>» (del mar) son palabras:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q13_2',false)">Homógrafas</button>
+<button class="option-btn" onclick="check(this,'q13_2',false)">Sinónimas</button>
+<button class="option-btn" onclick="check(this,'q13_2',true)">Homófonas (mismo sonido, distinta escritura)</button>
+<button class="option-btn" onclick="check(this,'q13_2',false)">Derivadas</button>
+</div>
+<div class="feedback" id="fb-q13_2"></div>
+</div><div class="question" id="q13_3">
+<p>63. «<em>tubo</em>» (pieza cilíndrica) y «<em>tuvo</em>» (verbo tener) son:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q13_3',false)">Homógrafas</button>
+<button class="option-btn" onclick="check(this,'q13_3',false)">Polisémicas</button>
+<button class="option-btn" onclick="check(this,'q13_3',true)">Homófonas</button>
+<button class="option-btn" onclick="check(this,'q13_3',false)">Antónimas</button>
+</div>
+<div class="feedback" id="fb-q13_3"></div>
+</div><div class="question" id="q13_4">
+<p>64. ¿Por qué es importante distinguir palabras homófonas al escribir?</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q13_4',true)">Porque cambian el significado del texto si se confunden</button>
+<button class="option-btn" onclick="check(this,'q13_4',false)">Porque son palabras que no existen en el diccionario</button>
+<button class="option-btn" onclick="check(this,'q13_4',false)">Porque tienen distintas raíces etimológicas</button>
+<button class="option-btn" onclick="check(this,'q13_4',false)">Porque afectan la concordancia gramatical</button>
+</div>
+<div class="feedback" id="fb-q13_4"></div>
+</div><div class="fill-blank">
+<p>65. «<em>grava</em>» (piedra menuda) y «<em>graba</em>» (verbo grabar) son palabras ___ en el español rioplatense.</p>
+<input class="blank-input" type="text" id="f13_5" placeholder="Escribe aqui..."/>
+<br/><button class="check-btn" onclick="checkFillMulti('f13_5',["homófonas", "homofonas", "homófona", "homofona"],'fb-f13_5')">Verificar</button>
+<div class="feedback" id="fb-f13_5"></div>
+</div></div>
+<div class="section" id="s14">
+<div class="section-header"><div class="section-num ">14</div><h2>Formas de tratamiento</h2></div>
+<div class="question" id="q14_1">
+<p>66. En Paraguay, ¿con qué pronombre se tutea de modo informal?</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q14_1',false)">Tú</button>
+<button class="option-btn" onclick="check(this,'q14_1',false)">Vosotros</button>
+<button class="option-btn" onclick="check(this,'q14_1',true)">Vos</button>
+<button class="option-btn" onclick="check(this,'q14_1',false)">Usted</button>
+</div>
+<div class="feedback" id="fb-q14_1"></div>
+</div><div class="question" id="q14_2">
+<p>67. La forma verbal «<em>comés</em>» corresponde al pronombre:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q14_2',false)">Tú</button>
+<button class="option-btn" onclick="check(this,'q14_2',false)">Él</button>
+<button class="option-btn" onclick="check(this,'q14_2',true)">Vos</button>
+<button class="option-btn" onclick="check(this,'q14_2',false)">Usted</button>
+</div>
+<div class="feedback" id="fb-q14_2"></div>
+</div><div class="question" id="q14_3">
+<p>68. Al escribir una carta formal a un rector universitario, la forma de tratamiento adecuada es:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q14_3',false)">Vos</button>
+<button class="option-btn" onclick="check(this,'q14_3',true)">Usted</button>
+<button class="option-btn" onclick="check(this,'q14_3',false)">Tú</button>
+<button class="option-btn" onclick="check(this,'q14_3',false)">Vosotros</button>
+</div>
+<div class="feedback" id="fb-q14_3"></div>
+</div><div class="question" id="q14_4">
+<p>69. ¿En qué países se usa principalmente el «vosotros» como segunda persona del plural?</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q14_4',false)">En toda América Latina</button>
+<button class="option-btn" onclick="check(this,'q14_4',true)">En España</button>
+<button class="option-btn" onclick="check(this,'q14_4',false)">En Paraguay y Argentina</button>
+<button class="option-btn" onclick="check(this,'q14_4',false)">En México y Colombia</button>
+</div>
+<div class="feedback" id="fb-q14_4"></div>
+</div><div class="fill-blank">
+<p>70. El pronombre de segunda persona del singular formal en el español de América es ___.</p>
+<input class="blank-input" type="text" id="f14_5" placeholder="Escribe aqui..."/>
+<br/><button class="check-btn" onclick="checkFillMulti('f14_5',["usted", "Usted"],'fb-f14_5')">Verificar</button>
+<div class="feedback" id="fb-f14_5"></div>
+</div></div>
+<div class="section" id="s15">
+<div class="section-header"><div class="section-num ">15</div><h2>Oración bimembre vs. unimembre</h2></div>
+<div class="question" id="q15_1">
+<p>71. «<em>¡Fuego!</em>» Es una oración:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q15_1',false)">Bimembre con sujeto tácito</button>
+<button class="option-btn" onclick="check(this,'q15_1',false)">Bimembre con predicado nominal</button>
+<button class="option-btn" onclick="check(this,'q15_1',true)">Unimembre (no se puede dividir en sujeto y predicado)</button>
+<button class="option-btn" onclick="check(this,'q15_1',false)">Simple con verbo copulativo</button>
+</div>
+<div class="feedback" id="fb-q15_1"></div>
+</div><div class="question" id="q15_2">
+<p>72. «<em>Los estudiantes de quinto grado aprobaron todos los exámenes.</em>» Es bimembre porque:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q15_2',false)">Tiene dos verbos conjugados</button>
+<button class="option-btn" onclick="check(this,'q15_2',true)">Tiene sujeto expreso («Los estudiantes de quinto grado») y predicado</button>
+<button class="option-btn" onclick="check(this,'q15_2',false)">Es una oración compuesta subordinada</button>
+<button class="option-btn" onclick="check(this,'q15_2',false)">No tiene sujeto tácito</button>
+</div>
+<div class="feedback" id="fb-q15_2"></div>
+</div><div class="question" id="q15_3">
+<p>73. «<em>Niebla espesa esta mañana.</em>» Es unimembre porque:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q15_3',false)">Tiene sujeto tácito de segunda persona</button>
+<button class="option-btn" onclick="check(this,'q15_3',true)">No tiene verbo conjugado ni sujeto identificable</button>
+<button class="option-btn" onclick="check(this,'q15_3',false)">Es una oración interrogativa</button>
+<button class="option-btn" onclick="check(this,'q15_3',false)">Tiene solo adjetivos</button>
+</div>
+<div class="feedback" id="fb-q15_3"></div>
+</div><div class="question" id="q15_4">
+<p>74. El sujeto «tácito» o «elíptico» en una oración bimembre:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q15_4',false)">No existe en español</button>
+<button class="option-btn" onclick="check(this,'q15_4',true)">No aparece escrito, pero se deduce de la desinencia verbal</button>
+<button class="option-btn" onclick="check(this,'q15_4',false)">Es siempre el narrador del texto</button>
+<button class="option-btn" onclick="check(this,'q15_4',false)">Solo aparece en oraciones negativas</button>
+</div>
+<div class="feedback" id="fb-q15_4"></div>
+</div><div class="fill-blank">
+<p>75. Una oración que consta únicamente de un bloque sin poder dividirse en sujeto y predicado se llama oración ___.</p>
+<input class="blank-input" type="text" id="f15_5" placeholder="Escribe aqui..."/>
+<br/><button class="check-btn" onclick="checkFillMulti('f15_5',["unimembre"],'fb-f15_5')">Verificar</button>
+<div class="feedback" id="fb-f15_5"></div>
+</div></div>
+<div class="section" id="s16">
+<div class="section-header"><div class="section-num ">16</div><h2>El predicado – verbal y nominal</h2></div>
+<div class="question" id="q16_1">
+<p>76. «<em>La temperatura <strong>bajó diez grados</strong> esta noche.</em>» El predicado es:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q16_1',false)">Nominal (verbo copulativo + atributo)</button>
+<button class="option-btn" onclick="check(this,'q16_1',true)">Verbal (verbo no copulativo + complementos)</button>
+</div>
+<div class="feedback" id="fb-q16_1"></div>
+</div><div class="question" id="q16_2">
+<p>77. «<em>Ese edificio <strong>permanece abandonado desde hace años</strong>.</em>» El predicado es:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q16_2',false)">Verbal</button>
+<button class="option-btn" onclick="check(this,'q16_2',true)">Nominal (cópula «permanece» + atributo «abandonado»)</button>
+</div>
+<div class="feedback" id="fb-q16_2"></div>
+</div><div class="question" id="q16_3">
+<p>78. En el predicado nominal «<em>sigue siendo el mejor alumno</em>», el atributo es:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q16_3',false)">sigue</button>
+<button class="option-btn" onclick="check(this,'q16_3',false)">siendo</button>
+<button class="option-btn" onclick="check(this,'q16_3',true)">el mejor alumno</button>
+<button class="option-btn" onclick="check(this,'q16_3',false)">sigue siendo</button>
+</div>
+<div class="feedback" id="fb-q16_3"></div>
+</div><div class="question" id="q16_4">
+<p>79. ¿Cuáles son los tres verbos copulativos principales del español?</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q16_4',false)">ser, tener, hacer</button>
+<button class="option-btn" onclick="check(this,'q16_4',true)">ser, estar, parecer</button>
+<button class="option-btn" onclick="check(this,'q16_4',false)">ser, haber, tener</button>
+<button class="option-btn" onclick="check(this,'q16_4',false)">estar, ir, quedar</button>
+</div>
+<div class="feedback" id="fb-q16_4"></div>
+</div><div class="fill-blank">
+<p>80. En «<em>Mi hermana <strong>trabaja</strong> en un banco</em>», el núcleo del predicado verbal es ___.</p>
+<input class="blank-input" type="text" id="f16_5" placeholder="Escribe aqui..."/>
+<br/><button class="check-btn" onclick="checkFillMulti('f16_5',["trabaja"],'fb-f16_5')">Verificar</button>
+<div class="feedback" id="fb-f16_5"></div>
+</div></div>
+<div class="section" id="s17">
+<div class="section-header"><div class="section-num ">17</div><h2>Oraciones impersonales y sus tipos</h2></div>
+<div class="question" id="q17_1">
+<p>81. «<em>Truena en el horizonte.</em>» Es impersonal de:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q17_1',false)">Verbo en 3.ª plural</button>
+<button class="option-btn" onclick="check(this,'q17_1',false)">Con «se»</button>
+<button class="option-btn" onclick="check(this,'q17_1',true)">Fenómeno natural</button>
+<button class="option-btn" onclick="check(this,'q17_1',false)">Con «haber»</button>
+</div>
+<div class="feedback" id="fb-q17_1"></div>
+</div><div class="question" id="q17_2">
+<p>82. «<em>Hay muchos libros sobre gramática en esa biblioteca.</em>» Es impersonal con:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q17_2',false)">Se impersonal</button>
+<button class="option-btn" onclick="check(this,'q17_2',false)">Verbo en 3.ª plural</button>
+<button class="option-btn" onclick="check(this,'q17_2',true)">Haber existencial</button>
+<button class="option-btn" onclick="check(this,'q17_2',false)">Fenómeno natural</button>
+</div>
+<div class="feedback" id="fb-q17_2"></div>
+</div><div class="question" id="q17_3">
+<p>83. «<em>Se necesitan técnicos especializados en energía solar.</em>» Es impersonal con:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q17_3',false)">Haber existencial</button>
+<button class="option-btn" onclick="check(this,'q17_3',true)">Se impersonal</button>
+<button class="option-btn" onclick="check(this,'q17_3',false)">Fenómeno natural</button>
+<button class="option-btn" onclick="check(this,'q17_3',false)">Verbo en 3.ª plural</button>
+</div>
+<div class="feedback" id="fb-q17_3"></div>
+</div><div class="question" id="q17_4">
+<p>84. «<em>Dicen que la nueva ley será muy polémica.</em>» Es impersonal porque el verbo está en:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q17_4',false)">Primera persona plural</button>
+<button class="option-btn" onclick="check(this,'q17_4',false)">Segunda persona singular</button>
+<button class="option-btn" onclick="check(this,'q17_4',true)">Tercera persona plural con sujeto indeterminado</button>
+<button class="option-btn" onclick="check(this,'q17_4',false)">Modo subjuntivo</button>
+</div>
+<div class="feedback" id="fb-q17_4"></div>
+</div><div class="fill-blank">
+<p>85. Completá: «___ mucho tráfico en la avenida principal esta tarde.»</p>
+<input class="blank-input" type="text" id="f17_5" placeholder="Escribe aqui..."/>
+<br/><button class="check-btn" onclick="checkFillMulti('f17_5',["Hay", "hay"],'fb-f17_5')">Verificar</button>
+<div class="feedback" id="fb-f17_5"></div>
+</div></div>
+<div class="section" id="s18">
+<div class="section-header"><div class="section-num ">18</div><h2>Oración simple vs. compuesta</h2></div>
+<div class="question" id="q18_1">
+<p>86. «<em>Estudié toda la noche, pero no pude dormir bien.</em>» Es compuesta:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q18_1',false)">Subordinada</button>
+<button class="option-btn" onclick="check(this,'q18_1',false)">Yuxtapuesta</button>
+<button class="option-btn" onclick="check(this,'q18_1',true)">Coordinada adversativa («pero»)</button>
+<button class="option-btn" onclick="check(this,'q18_1',false)">Simple</button>
+</div>
+<div class="feedback" id="fb-q18_1"></div>
+</div><div class="question" id="q18_2">
+<p>87. «<em>Llegaré cuando termine la reunión.</em>» Es compuesta:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q18_2',false)">Coordinada</button>
+<button class="option-btn" onclick="check(this,'q18_2',false)">Yuxtapuesta</button>
+<button class="option-btn" onclick="check(this,'q18_2',true)">Subordinada temporal («cuando»)</button>
+<button class="option-btn" onclick="check(this,'q18_2',false)">Simple</button>
+</div>
+<div class="feedback" id="fb-q18_2"></div>
+</div><div class="question" id="q18_3">
+<p>88. «<em>Salí, caminé, respiré el aire fresco.</em>» Es compuesta:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q18_3',false)">Subordinada causal</button>
+<button class="option-btn" onclick="check(this,'q18_3',false)">Coordinada copulativa</button>
+<button class="option-btn" onclick="check(this,'q18_3',true)">Yuxtapuesta (unidas por comas)</button>
+<button class="option-btn" onclick="check(this,'q18_3',false)">Simple extensa</button>
+</div>
+<div class="feedback" id="fb-q18_3"></div>
+</div><div class="question" id="q18_4">
+<p>89. ¿Qué caracteriza a una oración compuesta coordinada?</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q18_4',false)">Una proposición depende gramaticalmente de la otra</button>
+<button class="option-btn" onclick="check(this,'q18_4',true)">Las proposiciones son independientes entre sí y se unen por un nexo coordinante</button>
+<button class="option-btn" onclick="check(this,'q18_4',false)">No tienen nexo de unión entre proposiciones</button>
+<button class="option-btn" onclick="check(this,'q18_4',false)">Solo puede tener dos proposiciones</button>
+</div>
+<div class="feedback" id="fb-q18_4"></div>
+</div><div class="fill-blank">
+<p>90. «<em>No solo estudia, sino que también trabaja.</em>» El tipo de coordinación es ___.</p>
+<input class="blank-input" type="text" id="f18_5" placeholder="Escribe aqui..."/>
+<br/><button class="check-btn" onclick="checkFillMulti('f18_5',["distributiva", "adversativa", "copulativa", "correlativa"],'fb-f18_5')">Verificar</button>
+<div class="feedback" id="fb-f18_5"></div>
+</div></div>
+<div class="section" id="s19">
+<div class="section-header"><div class="section-num ">19</div><h2>Superlativo absoluto (-ísimo / -ísima)</h2></div>
+<div class="question" id="q19_1">
+<p>91. ¿Cuál es el superlativo absoluto correcto de «<em>amable</em>»?</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q19_1',false)">amableísimo</button>
+<button class="option-btn" onclick="check(this,'q19_1',true)">amabilísimo</button>
+<button class="option-btn" onclick="check(this,'q19_1',false)">amablísimo</button>
+<button class="option-btn" onclick="check(this,'q19_1',false)">amablelísimo</button>
+</div>
+<div class="feedback" id="fb-q19_1"></div>
+</div><div class="question" id="q19_2">
+<p>92. El superlativo absoluto de «<em>antiguo</em>» es:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q19_2',true)">antiquísimo</button>
+<button class="option-btn" onclick="check(this,'q19_2',false)">antigüísimo</button>
+<button class="option-btn" onclick="check(this,'q19_2',false)">anticuísimo</button>
+<button class="option-btn" onclick="check(this,'q19_2',false)">antigoísimo</button>
+</div>
+<div class="feedback" id="fb-q19_2"></div>
+</div><div class="question" id="q19_3">
+<p>93. «<em>Esta torta estaba buenísima.</em>» El adjetivo base es:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q19_3',false)">buenísima</button>
+<button class="option-btn" onclick="check(this,'q19_3',false)">mucho buena</button>
+<button class="option-btn" onclick="check(this,'q19_3',false)">buen</button>
+<button class="option-btn" onclick="check(this,'q19_3',true)">bueno/a</button>
+</div>
+<div class="feedback" id="fb-q19_3"></div>
+</div><div class="question" id="q19_4">
+<p>94. El superlativo absoluto puede expresarse también con:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q19_4',false)">Solo con el sufijo -ísimo</button>
+<button class="option-btn" onclick="check(this,'q19_4',true)">Con el prefijo «muy» + adjetivo en grado positivo</button>
+<button class="option-btn" onclick="check(this,'q19_4',false)">Solo con adjetivos irregulares</button>
+<button class="option-btn" onclick="check(this,'q19_4',false)">Con el sufijo -mente</button>
+</div>
+<div class="feedback" id="fb-q19_4"></div>
+</div><div class="fill-blank">
+<p>95. Formá el superlativo absoluto de «<em>fácil</em>»: ___</p>
+<input class="blank-input" type="text" id="f19_5" placeholder="Escribe aqui..."/>
+<br/><button class="check-btn" onclick="checkFillMulti('f19_5',["facilísimo", "facilísima"],'fb-f19_5')">Verificar</button>
+<div class="feedback" id="fb-f19_5"></div>
+</div></div>
+<div class="section" id="s20" style="border: 2px solid #f59e0b;">
+<div class="section-header"><div class="section-num extra">&#11088;</div><h2>Los cuatro «porqués» – Sección especial</h2></div>
+<div class="cheatsheet">
+<strong>&#128204; Repaso rápido antes de practicar:</strong>
+<ul>
+  <li><strong>porque</strong> (junto, sin tilde) &rarr; conjunción causal. Introduce la causa. <em>Lo hice porque quería.</em></li>
+  <li><strong>por qué</strong> (separado, con tilde) &rarr; interrogativo/exclamativo. <em>&iquest;Por qué llegaste tarde?</em></li>
+  <li><strong>porqué</strong> (junto, con tilde) &rarr; sustantivo = motivo, razón. <em>Desconozco el porqué de su furia.</em></li>
+  <li><strong>por que</strong> (separado, sin tilde) &rarr; prep. «por» + pronombre relativo «que». <em>El camino por que pasamos era bello.</em></li>
+</ul>
+</div>
+<div class="question" id="q20_1">
+<p>96. «<em>Me fui temprano ___ tenía que madrugar al día siguiente.</em>» Forma correcta:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q20_1',false)">porqué</button>
+<button class="option-btn" onclick="check(this,'q20_1',false)">por qué</button>
+<button class="option-btn" onclick="check(this,'q20_1',true)">porque</button>
+<button class="option-btn" onclick="check(this,'q20_1',false)">por que</button>
+</div>
+<div class="feedback" id="fb-q20_1"></div>
+</div><div class="question" id="q20_2">
+<p>97. «<em>¿___ decidiste cambiar de carrera?</em>» Forma correcta:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q20_2',false)">Porque</button>
+<button class="option-btn" onclick="check(this,'q20_2',false)">Por que</button>
+<button class="option-btn" onclick="check(this,'q20_2',false)">Porqué</button>
+<button class="option-btn" onclick="check(this,'q20_2',true)">Por qué</button>
+</div>
+<div class="feedback" id="fb-q20_2"></div>
+</div><div class="question" id="q20_3">
+<p>98. «<em>Nadie conoce el ___ de su renuncia.</em>» (sustantivo = motivo) Forma correcta:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q20_3',false)">por que</button>
+<button class="option-btn" onclick="check(this,'q20_3',false)">por qué</button>
+<button class="option-btn" onclick="check(this,'q20_3',false)">porque</button>
+<button class="option-btn" onclick="check(this,'q20_3',true)">porqué</button>
+</div>
+<div class="feedback" id="fb-q20_3"></div>
+</div><div class="question" id="q20_4">
+<p>99. «<em>El motivo ___ te escribí ya no existe.</em>» (preposición + relativo) Forma correcta:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q20_4',false)">porque</button>
+<button class="option-btn" onclick="check(this,'q20_4',false)">por qué</button>
+<button class="option-btn" onclick="check(this,'q20_4',false)">porqué</button>
+<button class="option-btn" onclick="check(this,'q20_4',true)">por que</button>
+</div>
+<div class="feedback" id="fb-q20_4"></div>
+</div><div class="question" id="q20_5">
+<p>100. «<em>Cuéntame ___ estás tan contento.</em>» (interrogativa indirecta) Forma correcta:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q20_5',false)">porque</button>
+<button class="option-btn" onclick="check(this,'q20_5',false)">por que</button>
+<button class="option-btn" onclick="check(this,'q20_5',false)">porqué</button>
+<button class="option-btn" onclick="check(this,'q20_5',true)">por qué</button>
+</div>
+<div class="feedback" id="fb-q20_5"></div>
+</div><div class="question" id="q20_6">
+<p>101. «<em>Reprobó el examen ___ no estudió nada.</em>» Forma correcta:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q20_6',false)">porqué</button>
+<button class="option-btn" onclick="check(this,'q20_6',false)">por qué</button>
+<button class="option-btn" onclick="check(this,'q20_6',true)">porque</button>
+<button class="option-btn" onclick="check(this,'q20_6',false)">por que</button>
+</div>
+<div class="feedback" id="fb-q20_6"></div>
+</div><div class="question" id="q20_7">
+<p>102. «<em>¡___ razón tan absurda!</em>» (exclamativa) Forma correcta:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q20_7',false)">Porque</button>
+<button class="option-btn" onclick="check(this,'q20_7',false)">Por que</button>
+<button class="option-btn" onclick="check(this,'q20_7',true)">Por qué</button>
+<button class="option-btn" onclick="check(this,'q20_7',false)">Porqué</button>
+</div>
+<div class="feedback" id="fb-q20_7"></div>
+</div><div class="question" id="q20_8">
+<p>103. «<em>Quiero entender el ___ de esta situación.</em>» (sustantivo precedido por artículo) Forma correcta:</p>
+<div class="options"><button class="option-btn" onclick="check(this,'q20_8',false)">por qué</button>
+<button class="option-btn" onclick="check(this,'q20_8',false)">por que</button>
+<button class="option-btn" onclick="check(this,'q20_8',false)">porque</button>
+<button class="option-btn" onclick="check(this,'q20_8',true)">porqué</button>
+</div>
+<div class="feedback" id="fb-q20_8"></div>
+</div><div class="fill-blank">
+<p>104. «<em>No entiendo ___ no me dijiste la verdad desde el principio.</em>» (interrogativa indirecta) Completá con la forma correcta.</p>
+<input class="blank-input" type="text" id="f20_9" placeholder="porque / por que / porqué / por qué"/>
+<br/><button class="check-btn" onclick="checkFill('f20_9','por qué','fb-f20_9')">Verificar</button>
+<div class="feedback" id="fb-f20_9"></div>
+</div>
+<div class="fill-blank">
+<p>105. «<em>Quedé contento ___ el proyecto fue aprobado por unanimidad.</em>» Completá con la forma correcta.</p>
+<input class="blank-input" type="text" id="f20_10" placeholder="porque / por que / porqué / por qué"/>
+<br/><button class="check-btn" onclick="checkFill('f20_10','porque','fb-f20_10')">Verificar</button>
+<div class="feedback" id="fb-f20_10"></div>
+</div>
+</div>
+  <div class="score-box" id="score-box" style="display:none">
+    <h3>&#127942; Resultado Final</h3>
+    <div class="score-num" id="score-display">0/105</div>
+    <p id="score-msg"></p>
+    <button class="reset-btn" onclick="location.reload()">&#128260; Reiniciar</button>
+  </div>
+</div>
+<footer>
+  &#9999;&#65039; Ejercicios Complementarios IV &middot;
+  <a href="ejercicios_complementarios_3.html" style="color:var(--primary)">&larr; Complementarios III</a> &middot;
+  <a href="ejercicios_complementarios_2.html" style="color:var(--primary)">Complementarios II</a> &middot;
+  <a href="ejercicios_complementarios.html" style="color:var(--primary)">Complementarios I</a> &middot;
+  <a href="ejercicios.html" style="color:var(--primary)">Ejercicios base</a> &middot;
+  <a href="index.html" style="color:var(--primary)">Temario</a>
+</footer>
+<script>
+const TOTAL=105;let answered=0,correct=0;
+function updateProgress(){
+  const pct=(answered/TOTAL)*100;
+  document.getElementById('prog').style.width=pct+'%';
+  document.getElementById('prog-label').textContent=answered+' / '+TOTAL+' respondidos';
+  if(answered>=TOTAL)showScore();
+}
+function check(btn,qId,isCorrect){
+  const q=document.getElementById(qId);
+  const btns=q.querySelectorAll('.option-btn');
+  btns.forEach(b=>b.disabled=true);
+  const fb=document.getElementById('fb-'+qId);
+  if(isCorrect){btn.classList.add('correct');fb.textContent='✅ ¡Correcto!';fb.className='feedback show ok';correct++;}
+  else{btn.classList.add('wrong');btns.forEach(b=>{if(b.getAttribute('onclick')&&b.getAttribute('onclick').includes(',true'))b.classList.add('correct');});fb.textContent='❌ Incorrecto. La respuesta correcta está en verde.';fb.className='feedback show fail';}
+  answered++;updateProgress();
+}
+function checkFill(inputId,answer,fbId){
+  const input=document.getElementById(inputId);
+  const fb=document.getElementById(fbId);
+  const val=input.value.trim().toLowerCase();
+  input.disabled=true;
+  if(val===answer.toLowerCase()){input.classList.add('correct');fb.textContent='✅ ¡Correcto!';fb.className='feedback show ok';correct++;}
+  else{input.classList.add('wrong');fb.textContent='❌ Incorrecto. Respuesta correcta: "'+answer+'"';fb.className='feedback show fail';}
+  answered++;updateProgress();
+}
+function checkFillMulti(inputId,answers,fbId){
+  const input=document.getElementById(inputId);
+  const fb=document.getElementById(fbId);
+  const val=input.value.trim().toLowerCase();
+  input.disabled=true;
+  if(answers.map(a=>a.toLowerCase()).includes(val)){input.classList.add('correct');fb.textContent='✅ ¡Correcto!';fb.className='feedback show ok';correct++;}
+  else{input.classList.add('wrong');fb.textContent='❌ Incorrecto. Respuestas válidas: '+answers.join(', ');fb.className='feedback show fail';}
+  answered++;updateProgress();
+}
+function checkFillContains(inputId,keywords,fbId,min){
+  const input=document.getElementById(inputId);
+  const fb=document.getElementById(fbId);
+  const val=input.value.trim().toLowerCase();
+  input.disabled=true;
+  const m=keywords.filter(k=>val.includes(k.toLowerCase()));
+  if(m.length>=min){input.classList.add('correct');fb.textContent='✅ ¡Correcto!';fb.className='feedback show ok';correct++;}
+  else{input.classList.add('wrong');fb.textContent='❌ Revisá tu respuesta.';fb.className='feedback show fail';}
+  answered++;updateProgress();
+}
+function showScore(){
+  const box=document.getElementById('score-box');
+  box.style.display='block';
+  document.getElementById('score-display').textContent=correct+'/'+TOTAL;
+  const pct=Math.round((correct/TOTAL)*100);
+  let msg=pct>=90?'🌟 ¡Excelente! Dominás todos los temas.':pct>=75?'👍 ¡Muy bien! Repasá los temas donde fallaste.':pct>=55?'📖 Aprobado. Conviene repasar el temario.':'💪 Seguí practicando, vas a mejorar!';
+  document.getElementById('score-msg').textContent=msg;
+  box.scrollIntoView({behavior:'smooth'});
+}
+</script>
+</body>
+</html>
